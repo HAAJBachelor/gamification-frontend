@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {BrowserRouter, Routes, Route, Router} from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import GameEditor from "./components/CodeEditor/GameEditor";
 import MainPaige from "./components/Pages/MainPaige";
 
