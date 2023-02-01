@@ -1,15 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Editor from "@monaco-editor/react";
+import {BrowserRouter, Routes, Route, Router} from "react-router-dom";
 import GameEditor from "./components/CodeEditor/GameEditor";
+import MainPaige from "./components/Pages/MainPaige";
 
 function App() {
 
     return (
-        <div>
-            <GameEditor/>
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<MainPaige />}>
+                    <Route path="/editor" element={<GameEditor/>} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
     );
 }
 

@@ -5,8 +5,8 @@ const GameEditor = () => {
         console.log("here is the current model value:", value);
     }
     return (
-        <div className="relative">
-            <Editor className="absolute right-0 text-green-800"
+        <div >
+            <Editor
                     height="100vh"
                     width="100VH"
                     defaultLanguage="javascript"
