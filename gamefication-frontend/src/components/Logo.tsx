@@ -2,7 +2,7 @@
 export const Logo = () => {
     return (
         <>
-            <img src="../image/OXX_LOGO.png" />
+            <img src="../image/OXX_LOGO.png" className='bg-black'/>
         </>
     );
 }
