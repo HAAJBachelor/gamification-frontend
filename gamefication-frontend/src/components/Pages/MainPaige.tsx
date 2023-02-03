@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link, Outlet} from "react-router-dom";
 import Card from "../UI/Card";
-import Header from "../Header";
+import Header from "../Header/Header";
 import NewCard from "../UI/NewCard";
 
 

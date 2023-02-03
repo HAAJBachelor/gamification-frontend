@@ -4,7 +4,7 @@ import {Button} from "../UI/Button";
 import Card from "../UI/Card";
 import NewCard from "../UI/NewCard";
 import Navbar from "../Navbar";
-import Header from "../Header";
+import Header from "../Header/Header";
 import GameEditor from "../CodeEditor/GameEditor";
 
 
