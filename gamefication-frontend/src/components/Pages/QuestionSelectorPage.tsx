@@ -3,6 +3,7 @@ import Questions from '../Problems/Questions';
 import Header from '../Header';
 import NewCard from '../UI/NewCard';
 import { Title } from '../Title/Title';
+import ProgressBar from '../ProgressBar';
 
 const QuestionSelectorPage = () => {
     return (
@@ -11,6 +12,7 @@ const QuestionSelectorPage = () => {
             <NewCard>     
                 <Title title="Velg neste utfordring"/>        
                 <Questions />
+                <ProgressBar />
             </NewCard>
         </>
     );
