@@ -1,10 +1,18 @@
 import React from 'react';
+import Questions from '../Problems/Questions';
+import Header from '../Header';
+import NewCard from '../UI/NewCard';
+import { Title } from '../Title/Title';
 
 const QuestionSelectorPage = () => {
     return (
-        <div>
-            
-        </div>
+        <>  
+            <Header />
+            <NewCard>     
+                <Title title="Velg neste utfordring"/>        
+                <Questions />
+            </NewCard>
+        </>
     );
 };
 
