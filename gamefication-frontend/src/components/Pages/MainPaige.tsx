@@ -11,7 +11,7 @@ const MainPaige = () => {
     }
     return (
         <>
-            <div className='bg-black h-screen '>
+            <div className='bg-gray-800 h-screen '>
                 <Header/>
                 <NewCard>
                     <div className='flex flex-col justify-center'>

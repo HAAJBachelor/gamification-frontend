@@ -6,11 +6,10 @@ import GameEditor from "../CodeEditor/GameEditor";
 const EditorPage = () => {
     return (
 
-        <div className='bg-black h-screen'>
+        <div className='bg-slate-800 h-screen'>
             <Header/>
             <NewCard>
                 <GameEditor></GameEditor>
-
             </NewCard>
         </div>
 

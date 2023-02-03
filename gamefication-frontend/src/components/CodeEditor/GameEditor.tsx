@@ -10,8 +10,8 @@ const GameEditor = () => {
                 <h2>asdasdasdasdasd</h2>
             </div>
             <Editor
-                    height="50vh"
-                    width="90vh"
+                    height="100vh"
+                    width="100vh"
                     defaultLanguage="javascript"
                     defaultValue="// some comment"
                     theme={"vs-dark"}
