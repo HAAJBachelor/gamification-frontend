@@ -1,5 +1,5 @@
 import React from 'react';
-import Questions from '../Problems/Questions';
+import Questions from '../Questions/Questions';
 import Header from '../Header/Header';
 import NewCard from '../UI/NewCard';
 import { Title } from '../Title/Title';
