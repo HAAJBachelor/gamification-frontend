@@ -17,7 +17,7 @@ const RulesPage = () => {
                 <Title title="Regler"/>
                 <ul className="mt-8 text-yellow-400 font-semibold marker:text-yellow-400 text-lg">
                     {rules.map(item => (
-                        <li className="mt-2">
+                        <li key={Math.random()} className="mt-2">
                             {item}
                         </li>))}
                 </ul>
