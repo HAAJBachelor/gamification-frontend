@@ -19,7 +19,7 @@ const MainPaige = () => {
                 <NewCard>
                     <Title title="Velkommen til Gamification"/>  
                     <div className='flex justify-center'>
-                        <img src={yellowFolk} />
+                        <img className="max-w-52 max-h-52" src={yellowFolk} alt="two OXX yellow folk"/>
                     </div>
                     <Button text="Start"/>
                     {/*<div className='flex flex-col justify-center'>
