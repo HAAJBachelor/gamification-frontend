@@ -41,11 +41,11 @@ function App() {
                 >?</Button>
             </Container>
             <Modal      
-            isOpen={modalIsOpen}
-            onAfterOpen={afterOpenModal}
-            onRequestClose={closeModal}
-            className={modalStyle}
-            contentLabel="Rules"
+                isOpen={modalIsOpen}
+                onAfterOpen={afterOpenModal}
+                onRequestClose={closeModal}
+                className={modalStyle}
+                contentLabel="Rules"
             >
                 <div className="w-full max-w-2xl px-4 h-full md:h-auto ">
                         <div className="bg-black rounded-lg shadow relative dark:bg-gray-700">

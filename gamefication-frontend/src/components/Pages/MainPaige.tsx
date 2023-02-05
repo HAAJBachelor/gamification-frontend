@@ -3,6 +3,9 @@ import {Link, Outlet} from "react-router-dom";
 import Card from "../UI/Card";
 import Header from "../Header/Header";
 import NewCard from "../UI/NewCard";
+import { Title } from '../Title/Title';
+import yellowFolk from '../../image/OXX_Yellowfolk.png'
+import { Button } from '../UI/Button';
 
 
 const MainPaige = () => {
@@ -11,10 +14,15 @@ const MainPaige = () => {
     }
     return (
         <>
-            <div className='bg-gray-800 h-screen '>
+            <div className='bg-black h-screen '>
                 <Header/>
                 <NewCard>
-                    <div className='flex flex-col justify-center'>
+                    <Title title="Velkommen til Gamification"/>  
+                    <div className='flex justify-center'>
+                        <img src={yellowFolk} />
+                    </div>
+                    <Button text="Start"/>
+                    {/*<div className='flex flex-col justify-center'>
                         <h2 className='text-center text-2xl font-bold text-white break-words my-3.5'>asdfasdasdasd</h2>
                         <div className='grid grid-cols-1 my-12'>
                             <div className='p-4'>
@@ -22,7 +30,7 @@ const MainPaige = () => {
                                 <p className='text--sm mt-4 text-white break-words my-3.5'>asdasdasdasd</p>
                             </div>
                         </div>
-                    </div>
+                    </div>*/}
                 </NewCard>
             </div>
         </>
