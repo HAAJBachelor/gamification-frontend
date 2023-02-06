@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import GameEditor from "./components/CodeEditor/GameEditor";
 import MainPaige from "./components/Pages/MainPaige";
 import RulesPage from "./components/Pages/RulesPage";
 import EditorPage from "./components/Pages/EditorPage";
@@ -12,6 +13,7 @@ import GamePage from "./components/Pages/GamePage";
 import RulesModal from "./components/UI/RulesModal";
 
 Modal.setAppElement("#root");
+import GamePage from './components/Pages/GamePage';
 
 Modal.setAppElement("#root");
 
@@ -23,9 +25,16 @@ function App() {
         setIsOpen(true);
         console.log('her er jeg')
     }
+
+    const afterOpenModal = () => {
+        // references are now sync'd and can be accessed.
+        subtitle.style.color = '#f00';
+    }
+
     const closeModal = () => {
         setIsOpen(false);
   }
+    const modalStyle = "bg-blackm grid justify-items-center";
     
     return (
         <>  
@@ -64,9 +73,8 @@ function App() {
                             </div>
                         </div>
                 </div>
-            </Modal>*/}
-
-            <Router>
+            </Modal>
+            <Router>            
                 <Routes>
                     <Route path="/" element={<MainPaige/>}/>
                     <Route path='/game' element={<GamePage/>}/>
@@ -75,7 +83,6 @@ function App() {
                     <Route path="/editorPage" element={<EditorPage/>}/>
                 </Routes>
             </Router>
-            <RulesModal visible={modalIsOpen} closeModal={closeModal} onClose={closeModal}/>
         </>        
     );
 }
