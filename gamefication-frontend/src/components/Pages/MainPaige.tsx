@@ -1,22 +1,20 @@
 import React from 'react';
-import {Link, Outlet} from "react-router-dom";
-import Card from "../UI/Card";
 import Header from "../Header/Header";
 import NewCard from "../UI/NewCard";
-import { Title } from '../Title/Title';
+import {Title} from '../Title/Title';
 import yellowFolk from '../../image/OXX_Yellowfolk.png'
-import { Button } from '../UI/Button';
+import {Button} from '../UI/Button';
 
 
 const MainPaige = () => {
-    const playHandler = () =>{
+    const playHandler = () => {
 
     }
     return (
         <>
-            <div className='bg-black h-screen '>               <Header/>
+            <div className='bg-black h-screen '><Header/>
                 <NewCard>
-                    <Title title="Velkommen til Gamification"/>  
+                    <Title title="Velkommen til Gamification"/>
                     <div className='flex justify-center'>
                         <img className="max-w-52 max-h-52" src={yellowFolk} alt="two OXX yellow folk"/>
                     </div>
