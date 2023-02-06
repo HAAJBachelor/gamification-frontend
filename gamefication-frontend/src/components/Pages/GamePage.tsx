@@ -5,6 +5,7 @@ import Questions from "../Questions/Questions";
 import GameEditor from "../CodeEditor/GameEditor";
 import Problem from "../CodeEditor/Problem";
 import Header from "../Header/Header";
+import {Button} from "../UI/Button";
 
 
 const GamePage = () => {
@@ -18,12 +19,13 @@ const GamePage = () => {
         setState(true)
     }
     return (
-        <div className='bg-zinc-800 h-screen'>
+        <div className='bg-black h-screen'>
             <Header/>
             {state &&
                 <NewCard>
                     <div>
-                        <Title title="Velg neste utfordring"/><Questions/>
+                        <Title title="Velg neste utfordring"/>
+                        <Questions/>
                         <div className='py-4'>
                             <button onClick={newEditorHandler}
                                     className="bg-yellow-500 text-white font-bold py-2 px-4 rounded-full">Click mee
@@ -32,14 +34,17 @@ const GamePage = () => {
                     </div>
                 </NewCard>}
             {!state && <NewCard>
-                <div className='flex flex-row justify-space-between'>
-                    <Problem/>
-                    <GameEditor/>
+                <div className='flex flex-row justify-items-center'>
+                    <div>
+                        <Problem/>
+                    </div>
+                    <div>
+                        <GameEditor/>
+                    </div>
+
                 </div>
                 <div className='py-4'>
-                    <button onClick={closeEditorHandler}
-                            className="bg-yellow-500 text-white font-bold py-2 px-4 rounded-full">Click me
-                    </button>
+                    <Button onClickHandler={closeEditorHandler} text='clickme'/>
                 </div>
             </NewCard>}
         </div>
