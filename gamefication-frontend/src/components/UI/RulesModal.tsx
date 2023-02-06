@@ -5,7 +5,7 @@ const RulesModal = (props: any) => {
     if (!props.visible) return null
 
     const handleOnClose = (e: any) => {
-        if (e.target.id === 'container') props.onClose()
+        if (e.target.id === 'container') props.onClose();
     }
 
     return (

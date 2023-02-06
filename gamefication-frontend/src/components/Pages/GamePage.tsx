@@ -5,11 +5,7 @@ import Questions from "../Questions/Questions";
 import GameEditor from "../CodeEditor/GameEditor";
 import Problem from "../CodeEditor/Problem";
 import Header from "../Header/Header";
-import Questions from "../Questions/Questions";
-import {Button} from "../UI/Button";
-import ProgressBar from "../ProgressBar";
 
-import Header from '../Header/Header';
 
 const GamePage = () => {
 
