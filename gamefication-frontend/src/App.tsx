@@ -12,6 +12,8 @@ import QuestionSelectorPage from './components/Pages/QuestionSelectorPage';
 
 Modal.setAppElement("#root");
 
+Modal.setAppElement("#root");
+
 function App() {
     let subtitle: any;
     const [modalIsOpen, setIsOpen] = React.useState(false);

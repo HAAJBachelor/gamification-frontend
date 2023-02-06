@@ -15,6 +15,7 @@ const MainPaige = () => {
     return (
         <>
             <div className='bg-black h-screen '>
+            <div className='bg-zinc-800h-screen '>
                 <Header/>
                 <NewCard>
                     <Title title="Velkommen til Gamification"/>  
