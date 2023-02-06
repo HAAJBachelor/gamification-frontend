@@ -1,6 +1,6 @@
 import React from 'react';
 import NewCard from "../UI/NewCard";
-import Header from "../Header";
+import Header from "../Header/Header";
 import GameEditor from "../CodeEditor/GameEditor";
 
 const EditorPage = () => {
