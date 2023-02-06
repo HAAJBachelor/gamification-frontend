@@ -30,9 +30,7 @@ function App() {
                     <Route path="/question" element={<QuestionSelectorPage/>}/>
                     <Route path="/rules" element={<RulesPage/>}/>
                     <Route path="/editorPage" element={<EditorPage/>}/>
-
                 </Routes>
-
             </Router>
             <RulesModal visible={modalIsOpen} closeModal={closeModal} onClose={closeModal}/>
         </>
