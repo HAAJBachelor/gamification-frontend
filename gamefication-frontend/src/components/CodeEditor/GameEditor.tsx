@@ -1,5 +1,6 @@
 import React from 'react';
 import Editor from "@monaco-editor/react";
+
 const GameEditor = () => {
     function handleEditorChange(value: any, event: any) {
         console.log("here is the current model value:", value);
@@ -9,9 +10,11 @@ const GameEditor = () => {
             <div className='mx-auto justify-'>
                 <h2>asdasdasdasdasd</h2>
             </div>
+
             <Editor
-                    height="100vh"
-                    width="100vh"
+                    height="60vh"
+                    width="80vh"
+
                     defaultLanguage="javascript"
                     defaultValue="// some comment"
                     theme={"vs-dark"}
