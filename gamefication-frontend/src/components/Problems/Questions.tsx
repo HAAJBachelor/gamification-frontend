@@ -3,7 +3,7 @@ import { Problem } from "../models";
 import Question from "./Question";
 
 type Props = {
-    //data: Array<Problem>
+
 }
 const Questions: React.FC<Props> = (props) => {
 
