@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import NewCard from "../UI/NewCard";
 import {Title} from "../Title/Title";
-import Questions from "../Problems/Questions";
+import Questions from "../Questions/Questions";
 import GameEditor from "../CodeEditor/GameEditor";
 import Problem from "../CodeEditor/Problem";
-import Header from "../Header";
+import Header from '../Header/Header';
 
 const GamePage = () => {
 
