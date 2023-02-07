@@ -1,25 +1,24 @@
-import {Title} from "../Title/Title";
-import {Button} from "../UI/Button";
-import NewCard from "../UI/NewCard";
-import Header from "../Header/Header";
+import React, {useEffect, useState} from "react";
 
 
 const RulesPage = () => {
-    const rules = ["aaaaaaaa", "bbbbbbbb", "cccccccc", "dddddddd"];
+
+
+    const [dogImage, setDogImage] = useState(null)
+
+    // 3. Create out useEffect function
+    useEffect(() => {
+        fetch("https://dog.ceo/api/breeds/image/random")
+            .then(response => response.json())
+            // 4. Setting *dogImage* to the image url that we received from the response above
+            .then(data => setDogImage(data.message))
+    }, [])
     return (
         <div className='bg-black h-screen '>
-            <Header/>
-            <NewCard>
-                <Title title="Regler"/>
-                <ul className="mt-8 text-yellow-400 font-semibold marker:text-yellow-400 text-lg">
-                    {rules.map(item => (
-                        <li className="mt-2">
-                            {item}
-                        </li>))}
-                </ul>
-                <p className="mt-12 text-yellow-400 font-bold">HAPPY HACK!</p>
-                <Button text="GO"/>
-            </NewCard>
+            <div className="App">
+                {/* 5. Using *dogImage as* the *src* for our image*/}
+                {dogImage && <img src={dogImage}></img>}
+            </div>
         </div>
     );
 
