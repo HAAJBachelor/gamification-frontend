@@ -3,7 +3,7 @@ type Props = {
     bgcolor: string
 }
 export const Capsule = (props: Props) => {
-    const capsule = "rounded-full font-semibold text-center max-w-none my-[2px] " + (props.bgcolor);
+    const capsule = "rounded-full font-semibold text-center max-w-none h-8 my-[5px] " + (props.bgcolor);
 
     return(
         <>
