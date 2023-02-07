@@ -15,7 +15,7 @@ const RulesModal = (props: any) => {
              className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm w-full flex justify-center items-center px-4 h-full md:h-auto">
             <div className='max-w-2xl rounded-lg relative bg-gray-800'>
                 <div className="flex justify-center items-center p-5 border-b rounded-t dark:border-gray-600">
-                    <h3 className="text-yellow-500 text-xl lg:text-2xl font-semibold dark:text-white">
+                    <h3 className="text-xl lg:text-2xl font-semibold text-white">
                         Terms of Service
                     </h3>
                 </div>
@@ -34,9 +34,8 @@ const RulesModal = (props: any) => {
                 </div>
                 <div
                     className="flex justify-center bspace-x-2 items-center p-6 border-t rounded-b border-gray-600">
-                    <Button handleOnClick={props.closeModal} text='Close'/>
+                    <Button handleOnClick={props.onClose} text='Close'/>
                 </div>
-
             </div>
 
         </div>

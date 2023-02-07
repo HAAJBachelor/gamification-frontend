@@ -31,7 +31,7 @@ function App() {
 
                 </Routes>
             </Router>
-            <RulesModal visible={modalIsOpen} closeModal={closeModal} onClose={closeModal}/>
+            <RulesModal visible={modalIsOpen} onClose={closeModal}/>
         </>
     );
 }
