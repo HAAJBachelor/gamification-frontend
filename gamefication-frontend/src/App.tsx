@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import './App.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import MainPaige from "./components/Pages/MainPaige";
+import LandingPage from "./components/Pages/LandingPage";
 import RulesPage from "./components/Pages/RulesPage";
-import EditorPage from "./components/Pages/EditorPage";
+
 import GamePage from './components/Pages/GamePage';
 import QuestionSelectorPage from "./components/Pages/QuestionSelectorPage";
 import RulesModal from "./components/UI/RulesModal";
@@ -25,11 +25,11 @@ function App() {
             <RulesButton openModal={openModal}/>
             <Router>
                 <Routes>
-                    <Route path="/" element={<MainPaige/>}/>
+                    <Route path="/" element={<LandingPage/>}/>
                     <Route path='/game' element={<GamePage/>}/>
                     <Route path="/question" element={<QuestionSelectorPage/>}/>
                     <Route path="/rules" element={<RulesPage/>}/>
-                    <Route path="/editorPage" element={<EditorPage/>}/>
+
                 </Routes>
             </Router>
             <RulesModal visible={modalIsOpen} closeModal={closeModal} onClose={closeModal}/>

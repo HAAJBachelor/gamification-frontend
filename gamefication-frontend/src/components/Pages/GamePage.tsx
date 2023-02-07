@@ -6,6 +6,7 @@ import GameEditor from "../CodeEditor/GameEditor";
 import Problem from "../CodeEditor/Problem";
 import Header from "../Header/Header";
 import {Button} from "../UI/Button";
+import ProgressBar from "../ProgressBar";
 
 
 const GamePage = () => {
@@ -28,10 +29,11 @@ const GamePage = () => {
                         <Questions/>
                         <div className='py-4'>
                             <button onClick={newEditorHandler}
-                                    className="bg-yellow-500 text-white font-bold py-2 px-4 rounded-full">Click mee
+                                    className="bg-yellow-500 text-white font-bold py-2 px-4 rounded-full">Click me
                             </button>
                         </div>
                     </div>
+                    <ProgressBar/>
                 </NewCard>}
             {!state && <NewCard>
                 <div className='flex flex-row justify-items-center'>

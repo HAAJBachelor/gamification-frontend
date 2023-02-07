@@ -7,7 +7,7 @@ import {Button} from '../UI/Button';
 import {Link} from "react-router-dom";
 
 
-const MainPaige = () => {
+const LandingPage = () => {
     const playHandler = () => {
 
     }
@@ -31,4 +31,4 @@ const MainPaige = () => {
     );
 };
 
-export default MainPaige;
+export default LandingPage
