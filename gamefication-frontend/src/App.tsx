@@ -10,11 +10,9 @@ import LandingPage from "./components/Pages/LandingPage";
 
 
 function App() {
-    let subtitle: any;
     const [modalIsOpen, setIsOpen] = useState(false);
     const openModal = () => {
         setIsOpen(true);
-        console.log('her er jeg')
     }
     const closeModal = () => {
         setIsOpen(false);
@@ -28,7 +26,6 @@ function App() {
                     <Route path='/game' element={<GamePage/>}/>
                     <Route path="/question" element={<QuestionSelectorPage/>}/>
                     <Route path="/rules" element={<RulesPage/>}/>
-
                 </Routes>
             </Router>
             <RulesModal visible={modalIsOpen} onClose={closeModal}/>

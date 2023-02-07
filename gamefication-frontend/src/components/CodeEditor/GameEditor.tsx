@@ -5,12 +5,11 @@ const GameEditor = () => {
     function handleEditorChange(value: any, event: any) {
         console.log("here is the current model value:", value);
     }
-
     return (
         <>
             <Editor
-                width="600px"
-
+                width="700px"
+                height='500px'
                 options={{
                     automaticLayout: true,
                     minimap: {enabled: false},
@@ -20,16 +19,13 @@ const GameEditor = () => {
                     lineNumbersMinChars: 3,
                     fontSize: 16,
                     scrollBeyondLastLine: false,
-
                 }}
                 defaultLanguage="javascript"
                 defaultValue="// some comment"
                 theme={"vs-dark"}
                 onChange={handleEditorChange}
             />
-
         </>
     );
 };
-
 export default GameEditor;

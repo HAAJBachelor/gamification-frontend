@@ -6,10 +6,8 @@ import yellowFolk from '../../image/OXX_Yellowfolk.png'
 import {Button} from '../UI/Button';
 import {Link} from "react-router-dom";
 
-
 const LandingPage = () => {
     const playHandler = () => {
-
     }
     return (
         <>
@@ -24,11 +22,9 @@ const LandingPage = () => {
                             <Button text="Start"></Button>
                         </Link>
                     </div>
-
                 </NewCard>
             </div>
         </>
     );
 };
-
 export default LandingPage

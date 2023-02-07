@@ -27,21 +27,29 @@ const GamePage = () => {
                     <div>
                         <Title title="Velg neste utfordring"/>
                         <Questions/>
-                            <Button handleOnClick={newEditorHandler} text='click me'/>
-                        
+                        <Button handleOnClick={newEditorHandler} text='click me'/>
+
                     </div>
                     <ProgressBar/>
                 </NewCard>}
-            {!state && <NewCard>
-                <div className='flex flex-row justify-items-center'>                    
-                    <Problem/>
-                    <div>
-                        <GameEditor/>
+            {!state &&
+                <div>
+                    <div className='flex flex-row justify-items-center'>
+                        <div className='justify-center'>
+                            <Problem/>
+                        </div>
+                        <div>
+                            <GameEditor/>
+                        </div>
+
                     </div>
-                </div>
-                    <Button handleOnClick={closeEditorHandler} text='click me'/>                
-            </NewCard>}
+                    <div className="flex flex-col justify-center items-center">
+                        <Button handleOnClick={closeEditorHandler} text='click me'/>
+                    </div>
+
+                </div>}
         </div>
+
     );
 };
 
