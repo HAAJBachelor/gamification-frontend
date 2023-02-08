@@ -1,26 +1,53 @@
 import React, {useEffect, useState} from "react";
-
+import {Button} from "../UI/Button";
+import Header from "../Header/Header";
+import NewCard from "../UI/NewCard";
+import {Title} from "../Title/Title";
+import Questions from "../Questions/Questions";
+import ProgressBar from "../ProgressBar";
 
 const RulesPage = () => {
 
-
-    const [dogImage, setDogImage] = useState(null)
-
-    // 3. Create out useEffect function
+    const [dogImage, setDogImage] = useState('')
     useEffect(() => {
-        fetch("https://dog.ceo/api/breeds/image/random")
-            .then(response => response.json())
-            // 4. Setting *dogImage* to the image url that we received from the response above
-            .then(data => setDogImage(data.message))
-    }, [])
+        fetch('https://localhost:7067/api/CreateSession',).then(response => {
+
+            if (!response.ok)
+                throw new Error("no data")
+            return response
+        })
+            .then(response => response.text()
+                .then(response => {
+                    setDogImage(response)
+                })).catch((error: Error) => {
+            console.log(error.message)
+        })
+    })
+
+    const checkHint = () => {
+
+    }
+
+
+    console.log(dogImage)
     return (
-        <div className='bg-black h-screen '>
-            <div className="App">
-                {/* 5. Using *dogImage as* the *src* for our image*/}
-                {dogImage && <img src={dogImage}></img>}
+        <div className='bg-black h-screen'>
+            <Header/>
+            <div>
+                <p className='text-white'>here it is {dogImage}</p>
             </div>
+            <NewCard>
+                <div>
+                    <Title title="Velg neste utfordring"/>
+                    <Questions/>
+                    <Button handleOnClick={checkHint} text='click me'/>
+
+                </div>
+                <ProgressBar/>
+            </NewCard>
+
         </div>
-    );
+    )
 
 };
 

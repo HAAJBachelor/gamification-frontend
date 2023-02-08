@@ -9,7 +9,7 @@ const RulesButton = (props: any) => {
                     icon="fa fab-plus"
                     rotate={true}
                     onClick={props.openModal}
-                    styles={{"background": "#FACC14", "font-weight": "bold", "font-size": "1.5rem"}}
+                    styles={{"background": "#FACC14", "fontWeight": "bold", "fontSize": "1.5rem"}}
                 >?</Button>
             </Container>
         </div>
