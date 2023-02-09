@@ -19,6 +19,8 @@ const GamePage = () => {
     const closeEditorHandler = () => {
         setState(true)
     }
+
+
     return (
         <div className='bg-black h-screen'>
             <Header/>

@@ -8,9 +8,16 @@ import {Link} from "react-router-dom";
 
 const LandingPage = () => {
         const [gameSession, setGameSession] = useState('')
-
         const fetchData = () => {
-            fetch('https://localhost:7067/api/CreateSession').then(response => {
+
+            fetch('https://localhost:7067/api/CreateSession', {
+                method: "GET",
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json",
+                    'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
+                }
+            }).then(response => {
                 if (!response.ok)
                     throw new Error("no data")
                 return response
@@ -27,10 +34,7 @@ const LandingPage = () => {
         }
 
 
-        const startGameHandler = () => {
-            console.log(gameSession)
-        }
-        return (
+    return (
             <>
                 <div className='bg-black h-screen '><Header/>
                     <NewCard>
