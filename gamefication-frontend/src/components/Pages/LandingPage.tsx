@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Header from "../Header/Header";
 import NewCard from "../UI/NewCard";
 import {Title} from '../Title/Title';
@@ -7,24 +7,46 @@ import {Button} from '../UI/Button';
 import {Link} from "react-router-dom";
 
 const LandingPage = () => {
-    const playHandler = () => {
+        const [gameSession, setGameSession] = useState('')
+
+        const fetchData = () => {
+            fetch('https://localhost:7067/api/CreateSession').then(response => {
+                if (!response.ok)
+                    throw new Error("no data")
+                return response
+            })
+                .then(response => response.text()
+                    .then(response => {
+                        setGameSession(response)
+                        console.log(response)
+                    })).catch((error: Error) => {
+                console.log(error.message)
+            })
+
+            console.log(gameSession)
+        }
+
+
+        const startGameHandler = () => {
+            console.log(gameSession)
+        }
+        return (
+            <>
+                <div className='bg-black h-screen '><Header/>
+                    <NewCard>
+                        <Title title="Velkommen til Gamification"/>
+                        <div className='flex justify-center'>
+                            <img className="max-w-52 max-h-52" src={yellowFolk} alt="two OXX yellow folk"/>
+                        </div>
+                        <div>
+                            <Link to='game'>
+                                <Button text="Start" handleOnClick={fetchData}></Button>
+                            </Link>
+                        </div>
+                    </NewCard>
+                </div>
+            </>
+        );
     }
-    return (
-        <>
-            <div className='bg-black h-screen '><Header/>
-                <NewCard>
-                    <Title title="Velkommen til Gamification"/>
-                    <div className='flex justify-center'>
-                        <img className="max-w-52 max-h-52" src={yellowFolk} alt="two OXX yellow folk"/>
-                    </div>
-                    <div>
-                        <Link to='game'>
-                            <Button text="Start"></Button>
-                        </Link>
-                    </div>
-                </NewCard>
-            </div>
-        </>
-    );
-};
+;
 export default LandingPage
