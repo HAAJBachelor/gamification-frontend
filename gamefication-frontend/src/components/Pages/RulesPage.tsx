@@ -31,7 +31,7 @@ const RulesPage = () => {
 
     console.log(dogImage)
     return (
-        <div className='bg-black h-screen'>
+        <>
             <Header/>
             <div>
                 <p className='text-white'>here it is {dogImage}</p>
@@ -46,7 +46,7 @@ const RulesPage = () => {
                 <ProgressBar/>
             </NewCard>
 
-        </div>
+        </>
     )
 
 };

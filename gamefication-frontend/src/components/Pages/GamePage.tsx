@@ -19,10 +19,8 @@ const GamePage = () => {
     const closeEditorHandler = () => {
         setState(true)
     }
-
-
     return (
-        <div className='bg-black h-screen'>
+        <>
             <Header/>
             {state &&
                 <NewCard>
@@ -30,7 +28,6 @@ const GamePage = () => {
                         <Title title="Velg neste utfordring"/>
                         <Questions/>
                         <Button handleOnClick={newEditorHandler} text='click me'/>
-
                     </div>
                     <ProgressBar/>
                 </NewCard>}
@@ -50,7 +47,7 @@ const GamePage = () => {
                     </div>
 
                 </div>}
-        </div>
+        </>
 
     );
 };

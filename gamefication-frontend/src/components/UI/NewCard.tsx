@@ -3,14 +3,13 @@ import React from 'react';
 const NewCard = (props: any) => {
     const classes = 'card ' + props.className;
     return (
-        <div className='mx-52 my-10 overflow-visible text-center'>
-            <div className={classes + 'mx-auto bg-black rounded-3xl border-4 border-yellow-400 relative py-10'}>{props.children}
+        <div className='text-center mx-52 my-10 overflow-visible mx-52 my-10 overflow-visible'>
+            <div
+                className={classes + 'mx-auto bg-black rounded-3xl border-4 border-yellow-400 relative py-10'}>{props.children}
             </div>
-
         </div>
     );
 };
-
 export default NewCard;
 
 {/* <div className='p-52 overflow-visible'>{props.children}

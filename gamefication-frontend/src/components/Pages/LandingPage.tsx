@@ -9,7 +9,6 @@ import {Link} from "react-router-dom";
 const LandingPage = () => {
         const [gameSession, setGameSession] = useState('')
         const fetchData = () => {
-
             fetch('https://localhost:7067/api/CreateSession', {
                 method: "GET",
                 credentials: 'include',
@@ -29,26 +28,21 @@ const LandingPage = () => {
                     })).catch((error: Error) => {
                 console.log(error.message)
             })
-
-            console.log(gameSession)
         }
-
-
-    return (
+        return (
             <>
-                <div className='bg-black h-screen '><Header/>
-                    <NewCard>
-                        <Title title="Velkommen til Gamification"/>
-                        <div className='flex justify-center'>
-                            <img className="max-w-52 max-h-52" src={yellowFolk} alt="two OXX yellow folk"/>
-                        </div>
-                        <div>
-                            <Link to='game'>
-                                <Button text="Start" handleOnClick={fetchData}></Button>
-                            </Link>
-                        </div>
-                    </NewCard>
-                </div>
+                <Header/>
+                <NewCard>
+                    <Title title="Velkommen til Gamification"/>
+                    <div className='flex justify-center'>
+                        <img className="max-w-52 max-h-52" src={yellowFolk} alt="two OXX yellow folk"/>
+                    </div>
+                    <div>
+                        <Link to='game'>
+                            <Button text="Start" handleOnClick={fetchData}></Button>
+                        </Link>
+                    </div>
+                </NewCard>
             </>
         );
     }
