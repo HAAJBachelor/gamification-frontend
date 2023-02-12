@@ -6,7 +6,7 @@ const Problem = () => {
     return (
         <div className='pt-8 px-8'>
             <div>
-                <p className='text-white '>Contrary to popular belief, Lorem Ipsum is not simply random text. It has
+                <p className='text-white'>Contrary to popular belief, Lorem Ipsum is not simply random text. It has
                     roots in a piece of
                     classical
                     Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at
@@ -20,7 +20,7 @@ const Problem = () => {
                     sit amet..", comes from a line in section 1.10.32.</p>
             </div>
             <div>
-                <p className='text-white pt-20  '>The standard chunk of Lorem Ipsum used since the 1500s is reproduced
+                <p className='text-white pt-20'>The standard chunk of Lorem Ipsum used since the 1500s is reproduced
                     below for
                     those interested.
                     Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in
