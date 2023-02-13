@@ -31,7 +31,6 @@ const LandingPage = () => {
         }
         return (
             <>
-                <div>
                     <Header/>
                     <NewCard>
                         <Title title="Velkommen til Gamification"/>
@@ -44,7 +43,6 @@ const LandingPage = () => {
                             </Link>
                         </div>
                     </NewCard>
-                </div>
             </>
         );
     }

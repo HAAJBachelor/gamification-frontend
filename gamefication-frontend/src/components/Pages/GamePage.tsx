@@ -32,13 +32,21 @@ const GamePage = () => {
                     <ProgressBar/>
                 </NewCard>}
             {!state &&
-                <div className='flex flex-row h-2/4'>
-                    <div className=''>
+                <div className='flex flex-row justify-evenly items-stretch '>
+                    <div className='flex-grow-1 w-1/3 overflow-auto resize rounded-md p-4 shadow-2xl '>
                         <Problem/>
                     </div>
-                    <div className=''>
+                    <div
+                        className='p-4 overflow-auto resize rounded-md flex-grow-1 w-2/3 shadow-2xl flex-wrap '>
                         <GameEditor/>
+                        <div>Hva om noe kommer her</div>
+                        <div>Det fortsetter å komme</div>
+                        <div>Det kan komme mer</div>
+                        <div className='flex flex-row justify-end align-middle'>
+                            <Button text='Submit'></Button>
+                        </div>
                     </div>
+
                 </div>
             }
         </>

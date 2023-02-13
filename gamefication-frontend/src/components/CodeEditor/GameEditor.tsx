@@ -6,9 +6,10 @@ const GameEditor = () => {
         console.log("here is the current model value:", value);
     }
     return (
-        <div className='shadow-md h-2/3 p-2'>
+        <div className='shadow-md h-2/3 p-2 '>
             <Editor
-                width="700px"
+
+
                 options={{
                     automaticLayout: true,
                     minimap: {enabled: false},

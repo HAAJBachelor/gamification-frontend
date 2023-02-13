@@ -2,7 +2,7 @@ import React from 'react';
 
 const Problem = () => {
     return (
-        <div className='pt-8 px-8 overflow-y-auto h-2/3 shadow-md'>
+        <div className=''>
             <div>
                 <h1 className='text-white text-2xl'>Solve this</h1>
                 <p className='text-white'>Contrary to popular belief, Lorem Ipsum is not simply random text. It has
