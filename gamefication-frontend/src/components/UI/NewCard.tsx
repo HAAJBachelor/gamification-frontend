@@ -5,7 +5,7 @@ const NewCard = (props: any) => {
     return (
         <div className='text-center mx-52 my-10 overflow-visible mx-52 my-10 overflow-visible'>
             <div
-                className={classes + 'mx-auto bg-background rounded-3xl border-4 border-yellow-400 relative py-10'}>{props.children}
+                className={classes + 'mx-auto rounded-3xl border-4 border-yellow-400 relative py-10'}>{props.children}
             </div>
         </div>
     );

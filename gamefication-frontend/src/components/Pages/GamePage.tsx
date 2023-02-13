@@ -32,21 +32,16 @@ const GamePage = () => {
                     <ProgressBar/>
                 </NewCard>}
             {!state &&
-                <div>
-                    <div className='flex flex-row justify-items-center'>
-                        <div className='justify-center'>
-                            <Problem/>
-                        </div>
-                        <div>
-                            <GameEditor/>
-                        </div>
 
+                <div className='flex flex-row justify-items-center'>
+                    <div className='flex:1'>
+                        <Problem/>
                     </div>
-                    <div className="flex flex-col justify-center items-center">
-                        <Button handleOnClick={closeEditorHandler} text='click me'/>
+                    <div>
+                        <GameEditor/>
                     </div>
-
-                </div>}
+                </div>
+            }
         </>
 
     );

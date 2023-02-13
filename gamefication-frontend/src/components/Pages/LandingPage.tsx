@@ -31,18 +31,20 @@ const LandingPage = () => {
         }
         return (
             <>
-                <Header/>
-                <NewCard>
-                    <Title title="Velkommen til Gamification"/>
-                    <div className='flex justify-center'>
-                        <img className="max-w-52 max-h-52" src={yellowFolk} alt="two OXX yellow folk"/>
-                    </div>
-                    <div>
-                        <Link to='game'>
-                            <Button text="Start" handleOnClick={fetchData}></Button>
-                        </Link>
-                    </div>
-                </NewCard>
+                <div>
+                    <Header/>
+                    <NewCard>
+                        <Title title="Velkommen til Gamification"/>
+                        <div className='flex justify-center'>
+                            <img className="max-w-52 max-h-52" src={yellowFolk} alt="two OXX yellow folk"/>
+                        </div>
+                        <div>
+                            <Link to='game'>
+                                <Button text="Start" handleOnClick={fetchData}></Button>
+                            </Link>
+                        </div>
+                    </NewCard>
+                </div>
             </>
         );
     }

@@ -6,10 +6,9 @@ const GameEditor = () => {
         console.log("here is the current model value:", value);
     }
     return (
-        <>
+        <div className='h-2/3 shadow-md p-2'>
             <Editor
                 width="700px"
-                height='500px'
                 options={{
                     automaticLayout: true,
                     minimap: {enabled: false},
@@ -20,12 +19,13 @@ const GameEditor = () => {
                     fontSize: 16,
                     scrollBeyondLastLine: false,
                 }}
-                defaultLanguage="javascript"
+                defaultLanguage="java"
                 defaultValue="// some comment"
                 theme={"vs-dark"}
                 onChange={handleEditorChange}
             />
-        </>
+
+        </div>
     );
 };
 export default GameEditor;

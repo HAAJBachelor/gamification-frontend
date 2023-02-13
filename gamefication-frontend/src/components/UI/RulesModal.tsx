@@ -12,7 +12,7 @@ const RulesModal = (props: any) => {
 
         <div id='container'
              onClick={handleOnClose}
-             className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm w-full flex justify-center items-center px-4 h-full md:h-auto">
+             className="fixed inset-0 bg-background bg-opacity-50 backdrop-blur-sm w-full flex justify-center items-center px-4 h-full md:h-auto">
             <div className='max-w-2xl rounded-lg relative bg-gray-800'>
                 <div className="flex justify-center items-center p-5 border-b rounded-t dark:border-gray-600">
                     <h3 className="text-xl lg:text-2xl font-semibold text-white">
