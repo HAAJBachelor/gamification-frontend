@@ -32,12 +32,11 @@ const GamePage = () => {
                     <ProgressBar/>
                 </NewCard>}
             {!state &&
-
-                <div className='flex flex-row justify-items-center'>
-                    <div className='flex:1'>
+                <div className='flex flex-row h-2/4'>
+                    <div className=''>
                         <Problem/>
                     </div>
-                    <div>
+                    <div className=''>
                         <GameEditor/>
                     </div>
                 </div>
