@@ -32,18 +32,24 @@ const GamePage = () => {
                     <ProgressBar/>
                 </NewCard>}
             {!state &&
-                <div className='flex flex-row justify-between items-stretch overflow-visible'>
-                    <div
-                        className='flex-grow-1 w-1/3 max-h-screen min-w-[400px] min-h-[400px] whitespace-pre-wrap overflow-y-scroll bg-gameComps resize rounded-md p-4 shadow-2xl mr-2 mt-4'>
-                        <Problem/>
-                    </div>
+                <div>
+                    <div className='flex flex-row justify-between items-stretch overflow-visible'>
+                        <div
+                            className='flex-grow-1 w-1/3 max-h-screen min-w-[400px] min-h-[400px] whitespace-pre-wrap overflow-y-scroll bg-gameComps resize rounded-md p-4 shadow-2xl mr-2 mt-4'>
+                            <Problem/>
+                        </div>
 
-                    <div
-                        className='p-4 w-2/3 overflow-auto resize rounded-md max-h-[450px] min-w-[400px] min-h-[400px] flex-grow-1 shadow-2xl bg-gameComps flex-wrap ml-2 mt-4'>
-                        <GameEditor/>
-                    </div>
+                        <div
+                            className='p-4 w-2/3 overflow-auto resize rounded-md max-h-[450px] min-w-[400px] min-h-[400px] flex-grow-1 shadow-2xl bg-gameComps flex-wrap ml-2 mt-4'>
+                            <GameEditor/>
+                        </div>
 
+                    </div>
+                    <div className='flex flex-row justify-end text-white'>hello
+                        <div className='absolute bottom-0 left-500 text-white'>hello</div>
+                    </div>
                 </div>
+
             }
         </>
 
