@@ -6,7 +6,7 @@ const GameEditor = () => {
         console.log("here is the current model value:", value);
     }
     return (
-        <div className='shadow-md h-2/3 p-2 '>
+        <div className='h-full'>
             <Editor
                 options={{
                     automaticLayout: true,
