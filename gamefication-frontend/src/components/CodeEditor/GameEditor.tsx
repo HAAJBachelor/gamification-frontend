@@ -8,8 +8,6 @@ const GameEditor = () => {
     return (
         <div className='shadow-md h-2/3 p-2 '>
             <Editor
-
-
                 options={{
                     automaticLayout: true,
                     minimap: {enabled: false},

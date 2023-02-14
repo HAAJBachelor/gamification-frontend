@@ -33,11 +33,13 @@ const GamePage = () => {
                 </NewCard>}
             {!state &&
                 <div className='flex flex-row justify-evenly items-stretch '>
-                    <div className='flex-grow-1 w-1/3 overflow-auto resize rounded-md p-4 shadow-2xl '>
+                    <div
+                        className='flex-grow-1 w-1/3  max-h-[500px] min-w-[400px] min-h-[400px] whitespace-pre-wrap overflow-y-scroll bg-gameComps resize rounded-md p-4 shadow-2xl  '>
                         <Problem/>
                     </div>
+
                     <div
-                        className='p-4 overflow-auto resize rounded-md flex-grow-1 w-2/3 shadow-2xl flex-wrap '>
+                        className='p-4 overflow-auto resize rounded-md max-h-[500px] min-w-[400px] min-h-[400px] flex-grow-1 w-2/3 shadow-2xl bg-gameComps flex-wrap'>
                         <GameEditor/>
                         <div>Hva om noe kommer her</div>
                         <div>Det fortsetter å komme</div>
