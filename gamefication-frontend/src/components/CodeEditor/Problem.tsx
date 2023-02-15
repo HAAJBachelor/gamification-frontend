@@ -2,9 +2,10 @@ import React from 'react';
 
 const Problem = () => {
     return (
-        <div className=''>
+        <>
             <div>
                 <h1 className='text-white text-2xl'>Solve this</h1>
+                <br/>
                 <p className='text-white'>Contrary to popular belief, Lorem Ipsum is not simply random text. It has
                     roots in a piece of
                     classical
@@ -49,7 +50,7 @@ const Problem = () => {
                     their exact original form, accompanied by English versions from the 1914 translation by H.
                     Rackham.</p>
             </div>
-        </div>
+        </>
     );
 };
 

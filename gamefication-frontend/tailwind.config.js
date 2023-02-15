@@ -9,6 +9,7 @@ module.exports = {
     colors: {
         background: 'rgb(43,43,43)',
         gameComps: 'rgb(65,65,65)',
+        hover: 'rgb(88, 88, 88)',
         'gray': colors.gray,
         'black': colors.black,
         'white': colors.white,

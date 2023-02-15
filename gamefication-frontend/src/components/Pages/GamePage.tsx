@@ -7,6 +7,8 @@ import Problem from "../CodeEditor/Problem";
 import Header from "../Header/Header";
 import {Button} from "../UI/Button";
 import ProgressBar from "../ProgressBar";
+import TestCases from "../Game/TestCases";
+import Actions from "../Game/Actions";
 
 
 const GamePage = () => {
@@ -33,23 +35,27 @@ const GamePage = () => {
                 </NewCard>}
             {!state &&
                 <div>
-                    <div className='flex flex-row justify-between items-stretch overflow-visible'>
+
+                    <div
+                        className='flex flex-col sm:flex-row justify-between items-stretch ml-2 mt-2 mr-2'>
                         <div
-                            className='flex-grow-1 w-1/3 max-h-screen min-w-[400px] min-h-[400px] whitespace-pre-wrap overflow-y-scroll bg-gameComps resize rounded-md p-4 shadow-2xl mr-2 mt-4'>
+                            className='flex-grow-1 w-1/3 max-h-[92vh] min-w-[400px] min-h-[400px] max-width-[300px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl mr-2 '>
                             <Problem/>
                         </div>
-
-                        <div
-                            className='p-4 w-2/3 overflow-auto resize rounded-md max-h-[450px] min-w-[400px] min-h-[400px] flex-grow-1 shadow-2xl bg-gameComps flex-wrap ml-2 mt-4'>
-                            <GameEditor/>
+                        <div className='flex flex-col'>
+                            <div
+                                className='p-4 w-2/3 overflow-auto resize w-[1250px] min-w-[400px] max-h-[450px] min-h-[400px] max-w-[1250px] flex-grow-1 shadow-2xl bg-gameComps flex-wrap ml-2 '>
+                                <GameEditor/>
+                            </div>
+                            <div className='flex flex-col sm:flex-row'>
+                                <TestCases/>
+                                <div className='flex flex-col justify-center items-start w-1/3 space-x-4'>
+                                    <Actions/>
+                                </div>
+                            </div>
                         </div>
-
-                    </div>
-                    <div className='flex flex-row justify-end text-white'>hello
-                        <div className='absolute bottom-0 left-500 text-white'>hello</div>
                     </div>
                 </div>
-
             }
         </>
 
