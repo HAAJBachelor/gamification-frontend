@@ -2,9 +2,15 @@ import {Capsule} from "../UI/Capsule";
 import QuestionContainer from "../UI/QuestionContainer";
 import {useState} from "react";
 
-const Question = () => {
-    const [task, setTask] = useState('');
-    let yo = 'hello '
+interface GameTask {
+    Description: string,
+    StartCode: string,
+    TestCases: [],
+    Rewards: [],
+}
+
+const Question = (props: any) => {
+    const [task, setTask] = useState<GameTask[]>([]);
 
     const fetchData = () => {
         fetch('http://localhost:7067/api/SelectTask?taskId=0', {
@@ -19,7 +25,7 @@ const Question = () => {
                 throw new Error("no data")
             return response
         })
-            .then(response => response.text()
+            .then(response => response.json()
                 .then(response => {
                     setTask(response)
                     console.log(response)

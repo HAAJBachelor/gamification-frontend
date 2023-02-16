@@ -23,6 +23,7 @@ module.exports = {
       'yellow': colors.yellow,
       'slate': colors.slate,
       'zinc': colors.zinc,
+
     },
   },
   plugins: [],

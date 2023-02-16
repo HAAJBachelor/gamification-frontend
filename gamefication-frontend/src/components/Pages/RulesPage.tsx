@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Button} from "../UI/Button";
 import Header from "../Header/Header";
 import NewCard from "../UI/NewCard";
@@ -8,39 +8,17 @@ import ProgressBar from "../ProgressBar";
 
 const RulesPage = () => {
 
-    const [dogImage, setDogImage] = useState('')
-    useEffect(() => {
-        fetch('https://localhost:7067/api/CreateSession',).then(response => {
-
-            if (!response.ok)
-                throw new Error("no data")
-            return response
-        })
-            .then(response => response.text()
-                .then(response => {
-                    setDogImage(response)
-                })).catch((error: Error) => {
-            console.log(error.message)
-        })
-    })
-
-    const checkHint = () => {
-
-    }
-
-
-    console.log(dogImage)
     return (
         <>
             <Header/>
             <div>
-                <p className='text-white'>here it is {dogImage}</p>
+                <p className='text-white'>here it is {}</p>
             </div>
             <NewCard>
                 <div>
                     <Title title="Velg neste utfordring"/>
                     <Questions/>
-                    <Button handleOnClick={checkHint} text='click me'/>
+                    <Button text='click me'/>
 
                 </div>
                 <ProgressBar/>

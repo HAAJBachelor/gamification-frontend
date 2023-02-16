@@ -10,8 +10,30 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  monospace;
 }
+
 @tailwind base;
+@tailwind base;
+
+/* Firefox */
+* {
+
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+
+}
+
+*::-webkit-scrollbar-track {
+
+}
+
+*::-webkit-scrollbar-thumb {
+
+}
+
+
 @tailwind components;
 @tailwind utilities

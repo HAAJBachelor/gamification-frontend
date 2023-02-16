@@ -2,7 +2,7 @@ import React from 'react';
 
 const Actions = () => {
     return (
-        <div className='flex flex-col justify-between'>
+        <div className='flex flex-row sm:flex-col justify-between'>
 
             <div className='m-8'>
                 <button

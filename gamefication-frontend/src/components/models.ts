@@ -3,3 +3,4 @@ export interface Problem {
     difficulty: string,
     award: string
 }
+
