@@ -2,18 +2,25 @@ import {Capsule} from "../UI/Capsule";
 import QuestionContainer from "../UI/QuestionContainer";
 import {useState} from "react";
 
+interface rewards {
+    Lives: number,
+    Time: number,
+    Points: number,
+
+}
+
 interface GameTask {
     Description: string,
     StartCode: string,
     TestCases: [],
-    Rewards: [],
+    Rewards: rewards,
 }
 
 const Question = (props: any) => {
     const [task, setTask] = useState<GameTask[]>([]);
 
     const fetchData = () => {
-        fetch('http://localhost:7067/api/SelectTask?taskId=0', {
+        fetch('https://localhost:7067/api/SelectTask?taskId=0', {
             method: "GET",
             credentials: 'include',
             headers: {

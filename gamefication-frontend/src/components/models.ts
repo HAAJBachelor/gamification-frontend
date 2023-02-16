@@ -4,3 +4,9 @@ export interface Problem {
     award: string
 }
 
+export interface GameTask {
+    Description: string,
+    StartCode: string,
+    TestCases: [],
+    Rewards: [],
+}

@@ -12,15 +12,60 @@ import Actions from "../Game/Actions";
 
 
 const GamePage = () => {
-
     const [state, setState] = useState(true);
-
-    const newEditorHandler = () => {
+    const [code, setCode] = useState('')
+    const editorHandler = () => {
         setState(false)
     }
-    const closeEditorHandler = () => {
-        setState(true)
+    const getCode = (code: any) => {
+        setCode(code)
+        console.log('fra parent', code)
     }
+    useState(() => {
+        fetch('https://localhost:7067/api/GenerateTasks', {
+            method: "GET",
+            credentials: 'include',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
+            }
+        }).then(response => {
+            if (!response.ok)
+                throw new Error("500")
+            return response
+        })
+            .then(response => response.text()
+                .then(response => {
+                    console.log(response)
+                })).catch((error: Error) => {
+            console.log(error.message)
+        })
+    })
+    const submitHandler = () => {
+        console.log('data sent to backend')
+
+        fetch('https://localhost:7067/api/SubmitTask', {
+            method: "POST",
+            credentials: 'include',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
+            },
+            body: JSON.stringify(code)
+        }).then(response => {
+            if (!response.ok)
+                throw new Error("500")
+            return response
+        })
+            .then(response => response.text()
+                .then(response => {
+                    console.log(response)
+                })).catch((error: Error) => {
+            console.log(error.message)
+        })
+    }
+
+
     return (
         <>
             <Header/>
@@ -29,7 +74,7 @@ const GamePage = () => {
                     <div>
                         <Title title="Velg neste utfordring"/>
                         <Questions/>
-                        <Button handleOnClick={newEditorHandler} text='click me'/>
+                        <Button handleOnClick={editorHandler} text='click me'/>
                     </div>
                     <ProgressBar/>
                 </NewCard>}
@@ -45,12 +90,12 @@ const GamePage = () => {
                         <div className='flex flex-col '>
                             <div
                                 className='p-4 w-2/3 overflow-auto resize w-[1250px] min-w-[400px] max-h-[450px] min-h-[400px] max-w-[1250px] flex-grow-1 shadow-2xl bg-gameComps flex-wrap ml-2 '>
-                                <GameEditor/>
+                                <GameEditor onChange={getCode}/>
                             </div>
                             <div className='flex flex-col sm:flex-row'>
                                 <TestCases/>
                                 <div className='flex flex-col justify-center items-start w-1/3 space-x-4'>
-                                    <Actions/>
+                                    <Actions handleOnClick={submitHandler}/>
                                 </div>
                             </div>
                         </div>

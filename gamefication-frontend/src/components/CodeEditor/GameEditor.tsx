@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Editor from "@monaco-editor/react";
 
-const GameEditor = () => {
-    function handleEditorChange(value: any, event: any) {
-        console.log("here is the current model value:", value);
+const GameEditor = (props: any) => {
+    const [code, setCode] = useState('');
+    const handleEditorChange = (value: any, event: any) => {
+        setCode(value)
+        props.onChange(code)
     }
     return (
         <div className='h-full'>
@@ -23,7 +25,6 @@ const GameEditor = () => {
                 theme={"vs-dark"}
                 onChange={handleEditorChange}
             />
-
         </div>
     );
 };

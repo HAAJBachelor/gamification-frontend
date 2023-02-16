@@ -4,67 +4,50 @@ import NewCard from "../UI/NewCard";
 import {Title} from '../Title/Title';
 import yellowFolk from '../../image/OXX_Yellowfolk.png'
 import {Button} from '../UI/Button';
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const LandingPage = () => {
-    const [gameSession, setGameSession] = useState('')
+        const [gameSession, setGameSession] = useState('')
+        const [session, setSession] = useState(false)
 
-    const startSession = () => {
-        fetch('https://localhost:7067/api/CreateSession', {
-            method: "GET",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
-            }
-        }).then(response => {
-            if (!response.ok)
-                throw new Error("no data")
-            return response
-        })
-            .then(response => response.text()
-                .then(response => {
-                    setGameSession(response)
-                    console.log(response)
-                })).catch((error: Error) => {
-            console.log(error.message)
-        })
-    }
+        let navigate = useNavigate();
 
-    useState(() => {
-        fetch('https://localhost:7067/api/GenerateTasks', {
-            method: "GET",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
-            }
-        }).then(response => {
-            if (!response.ok)
-                throw new Error("500")
-            return response
-        })
-            .then(response => response.text()
-                .then(response => {
-                    console.log(response)
-                })).catch((error: Error) => {
-            console.log(error.message)
-        })
-    })
-    return (
-        <>
-            <Header/>
-            <NewCard>
-                <Title title="Velkommen til Gamification"/>
-                <div className='flex justify-center'>
-                    <img className="max-w-52 max-h-52" src={yellowFolk} alt="two OXX yellow folk"/>
-                </div>
-                <div>
-                    <Link to='game'>
+
+        const startSession = () => {
+            fetch('https://localhost:7067/api/CreateSession', {
+                method: "GET",
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json",
+                    'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
+                }
+            }).then(response => {
+                if (!response.ok)
+                    throw new Error("no data")
+                return response
+            })
+                .then(response => response.text()
+                    .then(response => {
+                        setGameSession(response)
+                        console.log(response)
+                        setSession(true)
+                        navigate('game')
+                    })).catch((error: Error) => {
+                console.log(error.message)
+            })
+        }
+        return (
+            <>
+                <Header/>
+                <NewCard>
+                    <Title title="Velkommen til Gamification"/>
+                    <div className='flex justify-center'>
+                        <img className="max-w-52 max-h-52" src={yellowFolk} alt="two OXX yellow folk"/>
+                    </div>
+                    <div>
                         <Button text="Start" handleOnClick={startSession}></Button>
-                            </Link>
-                        </div>
-                    </NewCard>
+                    </div>
+                </NewCard>
             </>
         );
     }
