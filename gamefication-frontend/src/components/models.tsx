@@ -17,3 +17,15 @@ export interface GameTask {
     testCases: TestCase[],
     rewards: rewards,
 }
+
+export interface TestCaseResult {
+    success: boolean,
+    error: boolean,
+    description: string,
+}
+
+export interface TaskResult {
+    success: boolean,
+    testCaseResults: TestCaseResult[],
+
+}

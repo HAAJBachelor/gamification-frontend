@@ -4,6 +4,7 @@ import Editor from "@monaco-editor/react";
 const GameEditor = (props: any) => {
     const [editorValue, setEditorValue] = useState('');
     const [boilerCode, setBoilerCode] = useState('')
+
     const handleEditorChange = (value: any, event: any) => {
         setEditorValue(value)
         props.onChange(editorValue)

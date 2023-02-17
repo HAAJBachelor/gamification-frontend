@@ -5,17 +5,17 @@ import Questions from "../Questions/Questions";
 import GameEditor from "../CodeEditor/GameEditor";
 import Problem from "../CodeEditor/Problem";
 import Header from "../Header/Header";
-import {Button} from "../UI/Button";
 import ProgressBar from "../ProgressBar";
 import TestCases from "../Game/TestCases";
 import Actions from "../Game/Actions";
-import {GameTask} from "../models";
-
+import {GameTask, TaskResult} from "../models";
 
 const GamePage = () => {
     const [state, setState] = useState(true);
     const [code, setCode] = useState('')
     const [task, setTask] = useState<GameTask>()
+    const [results, setResults] = useState<TaskResult>()
+    const [buttonText, setButtonText] = useState('Submit')
     const editorHandler = () => {
         setState(false)
     }
@@ -43,7 +43,6 @@ const GamePage = () => {
             console.log(error.message)
         })
     })
-
     const submitHandler = () => {
         fetch('https://localhost:7067/api/SubmitTask', {
             method: "POST",
@@ -58,17 +57,39 @@ const GamePage = () => {
                 throw new Error("500")
             return response
         })
-            .then(response => response.text()
+            .then(response => response.json()
                 .then(response => {
                     console.log(response)
+                    setResults(response)
                 })).catch((error: Error) => {
             console.log(error.message)
         })
     }
-
-
+    console.log(results, ' her er resultat')
     const fetchTask = (id: number) => {
         fetch(`https://localhost:7067/api/SelectTask?taskId=${id}`, {
+            method: "GET",
+            credentials: 'include',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
+            }
+        }).then(response => {
+            if (!response.ok)
+                throw new Error("no data")
+            return response
+        })
+            .then(response => response.json()
+                .then(response => {
+                    setTask(response)
+                    console.log(response)
+                    setState(false)
+                })).catch((error: Error) => {
+            console.log(error.message)
+        })
+    }
+    const testAllCases = () => {
+        fetch('https://localhost:7067/api/SelectTask?taskId=', {
             method: "GET",
             credentials: 'include',
             headers: {
@@ -97,13 +118,11 @@ const GamePage = () => {
                     <div>
                         <Title title="Velg neste utfordring"/>
                         <Questions onClick={fetchTask}/>
-                        <Button handleOnClick={editorHandler} text='click me'/>
                     </div>
                     <ProgressBar/>
                 </NewCard>}
             {!state &&
                 <div>
-
                     <div
                         className='flex flex-col sm:flex-row justify-between items-stretch ml-2 mt-2 mr-2'>
                         <div
@@ -119,7 +138,8 @@ const GamePage = () => {
                             <div className='flex flex-col sm:flex-row'>
                                 <TestCases/>
                                 <div className='flex flex-col justify-center items-start w-1/3 space-x-4'>
-                                    <Actions handleOnClick={submitHandler}/>
+                                    <Actions text={buttonText} handleOnClick={submitHandler}
+                                             handleOnTestClick={testAllCases}/>
                                 </div>
                             </div>
                         </div>
