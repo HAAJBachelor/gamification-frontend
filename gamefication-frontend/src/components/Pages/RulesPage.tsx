@@ -3,7 +3,6 @@ import {Button} from "../UI/Button";
 import Header from "../Header/Header";
 import NewCard from "../UI/NewCard";
 import {Title} from "../Title/Title";
-import Questions from "../Questions/Questions";
 import ProgressBar from "../ProgressBar";
 
 const RulesPage = () => {
@@ -17,7 +16,7 @@ const RulesPage = () => {
             <NewCard>
                 <div>
                     <Title title="Velg neste utfordring"/>
-                    <Questions/>
+
                     <Button text='click me'/>
 
                 </div>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import NewCard from "../UI/NewCard";
 import {Title} from "../Title/Title";
 import Questions from "../Questions/Questions";
@@ -9,11 +9,13 @@ import {Button} from "../UI/Button";
 import ProgressBar from "../ProgressBar";
 import TestCases from "../Game/TestCases";
 import Actions from "../Game/Actions";
+import {GameTask} from "../models";
 
 
 const GamePage = () => {
     const [state, setState] = useState(true);
     const [code, setCode] = useState('')
+    const [task, setTask] = useState<GameTask>();
     const editorHandler = () => {
         setState(false)
     }
@@ -21,7 +23,7 @@ const GamePage = () => {
         setCode(code)
         console.log('fra parent', code)
     }
-    useState(() => {
+    useEffect(() => {
         fetch('https://localhost:7067/api/GenerateTasks', {
             method: "GET",
             credentials: 'include',
@@ -41,6 +43,7 @@ const GamePage = () => {
             console.log(error.message)
         })
     })
+
     const submitHandler = () => {
         console.log('data sent to backend')
 
@@ -66,6 +69,28 @@ const GamePage = () => {
     }
 
 
+    const fetchTask = (id: number) => {
+        fetch(`https://localhost:7067/api/SelectTask?taskId=${id}`, {
+            method: "GET",
+            credentials: 'include',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
+            }
+        }).then(response => {
+            if (!response.ok)
+                throw new Error("no data")
+            return response
+        })
+            .then(response => response.json()
+                .then(response => {
+                    setTask(response)
+                    console.log(response)
+                })).catch((error: Error) => {
+            console.log(error.message)
+        })
+    }
+
     return (
         <>
             <Header/>
@@ -73,7 +98,7 @@ const GamePage = () => {
                 <NewCard>
                     <div>
                         <Title title="Velg neste utfordring"/>
-                        <Questions/>
+                        <Questions onClick={fetchTask}/>
                         <Button handleOnClick={editorHandler} text='click me'/>
                     </div>
                     <ProgressBar/>
@@ -90,7 +115,7 @@ const GamePage = () => {
                         <div className='flex flex-col '>
                             <div
                                 className='p-4 w-2/3 overflow-auto resize w-[1250px] min-w-[400px] max-h-[450px] min-h-[400px] max-w-[1250px] flex-grow-1 shadow-2xl bg-gameComps flex-wrap ml-2 '>
-                                <GameEditor onChange={getCode}/>
+                                <GameEditor onChange={getCode} value=''/>
                             </div>
                             <div className='flex flex-col sm:flex-row'>
                                 <TestCases/>

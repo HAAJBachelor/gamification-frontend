@@ -1,12 +1,35 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Editor from "@monaco-editor/react";
 
 const GameEditor = (props: any) => {
-    const [code, setCode] = useState('');
+    const [editorValue, setEditorValue] = useState('');
+    const [boilerCode, setBoilerCode] = useState('')
     const handleEditorChange = (value: any, event: any) => {
-        setCode(value)
-        props.onChange(code)
+        setEditorValue(value)
+        props.onChange(editorValue)
+
     }
+    useEffect(() => {
+        fetch('https://localhost:7067/api/GetStartCode?language=csharp', {
+            method: "GET",
+            credentials: 'include',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
+            }
+        }).then(response => {
+            if (!response.ok)
+                throw new Error("no data")
+            return response
+        })
+            .then(response => response.text()
+                .then(response => {
+                    setBoilerCode(response)
+                })).catch((error: Error) => {
+            console.log(error.message)
+        })
+    })
+
     return (
         <div className='h-full'>
             <Editor
@@ -21,7 +44,7 @@ const GameEditor = (props: any) => {
                     scrollBeyondLastLine: false,
                 }}
                 defaultLanguage="java"
-                defaultValue="// some comment"
+                defaultValue={boilerCode}
                 theme={"vs-dark"}
                 onChange={handleEditorChange}
             />
