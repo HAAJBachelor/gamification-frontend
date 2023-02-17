@@ -10,7 +10,7 @@ const GameEditor = (props: any) => {
 
     }
     useEffect(() => {
-        fetch('https://localhost:7067/api/GetStartCode?language=csharp', {
+        fetch('https://localhost:7067/api/GetStartCode?language=java', {
             method: "GET",
             credentials: 'include',
             headers: {

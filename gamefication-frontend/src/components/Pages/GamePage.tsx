@@ -15,7 +15,7 @@ import {GameTask} from "../models";
 const GamePage = () => {
     const [state, setState] = useState(true);
     const [code, setCode] = useState('')
-    const [task, setTask] = useState<GameTask>();
+    const [task, setTask] = useState<GameTask>()
     const editorHandler = () => {
         setState(false)
     }
@@ -45,8 +45,6 @@ const GamePage = () => {
     })
 
     const submitHandler = () => {
-        console.log('data sent to backend')
-
         fetch('https://localhost:7067/api/SubmitTask', {
             method: "POST",
             credentials: 'include',
@@ -86,11 +84,11 @@ const GamePage = () => {
                 .then(response => {
                     setTask(response)
                     console.log(response)
+                    setState(false)
                 })).catch((error: Error) => {
             console.log(error.message)
         })
     }
-
     return (
         <>
             <Header/>
@@ -110,7 +108,8 @@ const GamePage = () => {
                         className='flex flex-col sm:flex-row justify-between items-stretch ml-2 mt-2 mr-2'>
                         <div
                             className='flex-grow-1 w-1/3 max-h-[92vh] min-w-[400px] min-h-[400px] max-width-[300px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl mr-2 '>
-                            <Problem/>
+                            <Problem description={String(task?.description)} input={String(task?.testCases[0].input)}
+                                     output={String(task?.testCases[0].output)}/>
                         </div>
                         <div className='flex flex-col '>
                             <div
