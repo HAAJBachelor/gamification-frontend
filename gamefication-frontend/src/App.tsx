@@ -24,6 +24,7 @@ function App() {
                     <Route path="/" element={<LandingPage/>}/>
                     <Route path='/game' element={<GamePage/>}/>
                     <Route path="/rules" element={<RulesPage/>}/>
+
                 </Routes>
             </Router>
             <RulesModal visible={modalIsOpen} onClose={closeModal}/>

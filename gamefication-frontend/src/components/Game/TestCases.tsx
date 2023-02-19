@@ -1,28 +1,18 @@
 import React from 'react';
 import TestCase from "./TestCase";
 
-const TestCases = () => {
+type Props = {
+    input: string,
+    output: string,
+}
+
+const TestCases = (props:Props) => {
     return (
-        <div className='overflow-auto overflow-x-hidden h-2/2 max-h-[400px] w-auto'>
-            <div className='text-white shadow-2xl bg-gameComps p-4 ml-2 mt-2 w-[800px] hover:bg-hover'><TestCase nr='01'
-                                                                                                                 title='TestCase'/>
+
+            <div className='text-white shadow-2xl bg-gameComps p-4 m-2 hover:bg-hover w-auto'>
+                <TestCase input={props.input} output={props.output}/>
             </div>
-            <div className='text-white shadow-2xl bg-gameComps p-4 ml-2 mt-2 w-[800px] hover:bg-hover'><TestCase nr='01'
-                                                                                                                 title='TestCase'/>
-            </div>
-            <div className='text-white shadow-2xl bg-gameComps p-4 ml-2 mt-2 w-[800px] hover:bg-hover'><TestCase nr='01'
-                                                                                                                 title='TestCase'/>
-            </div>
-            <div className='text-white shadow-2xl bg-gameComps p-4 ml-2 mt-2 w-[800px] hover:bg-hover'><TestCase nr='01'
-                                                                                                                 title='TestCase'/>
-            </div>
-            <div className='text-white shadow-2xl bg-gameComps p-4 ml-2 mt-2 w-[800px] hover:bg-hover'><TestCase nr='01'
-                                                                                                                 title='TestCase'/>
-            </div>
-            <div className='text-white shadow-2xl bg-gameComps p-4 ml-2 mt-2 w-[800px] hover:bg-hover'><TestCase nr='01'
-                                                                                                                 title='TestCase'/>
-            </div>
-        </div>
+
     );
 };
 

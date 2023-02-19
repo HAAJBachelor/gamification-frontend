@@ -11,14 +11,27 @@ import Actions from "../Game/Actions";
 import {GameTask, TaskResult} from "../models";
 
 const GamePage = () => {
-    const [state, setState] = useState(true);
+    const [state, setState] = useState(false);
     const [code, setCode] = useState('')
     const [task, setTask] = useState<GameTask>()
     const [results, setResults] = useState<TaskResult>()
     const [buttonText, setButtonText] = useState('Submit')
-    const editorHandler = () => {
-        setState(false)
-    }
+    const [testCases, setTestCases] = useState([
+        {
+            input: 'Hello',
+            output: 'yoyo',
+        },
+        {
+            input: 'dudu',
+            output: 'didi',
+        },
+        {
+            input: 'bibi',
+            output: 'lolo',
+        },
+
+    ])
+
     const getCode = (code: any) => {
         setCode(code)
         console.log('fra parent', code)
@@ -124,31 +137,41 @@ const GamePage = () => {
             {!state &&
                 <div>
                     <div
-                        className='flex flex-col sm:flex-row justify-between items-stretch ml-2 mt-2 mr-2'>
+                        className='flex flex-col sm:flex-row justify-between items-stretch min-h-screen'>
                         <div
-                            className='flex-grow-1 w-1/3 max-h-[92vh] min-w-[400px] min-h-[400px] max-width-[300px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl mr-2 '>
+                            className='basis-2/6 max-h-[95vh] min-w-[300px] min-h-[400px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl m-2 '>
                             <Problem description={String(task?.description)} input={String(task?.testCases[0].input)}
                                      output={String(task?.testCases[0].output)}/>
                         </div>
-                        <div className='flex flex-col '>
+                        <div className='flex flex-col basis-4/6 max-h-[95vh]'>
                             <div
-                                className='p-4 w-2/3 overflow-auto resize w-[1250px] min-w-[400px] max-h-[450px] min-h-[400px] max-w-[1250px] flex-grow-1 shadow-2xl bg-gameComps flex-wrap ml-2 '>
+                                className='p-4 overflow-auto resize h-screen shadow-2xl bg-gameComps m-2 '>
                                 <GameEditor onChange={getCode} value=''/>
                             </div>
-                            <div className='flex flex-col sm:flex-row'>
-                                <TestCases/>
-                                <div className='flex flex-col justify-center items-start w-1/3 space-x-4'>
+
+                            <div className='flex flex-col sm:flex-row overflow-auto overflow-x-hidden m-2'>
+                                <div className='flex flex-col items-stretch basis-4/6 '>
+                                    {testCases.map((test) => {
+                                        return (
+                                            <TestCases input={test.input} output={test.output}/>
+                                        );
+                                    })}
+                                </div>
+                                <div className='justify-between basis-2/6'>
                                     <Actions text={buttonText} handleOnClick={submitHandler}
                                              handleOnTestClick={testAllCases}/>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                 </div>
             }
         </>
 
-    );
+    )
+        ;
 };
 
 export default GamePage;

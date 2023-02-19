@@ -32,7 +32,7 @@ const GameEditor = (props: any) => {
     })
 
     return (
-        <div className='h-full'>
+        <>
             <Editor
                 options={{
                     automaticLayout: true,
@@ -49,7 +49,7 @@ const GameEditor = (props: any) => {
                 theme={"vs-dark"}
                 onChange={handleEditorChange}
             />
-        </div>
+        </>
     );
 };
 export default GameEditor;
