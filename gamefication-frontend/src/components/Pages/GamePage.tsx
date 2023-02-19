@@ -9,12 +9,15 @@ import ProgressBar from "../ProgressBar";
 import TestCases from "../Game/TestCases";
 import Actions from "../Game/Actions";
 import {GameTask, TaskResult} from "../models";
+import RulesModal from "../UI/RulesModal";
+import RulesButton from "../RulesButton";
 
 const GamePage = () => {
     const [state, setState] = useState(false);
     const [code, setCode] = useState('')
     const [task, setTask] = useState<GameTask>()
     const [results, setResults] = useState<TaskResult>()
+    const [modalIsOpen, setIsOpen] = useState(false);
     const [buttonText, setButtonText] = useState('Submit')
     const [testCases, setTestCases] = useState([
         {
@@ -31,6 +34,13 @@ const GamePage = () => {
         },
 
     ])
+
+    const openModal = () => {
+        setIsOpen(true);
+    }
+    const closeModal = () => {
+        setIsOpen(false);
+    }
 
     const getCode = (code: any) => {
         setCode(code)
@@ -123,6 +133,7 @@ const GamePage = () => {
             console.log(error.message)
         })
     }
+
     return (
         <>
             <Header/>
@@ -137,19 +148,19 @@ const GamePage = () => {
             {!state &&
                 <div>
                     <div
-                        className='flex flex-col sm:flex-row justify-between items-stretch min-h-screen'>
+                        className='flex flex-col sm:flex-row justify-between items-stretch min-h-screen max-h-screen max-w-screen'>
                         <div
-                            className='basis-2/6 max-h-[95vh] min-w-[300px] min-h-[400px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl m-2 '>
+                            className='basis-2/6 max-h-[95vh] min-w-[300px] min-h-[400px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl m-4 '>
                             <Problem description={String(task?.description)} input={String(task?.testCases[0].input)}
                                      output={String(task?.testCases[0].output)}/>
                         </div>
-                        <div className='flex flex-col basis-4/6 max-h-[95vh]'>
+                        <div className='flex flex-col basis-4/6 max-h-[95vh] m-4'>
                             <div
-                                className='p-4 overflow-auto resize h-screen shadow-2xl bg-gameComps m-2 '>
+                                className='p-4 overflow-auto resize h-screen shadow-2xl bg-gameComps'>
                                 <GameEditor onChange={getCode} value=''/>
                             </div>
 
-                            <div className='flex flex-col sm:flex-row overflow-auto overflow-x-hidden m-2'>
+                            <div className='flex flex-col sm:flex-row overflow-auto overflow-x-hidden'>
                                 <div className='flex flex-col items-stretch basis-4/6 '>
                                     {testCases.map((test) => {
                                         return (
@@ -166,8 +177,11 @@ const GamePage = () => {
 
                         </div>
                     </div>
+
                 </div>
             }
+            <RulesButton openModal={openModal}/>
+            <RulesModal visible={modalIsOpen} onClose={closeModal}/>
         </>
 
     )

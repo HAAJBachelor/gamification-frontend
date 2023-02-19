@@ -5,13 +5,22 @@ import {Title} from '../Title/Title';
 import yellowFolk from '../../image/OXX_Yellowfolk.png'
 import {Button} from '../UI/Button';
 import {useNavigate} from "react-router-dom";
+import RulesButton from "../RulesButton";
+import RulesModal from "../UI/RulesModal";
+
 
 const LandingPage = () => {
         const [gameSession, setGameSession] = useState('')
         const [session, setSession] = useState(false)
+        const [modalIsOpen, setIsOpen] = useState(false);
 
         let navigate = useNavigate();
-
+        const openModal = () => {
+            setIsOpen(true);
+        }
+        const closeModal = () => {
+            setIsOpen(false);
+        }
 
         const startSession = () => {
             fetch('https://localhost:7067/api/CreateSession', {
@@ -48,6 +57,8 @@ const LandingPage = () => {
                         <Button text="Start" handleOnClick={startSession}></Button>
                     </div>
                 </NewCard>
+                <RulesButton openModal={openModal}/>
+                <RulesModal visible={modalIsOpen} onClose={closeModal}/>
             </>
         );
     }

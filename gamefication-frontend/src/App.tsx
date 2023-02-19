@@ -9,16 +9,11 @@ import LandingPage from "./components/Pages/LandingPage";
 
 
 function App() {
-    const [modalIsOpen, setIsOpen] = useState(false);
-    const openModal = () => {
-        setIsOpen(true);
-    }
-    const closeModal = () => {
-        setIsOpen(false);
-  }
+
+
     return (
         <>
-            <RulesButton openModal={openModal}/>
+
             <Router>
                 <Routes>
                     <Route path="/" element={<LandingPage/>}/>
@@ -27,7 +22,7 @@ function App() {
 
                 </Routes>
             </Router>
-            <RulesModal visible={modalIsOpen} onClose={closeModal}/>
+
         </>
     );
 }

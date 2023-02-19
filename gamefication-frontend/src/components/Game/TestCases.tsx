@@ -1,5 +1,7 @@
 import React from 'react';
 import TestCase from "./TestCase";
+import RulesButton from "../RulesButton";
+import RulesModal from "../UI/RulesModal";
 
 type Props = {
     input: string,
@@ -9,8 +11,9 @@ type Props = {
 const TestCases = (props:Props) => {
     return (
 
-            <div className='text-white shadow-2xl bg-gameComps p-4 m-2 hover:bg-hover w-auto'>
+            <div className='text-white shadow-2xl bg-gameComps p-4 mt-2 hover:bg-hover w-auto'>
                 <TestCase input={props.input} output={props.output}/>
+
             </div>
 
     );
