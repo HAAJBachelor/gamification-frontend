@@ -4,7 +4,6 @@ import {Title} from "../Title/Title";
 import Questions from "../Questions/Questions";
 import GameEditor from "../CodeEditor/GameEditor";
 import Problem from "../CodeEditor/Problem";
-import Header from "../Header/Header";
 import ProgressBar from "../ProgressBar";
 import TestCases from "../Game/TestCases";
 import Actions from "../Game/Actions";
@@ -61,7 +60,7 @@ const GamePage = () => {
         })
             .then(response => response.text()
                 .then(response => {
-                    console.log(response)
+
                 })).catch((error: Error) => {
             console.log(error.message)
         })
@@ -84,6 +83,11 @@ const GamePage = () => {
                 .then(response => {
                     console.log(response)
                     setResults(response)
+                    console.log(results?.success, ' her fra submit')
+
+                    if (results?.success === false) {
+                        setButtonText('prøv igjen')
+                    }
                 })).catch((error: Error) => {
             console.log(error.message)
         })
@@ -136,7 +140,7 @@ const GamePage = () => {
 
     return (
         <>
-            <Header/>
+
             {state &&
                 <NewCard>
                     <div>
@@ -145,39 +149,36 @@ const GamePage = () => {
                     </div>
                     <ProgressBar/>
                 </NewCard>}
+
             {!state &&
-                <div>
+
+                <div
+                    className='flex flex-col sm:flex-row justify-between items-stretch min-h-screen max-h-screen max-w-screen'>
                     <div
-                        className='flex flex-col sm:flex-row justify-between items-stretch min-h-screen max-h-screen max-w-screen'>
+                        className='basis-2/6 max-h-[95vh] min-w-[300px] min-h-[400px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl m-4 '>
+                        <Problem description={String(task?.description)} input={String(task?.testCases[0].input)}
+                                 output={String(task?.testCases[0].output)}/>
+                    </div>
+                    <div className='flex flex-col basis-4/6 max-h-[95vh] m-4'>
                         <div
-                            className='basis-2/6 max-h-[95vh] min-w-[300px] min-h-[400px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl m-4 '>
-                            <Problem description={String(task?.description)} input={String(task?.testCases[0].input)}
-                                     output={String(task?.testCases[0].output)}/>
+                            className='p-4 overflow-auto resize h-screen shadow-2xl bg-gameComps'>
+                            <GameEditor onChange={getCode} value=''/>
                         </div>
-                        <div className='flex flex-col basis-4/6 max-h-[95vh] m-4'>
-                            <div
-                                className='p-4 overflow-auto resize h-screen shadow-2xl bg-gameComps'>
-                                <GameEditor onChange={getCode} value=''/>
+
+                        <div className='flex flex-col sm:flex-row overflow-auto overflow-x-hidden'>
+                            <div className='flex flex-col items-stretch basis-4/6 '>
+                                {testCases.map((test) => {
+                                    return (
+                                        <TestCases input={test.input} output={test.output}/>
+                                    );
+                                })}
                             </div>
-
-                            <div className='flex flex-col sm:flex-row overflow-auto overflow-x-hidden'>
-                                <div className='flex flex-col items-stretch basis-4/6 '>
-                                    {testCases.map((test) => {
-                                        return (
-                                            <TestCases input={test.input} output={test.output}/>
-                                        );
-                                    })}
-                                </div>
-                                <div className='justify-between basis-2/6'>
-                                    <Actions text={buttonText} handleOnClick={submitHandler}
-                                             handleOnTestClick={testAllCases}/>
-                                </div>
+                            <div className='justify-between basis-2/6'>
+                                <Actions text={buttonText} handleOnClick={submitHandler}
+                                         handleOnTestClick={testAllCases}/>
                             </div>
-
-
                         </div>
                     </div>
-
                 </div>
             }
             <RulesButton openModal={openModal}/>

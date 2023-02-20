@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import Header from "../Header/Header";
 import NewCard from "../UI/NewCard";
 import {Title} from '../Title/Title';
 import yellowFolk from '../../image/OXX_Yellowfolk.png'
@@ -47,7 +46,6 @@ const LandingPage = () => {
         }
         return (
             <>
-                <Header/>
                 <NewCard>
                     <Title title="Velkommen til Gamification"/>
                     <div className='flex justify-center'>

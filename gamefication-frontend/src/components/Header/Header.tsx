@@ -6,15 +6,11 @@ import {Liv} from "./Liv";
 export default function Header() {
     return (
         <>
-            <nav className="relative flex flex-wrap items-center bg-background text-white font-bold relative">
+            <nav
+                className="flex flex-wrap items-center bg-background text-white font-bold relative w-full z-20 top-0 left-0">
                 <Logo/>
                 <Tid/>
                 <Liv/>
-                <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
-                    <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
-
-                    </div>
-                </div>
             </nav>
         </>
     );
