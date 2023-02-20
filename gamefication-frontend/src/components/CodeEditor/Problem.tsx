@@ -19,11 +19,11 @@ const Problem = (props: Props) => {
                     <div className='text-center text-yellow-500 uppercase m-10'>
                         <h1>Foreventet input og output</h1>
                     </div>
-                    <p className='text-white '>{props.input}</p>
+                    <p className='text-white pl-4'>{props.input}</p>
                 </div>
 
                 <div>
-                    <p className='text-white'>{props.output}</p>
+                    <p className='text-white pl-4 pt-2'>{props.output}</p>
                 </div>
             </div>
         </>

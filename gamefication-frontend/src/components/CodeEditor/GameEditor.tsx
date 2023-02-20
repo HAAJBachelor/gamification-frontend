@@ -30,7 +30,6 @@ const GameEditor = (props: any) => {
             console.log(error.message)
         })
     })
-
     return (
         <>
             <Editor

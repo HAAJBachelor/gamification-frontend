@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import NewCard from "../UI/NewCard";
 import {Title} from "../Title/Title";
 import Questions from "../Questions/Questions";
@@ -10,14 +10,19 @@ import Actions from "../Game/Actions";
 import {GameTask, TaskResult} from "../models";
 import RulesModal from "../UI/RulesModal";
 import RulesButton from "../RulesButton";
+import Header from "../Header/Header";
+import ToolTip from "../ToolTip";
+import {useNavigate} from "react-router-dom";
 
 const GamePage = () => {
-    const [state, setState] = useState(false);
+    const [state, setState] = useState(true);
     const [code, setCode] = useState('')
     const [task, setTask] = useState<GameTask>()
     const [results, setResults] = useState<TaskResult>()
+    const [taskResultCheck, setTaskResultCheck] = useState(true)
     const [modalIsOpen, setIsOpen] = useState(false);
     const [buttonText, setButtonText] = useState('Submit')
+    let navigate = useNavigate();
     const [testCases, setTestCases] = useState([
         {
             input: 'Hello',
@@ -31,6 +36,15 @@ const GamePage = () => {
             input: 'bibi',
             output: 'lolo',
         },
+        {
+            input: 'bibi',
+            output: 'lolo',
+        },
+        {
+            input: 'bibi',
+            output: 'lolo',
+        },
+
 
     ])
 
@@ -45,7 +59,8 @@ const GamePage = () => {
         setCode(code)
         console.log('fra parent', code)
     }
-    useEffect(() => {
+    if (state) {
+
         fetch('https://localhost:7067/api/GenerateTasks', {
             method: "GET",
             credentials: 'include',
@@ -60,11 +75,13 @@ const GamePage = () => {
         })
             .then(response => response.text()
                 .then(response => {
-
+                    console.log(response)
                 })).catch((error: Error) => {
             console.log(error.message)
         })
-    })
+    }
+
+
     const submitHandler = () => {
         fetch('https://localhost:7067/api/SubmitTask', {
             method: "POST",
@@ -87,12 +104,15 @@ const GamePage = () => {
 
                     if (results?.success === false) {
                         setButtonText('prøv igjen')
+                    } else {
+                        setTaskResultCheck(true)
+                        setState(true)
                     }
                 })).catch((error: Error) => {
             console.log(error.message)
         })
     }
-    console.log(results, ' her er resultat')
+
     const fetchTask = (id: number) => {
         fetch(`https://localhost:7067/api/SelectTask?taskId=${id}`, {
             method: "GET",
@@ -115,14 +135,15 @@ const GamePage = () => {
             console.log(error.message)
         })
     }
-    const testAllCases = () => {
-        fetch('https://localhost:7067/api/SelectTask?taskId=', {
-            method: "GET",
+    const testCaseHandler = (taskId: number) => {
+        fetch(`https://localhost:7067/api/SubmitTestCase?index=${taskId}`, {
+            method: "POST",
             credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
                 'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
-            }
+            },
+            body: JSON.stringify(code)
         }).then(response => {
             if (!response.ok)
                 throw new Error("no data")
@@ -130,57 +151,74 @@ const GamePage = () => {
         })
             .then(response => response.json()
                 .then(response => {
-                    setTask(response)
                     console.log(response)
-                    setState(false)
                 })).catch((error: Error) => {
             console.log(error.message)
         })
     }
-
     return (
         <>
-
             {state &&
-                <NewCard>
-                    <div>
-                        <Title title="Velg neste utfordring"/>
-                        <Questions onClick={fetchTask}/>
+                <>
+                    <Header/>
+                    <div className='pt-38'>
+                        <NewCard>
+                            <div>
+                                <Title title="Velg neste utfordring"/>
+                                <Questions onClick={fetchTask}/>
+                            </div>
+                            <ProgressBar/>
+                        </NewCard>
                     </div>
-                    <ProgressBar/>
-                </NewCard>}
-
+                </>}
             {!state &&
 
-                <div
-                    className='flex flex-col sm:flex-row justify-between items-stretch min-h-screen max-h-screen max-w-screen'>
-                    <div
-                        className='basis-2/6 max-h-[95vh] min-w-[300px] min-h-[400px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl m-4 '>
-                        <Problem description={String(task?.description)} input={String(task?.testCases[0].input)}
-                                 output={String(task?.testCases[0].output)}/>
-                    </div>
-                    <div className='flex flex-col basis-4/6 max-h-[95vh] m-4'>
-                        <div
-                            className='p-4 overflow-auto resize h-screen shadow-2xl bg-gameComps'>
-                            <GameEditor onChange={getCode} value=''/>
-                        </div>
+                <>
 
-                        <div className='flex flex-col sm:flex-row overflow-auto overflow-x-hidden'>
-                            <div className='flex flex-col items-stretch basis-4/6 '>
-                                {testCases.map((test) => {
-                                    return (
-                                        <TestCases input={test.input} output={test.output}/>
-                                    );
-                                })}
+                    <div className='min-h-screen max-h-screen max-w-screen'>
+                        <Header/>
+                        <div className='flex flex-col lg:flex-row justify-between items-stretch '>
+                            <div
+                                className='basis-2/6 max-h-[88vh] min-w-[300px] min-h-[400px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl m-4 '>
+                                <Problem description={String(task?.description)}
+                                         input={String(task?.testCases[0].input)}
+                                         output={String(task?.testCases[0].output)}/>
                             </div>
-                            <div className='justify-between basis-2/6'>
-                                <Actions text={buttonText} handleOnClick={submitHandler}
-                                         handleOnTestClick={testAllCases}/>
+                            <div className='flex flex-col basis-4/6 max-h-[88vh] m-4'>
+                                <div
+                                    className='overflow-auto resize h-screen shadow-2xl bg-gameComps p-4'>
+
+                                    <GameEditor onChange={getCode} value=''/>
+
+                                </div>
+
+                                <div className='flex flex-col sm:flex-row '>
+                                    <div
+                                        className='flex flex-row items-center justify-center basis-4/6 overflow-auto overflow-y-hidden bg-gameComps mt-2 p-4'>
+                                        {testCases.map((test, index) => {
+                                            return (
+
+                                                <div className='ml-8 px-4 flex-grow border-t border-gray-400'>
+                                                    <ToolTip message={(String)('Testcase:' + index)}>
+                                                        <TestCases input={test.input} output={test.output}
+                                                                   onClick={testCaseHandler}/>
+                                                    </ToolTip>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+
+                                    <div className='justify-between basis-2/6 bg-gameComps mt-2 ml-2'>
+                                        <Actions text={buttonText} test='TestAll' handleOnClick={submitHandler}
+                                                 handleOnClickTest={testCaseHandler}/>
+                                        {taskResultCheck && <RulesModal/>}
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
+                </>}
             <RulesButton openModal={openModal}/>
             <RulesModal visible={modalIsOpen} onClose={closeModal}/>
         </>

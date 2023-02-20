@@ -45,7 +45,7 @@ const LandingPage = () => {
             })
         }
         return (
-            <>
+            <div className='pt-38'>
                 <NewCard>
                     <Title title="Velkommen til Gamification"/>
                     <div className='flex justify-center'>
@@ -57,7 +57,7 @@ const LandingPage = () => {
                 </NewCard>
                 <RulesButton openModal={openModal}/>
                 <RulesModal visible={modalIsOpen} onClose={closeModal}/>
-            </>
+            </div>
         );
     }
 ;
