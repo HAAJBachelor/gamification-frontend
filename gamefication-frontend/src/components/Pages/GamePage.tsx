@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {createRef, useRef, useState} from 'react';
 import NewCard from "../UI/NewCard";
 import {Title} from "../Title/Title";
 import Questions from "../Questions/Questions";
@@ -16,7 +16,7 @@ import {useNavigate} from "react-router-dom";
 
 const GamePage = () => {
     const [state, setState] = useState(true);
-    const [code, setCode] = useState('')
+    let code = ""
     const [task, setTask] = useState<GameTask>()
     const [results, setResults] = useState<TaskResult>()
     const [taskResultCheck, setTaskResultCheck] = useState(true)
@@ -48,6 +48,10 @@ const GamePage = () => {
 
     ])
 
+    const setCode = (value: string) => {
+        code = value
+    }
+
     const openModal = () => {
         setIsOpen(true);
     }
@@ -55,12 +59,7 @@ const GamePage = () => {
         setIsOpen(false);
     }
 
-    const getCode = (code: any) => {
-        setCode(code)
-        console.log('fra parent', code)
-    }
     if (state) {
-
         fetch('https://localhost:7067/api/GenerateTasks', {
             method: "GET",
             credentials: 'include',
@@ -172,9 +171,7 @@ const GamePage = () => {
                     </div>
                 </>}
             {!state &&
-
                 <>
-
                     <div className='min-h-screen max-h-screen max-w-screen'>
                         <Header/>
                         <div className='flex flex-col lg:flex-row justify-between items-stretch '>
@@ -188,7 +185,7 @@ const GamePage = () => {
                                 <div
                                     className='overflow-auto resize h-screen shadow-2xl bg-gameComps p-4'>
 
-                                    <GameEditor onChange={getCode} value=''/>
+                                    <GameEditor onChange={setCode}/>
 
                                 </div>
 
@@ -201,13 +198,12 @@ const GamePage = () => {
                                                 <div className='ml-8 px-4 flex-grow border-t border-gray-400'>
                                                     <ToolTip message={(String)('Testcase:' + index)}>
                                                         <TestCases input={test.input} output={test.output}
-                                                                   onClick={testCaseHandler}/>
+                                                                   onClick={() => testCaseHandler(index)}/>
                                                     </ToolTip>
                                                 </div>
                                             );
                                         })}
                                     </div>
-
                                     <div className='justify-between basis-2/6 bg-gameComps mt-2 ml-2'>
                                         <Actions text={buttonText} test='TestAll' handleOnClick={submitHandler}
                                                  handleOnClickTest={testCaseHandler}/>
@@ -222,9 +218,7 @@ const GamePage = () => {
             <RulesButton openModal={openModal}/>
             <RulesModal visible={modalIsOpen} onClose={closeModal}/>
         </>
-
-    )
-        ;
+    );
 };
 
 export default GamePage;

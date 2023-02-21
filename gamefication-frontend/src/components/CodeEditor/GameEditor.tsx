@@ -1,22 +1,24 @@
-import React, {useEffect, useState} from 'react';
-import Editor from "@monaco-editor/react";
+import React, {forwardRef, useEffect, useRef, useState} from 'react';
+import Editor, {Monaco} from "@monaco-editor/react";
 
-const GameEditor = (props: any) => {
-    const [editorValue, setEditorValue] = useState('');
+
+type Props = {
+    onChange: (value:string) => void
+}
+
+const GameEditor =  (props : Props)=> {
     const [boilerCode, setBoilerCode] = useState('')
-
     const handleEditorChange = (value: any, event: any) => {
-        setEditorValue(value)
-        props.onChange(editorValue)
-
+        props.onChange(value)
     }
+
     useEffect(() => {
         fetch('https://localhost:7067/api/GetStartCode?language=java', {
             method: "GET",
             credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             }
         }).then(response => {
             if (!response.ok)
@@ -26,6 +28,7 @@ const GameEditor = (props: any) => {
             .then(response => response.text()
                 .then(response => {
                     setBoilerCode(response)
+                    props.onChange(response)
                 })).catch((error: Error) => {
             console.log(error.message)
         })
