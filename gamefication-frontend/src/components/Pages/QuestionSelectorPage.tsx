@@ -4,9 +4,11 @@ import Header from '../Header/Header';
 import NewCard from '../UI/NewCard';
 import {Title} from '../Title/Title';
 import ProgressBar from '../ProgressBar';
+import { GameTask } from '../models';
 
 type Props = {
-    onClick: (id: number) => void;
+    onClick: (id: number) => void;    
+    problemsList: GameTask[]
 }
 const QuestionSelectorPage = (props: Props) => {
     return (
@@ -14,7 +16,7 @@ const QuestionSelectorPage = (props: Props) => {
             <Header/>
             <NewCard>
                 <Title title="Velg neste utfordring"/>
-                <Questions onClick={props.onClick}/>
+                <Questions onClick={props.onClick} problemsList={props.problemsList}/>
                 <ProgressBar/>
             </NewCard>
         </>
