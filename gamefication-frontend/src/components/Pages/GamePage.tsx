@@ -23,8 +23,6 @@ const GamePage = () => {
     const [modalIsOpen, setIsOpen] = useState(false)
     const [buttonText, setButtonText] = useState('Submit')
     
-    const [problems, setProblems] = useState<GameTask[]>([])
-
     let navigate = useNavigate();
     const [testCases, setTestCases] = useState([
         {
@@ -62,47 +60,6 @@ const GamePage = () => {
         setCode(code)
         console.log('fra parent', code)
     }
-    /*if (state) {
-
-        fetch('https://localhost:7067/api/GenerateTasks', {
-            method: "GET",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
-            }
-        }).then(response => {
-            if (!response.ok)
-                throw new Error("500")
-            return response
-        })
-            .then(response => response.text()
-                .then(response => {
-                    console.log(response)
-                })).catch((error: Error) => {
-            console.log(error.message)
-        })
-    }*/
-
-    useEffect(() => {
-        try{
-            const fetchData = async() => {
-                const response = await fetch('https://localhost:7067/api/GenerateTasks', {
-                    credentials: 'include',
-                    headers: {
-                        "Content-Type": "application/json",
-                        'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
-                    }
-                })
-                if(!response.ok) throw new Error("500")
-                const data = await response.json();
-                setProblems(data);
-            }
-            fetchData(); 
-        }catch(error: any){
-            console.log(error.message); 
-        }                     
-    }, []);
 
     const submitHandler = () => {
         fetch('https://localhost:7067/api/SubmitTask', {
@@ -187,7 +144,7 @@ const GamePage = () => {
                         <NewCard>
                             <div>
                                 <Title title="Velg neste utfordring"/>
-                                <Questions onClick={fetchTask} problemsList={problems} />
+                                <Questions onClick={fetchTask} />
                             </div>
                             <ProgressBar/>
                         </NewCard>

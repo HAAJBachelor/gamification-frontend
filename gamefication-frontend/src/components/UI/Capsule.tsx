@@ -1,5 +1,5 @@
 type Props = {
-    text: string,
+    text: string | number,
     bgcolor: string,
 }
 const Capsule = (props: Props) => {

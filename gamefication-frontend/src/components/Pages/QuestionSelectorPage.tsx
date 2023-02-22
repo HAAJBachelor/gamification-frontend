@@ -1,4 +1,3 @@
-import React from 'react';
 import Questions from '../Questions/Questions';
 import Header from '../Header/Header';
 import NewCard from '../UI/NewCard';
@@ -16,7 +15,7 @@ const QuestionSelectorPage = (props: Props) => {
             <Header/>
             <NewCard>
                 <Title title="Velg neste utfordring"/>
-                <Questions onClick={props.onClick} problemsList={props.problemsList}/>
+                <Questions onClick={props.onClick} />
                 <ProgressBar/>
             </NewCard>
         </>
