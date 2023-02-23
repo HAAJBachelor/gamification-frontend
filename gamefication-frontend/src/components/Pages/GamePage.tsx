@@ -18,7 +18,6 @@ const GamePage = () => {
     const [state, setState] = useState(true);
     let code = ""
     const [task, setTask] = useState<GameTask>()
-    const [results, setResults] = useState<TaskResult>()
     const [taskResultCheck, setTaskResultCheck] = useState(true)
     const [modalIsOpen, setIsOpen] = useState(false)
     const [buttonText, setButtonText] = useState('Submit')
@@ -76,12 +75,8 @@ const GamePage = () => {
             return response
         })
             .then(response => response.json()
-                .then(response => {
-                    console.log(response)
-                    setResults(response)
-                    console.log(results?.success, ' her fra submit')
-
-                    if (results?.success === false) {
+                .then((response:TaskResult) => {
+                    if (!response.success) {
                         setButtonText('prøv igjen')
                     } else {
                         setTaskResultCheck(true)
