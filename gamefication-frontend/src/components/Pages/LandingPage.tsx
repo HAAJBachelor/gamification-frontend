@@ -45,23 +45,6 @@ const LandingPage = () => {
             })
         }
 
-        const endSession = async () => {
-            try{
-                const response = await fetch('https://localhost:7067/api/EndSession', {
-                    credentials: 'include',
-                    headers: {
-                        "Content-Type": "application/json",
-                        'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
-                    }
-                })
-                if(!response.ok) throw new Error("something went wrong");
-                const data = await response.text();
-                console.log(data); 
-            } catch(error: any){
-                console.log(error.message);
-            }
-        }
-
         return (
             <div className='pt-38'>
                 <NewCard>
@@ -71,7 +54,6 @@ const LandingPage = () => {
                     </div>
                     <div>
                         <Button text="Start" handleOnClick={startSession}></Button>
-                        <Button text="End" handleOnClick={endSession}></Button>
                     </div>
                 </NewCard>
                 <RulesButton openModal={openModal}/>
