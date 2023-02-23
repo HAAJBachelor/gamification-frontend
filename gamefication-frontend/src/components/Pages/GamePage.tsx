@@ -20,8 +20,9 @@ const GamePage = () => {
     const [task, setTask] = useState<GameTask>()
     const [results, setResults] = useState<TaskResult>()
     const [taskResultCheck, setTaskResultCheck] = useState(true)
-    const [modalIsOpen, setIsOpen] = useState(false);
+    const [modalIsOpen, setIsOpen] = useState(false)
     const [buttonText, setButtonText] = useState('Submit')
+    
     let navigate = useNavigate();
     const [testCases, setTestCases] = useState([
         {
@@ -57,27 +58,6 @@ const GamePage = () => {
     }
     const closeModal = () => {
         setIsOpen(false);
-    }
-
-    if (state) {
-        fetch('https://localhost:7067/api/GenerateTasks', {
-            method: "GET",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
-            }
-        }).then(response => {
-            if (!response.ok)
-                throw new Error("500")
-            return response
-        })
-            .then(response => response.text()
-                .then(response => {
-                    console.log(response)
-                })).catch((error: Error) => {
-            console.log(error.message)
-        })
     }
 
 
@@ -164,7 +144,7 @@ const GamePage = () => {
                         <NewCard>
                             <div>
                                 <Title title="Velg neste utfordring"/>
-                                <Questions onClick={fetchTask}/>
+                                <Questions onClick={fetchTask} />
                             </div>
                             <ProgressBar/>
                         </NewCard>

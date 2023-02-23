@@ -1,8 +1,8 @@
 type Props = {
-    text: string,
-    bgcolor: string
+    text: string | number,
+    bgcolor: string,
 }
-export const Capsule = (props: Props) => {
+const Capsule = (props: Props) => {
     const capsule = "rounded-full font-semibold text-center max-w-none h-8 my-[5px] " + (props.bgcolor);
 
     return(
@@ -11,3 +11,5 @@ export const Capsule = (props: Props) => {
         </>
     );
 } 
+
+export default Capsule;
