@@ -17,7 +17,6 @@ const GameEditor =  (props : Props)=> {
     }
 
     const fetchStartCode = () =>  {
-        let ret = ""
         fetch('https://localhost:7067/api/GetStartCode?language=java', {
             method: "GET",
             credentials: 'include',
