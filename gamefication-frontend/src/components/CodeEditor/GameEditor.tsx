@@ -12,7 +12,12 @@ const GameEditor =  (props : Props)=> {
         props.onChange(value)
     }
 
-    useEffect(() => {
+    const handleOnMount = (editor:any, monaco:any) => {
+        fetchStartCode()
+    }
+
+    const fetchStartCode = () =>  {
+        let ret = ""
         fetch('https://localhost:7067/api/GetStartCode?language=java', {
             method: "GET",
             credentials: 'include',
@@ -32,7 +37,7 @@ const GameEditor =  (props : Props)=> {
                 })).catch((error: Error) => {
             console.log(error.message)
         })
-    })
+    }
     return (
         <>
             <Editor
@@ -50,6 +55,8 @@ const GameEditor =  (props : Props)=> {
                 defaultValue={boilerCode}
                 theme={"vs-dark"}
                 onChange={handleEditorChange}
+                onMount={handleOnMount}
+                value={boilerCode}
             />
         </>
     );
