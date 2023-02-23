@@ -4,6 +4,8 @@ import Capsule from "../UI/Capsule";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import QuestionContainer from "../UI/QuestionContainer";
 
+import rocket from '../../image/rocket.png'
+
 type Props = {
     onClick: (id: number) => void;
     id: number;
@@ -38,13 +40,30 @@ const Question = (props: Props) => {
         props.onClick(props.id)
     }
 
+    const backgroundColorDifficulty = (difficulty: string) =>  {
+        let bgcolor = "";
+        if(difficulty.toUpperCase() === "EASY") {
+            bgcolor = "bg-[#C8DF52]";
+        }
+        if(difficulty.toUpperCase() === "MID") {
+            bgcolor = "bg-yellow-400";
+        }
+        if(difficulty.toUpperCase() === "HARD") {
+            bgcolor = "bg-red-600";
+        }
+        return bgcolor;
+    }
+
     return (
         <QuestionContainer onClick={onCLick}>
             {(problems.length === 0) && <LoadingSpinner />}            
             {(problems.length !== 0) &&  
             <>
-                <Capsule bgcolor="bg-yellow-400" text={problems[props.id].difficulty.toUpperCase()}/>
-                <Capsule bgcolor="bg-yellow-400" text={problems[props.id].rewards.time}/>
+                <Capsule bgcolor={backgroundColorDifficulty(problems[props.id].difficulty.toUpperCase())} text={problems[props.id].difficulty.toUpperCase()}/>
+                <Capsule 
+                    bgcolor="bg-yellow-400" 
+                    text={problems[props.id].rewards.time + " min | " + problems[props.id].rewards.lives}
+                />
                 <Capsule bgcolor="bg-yellow-400" text={problems[props.id].rewards.lives}/>
             </>            
             }
