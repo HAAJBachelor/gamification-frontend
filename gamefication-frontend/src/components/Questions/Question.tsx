@@ -9,37 +9,15 @@ import rocket from '../../image/rocket.png'
 type Props = {
     onClick: (id: number) => void;
     id: number;
+    problemsList: GameTask[]
     
 }
 const Question = (props: Props) => {    
-    
-    const [problems, setProblems] = useState<GameTask[]>([]);
-    const [loading, setLoading] = useState(false);
-    
-    useEffect(() => {
-        try{
-            const fetchData = async() => {
-                const response = await fetch('https://localhost:7067/api/GenerateTasks', {
-                    credentials: 'include',
-                    headers: {
-                        "Content-Type": "application/json",
-                        'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
-                    }
-                })
-                if(!response.ok) throw new Error("500")
-                const data = await response.json();
-                setProblems(data);            
-            }
-            fetchData(); 
-        }catch(error: any){
-            console.log(error.message); 
-        }                     
-    }, []);
-
     const onCLick = () => {
         props.onClick(props.id)
     }
 
+    
     const backgroundColorDifficulty = (difficulty: string) =>  {
         let bgcolor = "";
         if(difficulty.toUpperCase() === "EASY") {
@@ -56,15 +34,18 @@ const Question = (props: Props) => {
 
     return (
         <QuestionContainer onClick={onCLick}>
-            {(problems.length === 0) && <LoadingSpinner />}            
-            {(problems.length !== 0) &&  
+            {(props.problemsList.length === 0) && <LoadingSpinner />}            
+            {(props.problemsList.length !== 0) &&  
             <>
-                <Capsule bgcolor={backgroundColorDifficulty(problems[props.id].difficulty.toUpperCase())} text={problems[props.id].difficulty.toUpperCase()}/>
+                <Capsule 
+                    bgcolor={backgroundColorDifficulty(props.problemsList[props.id].difficulty.toUpperCase())} 
+                    text={props.problemsList[props.id].difficulty.toUpperCase()}/>
                 <Capsule 
                     bgcolor="bg-yellow-400" 
-                    text={problems[props.id].rewards.time + " min | " + problems[props.id].rewards.lives}
+                    text={props.problemsList[props.id].rewards.time + " min | " + 
+                    props.problemsList[props.id].rewards.lives}
                 />
-                <Capsule bgcolor="bg-yellow-400" text={problems[props.id].rewards.lives}/>
+                <Capsule bgcolor="bg-yellow-400" text={props.problemsList[props.id].rewards.lives}/>
             </>            
             }
         </QuestionContainer>
