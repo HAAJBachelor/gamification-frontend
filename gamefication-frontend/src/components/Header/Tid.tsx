@@ -1,9 +1,18 @@
+import { useState } from "react";
+import { State } from "../models";
+import LoadingSpinner from "../UI/LoadingSpinner";
 
-export const Tid = () => {
+const Tid = () => {
+
     const today = new Date();
-    const time = today.toLocaleTimeString();    
+    const tid = today.toLocaleTimeString();  
 
     return (
-        <div>Tid: {time}</div>
+        <>
+            <div>Tid: {tid}</div>
+            
+        </>
     );
 }
+
+export default Tid;

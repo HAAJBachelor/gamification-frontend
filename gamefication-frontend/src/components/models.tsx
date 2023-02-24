@@ -30,3 +30,10 @@ export interface TaskResult {
     testCaseResults: TestCaseResult[],
 
 }
+
+export interface State{
+    _points: number,
+    _lives: number,
+    _time: number,
+
+}
