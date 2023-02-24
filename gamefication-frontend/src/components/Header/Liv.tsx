@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import rocket from '../../image/rocket.png'
+import rocket from '../../image/rocket.png';
 import { State } from "../models";
 
 
