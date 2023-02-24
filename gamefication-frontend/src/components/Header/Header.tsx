@@ -1,5 +1,5 @@
 import React from "react";
-import {Tid} from "./Tid";
+import Tid from "./Tid";
 import {Logo} from "../Logo";
 import {Liv} from "./Liv";
 
