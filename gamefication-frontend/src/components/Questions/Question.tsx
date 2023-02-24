@@ -9,7 +9,7 @@ import rocket from '../../image/rocket.png'
 type Props = {
     onClick: (id: number) => void;
     id: number;
-    problemsList: GameTask[]
+    problemsList: GameTask[];
     
 }
 const Question = (props: Props) => {    
@@ -32,6 +32,8 @@ const Question = (props: Props) => {
         return bgcolor;
     }
 
+    const picture = <img className=" inline w-[25px] h-[25px] ml-[8px]" src={rocket} alt='yellow rocket'/>
+
     return (
         <QuestionContainer onClick={onCLick}>
             {(props.problemsList.length === 0) && <LoadingSpinner />}            
@@ -43,8 +45,10 @@ const Question = (props: Props) => {
                 <Capsule 
                     bgcolor="bg-yellow-400" 
                     text={props.problemsList[props.id].rewards.time + " min | " + 
-                    props.problemsList[props.id].rewards.lives}
+                    props.problemsList[props.id].rewards.lives + " X"} 
+                    picture = {picture}
                 />
+                
                 <Capsule bgcolor="bg-yellow-400" text={props.problemsList[props.id].rewards.lives}/>
             </>            
             }
