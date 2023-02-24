@@ -5,7 +5,6 @@ import { State } from "../models";
 
 export const Liv = () => {    
     const [lives, setLives] = useState(0);
-    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         try{
@@ -24,7 +23,6 @@ export const Liv = () => {
                 setLives(data._lives)    
             }
             fetchData();
-            setLoading(true);
         }catch(error: any){
             console.log(error.message);
         }},[])
@@ -32,7 +30,7 @@ export const Liv = () => {
         console.log(lives);
     return(
         <>
-            <div className='inline-flex absolute right-0 '>Liv: 
+            <div className='inline-flex absolute right-2 '>Liv: 
                 <img className="w-[25px] h-[25px] ml-[8px]" src={rocket} alt='yellow rocket'/>
                 X {lives}
             </div>
