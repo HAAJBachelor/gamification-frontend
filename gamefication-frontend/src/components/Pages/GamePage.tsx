@@ -12,17 +12,17 @@ import RulesModal from "../UI/RulesModal";
 import RulesButton from "../RulesButton";
 import Header from "../Header/Header";
 import ToolTip from "../ToolTip";
-import {useNavigate} from "react-router-dom";
+
 
 const GamePage = () => {
-    const [state, setState] = useState(true);
+    const [editor, setEditor] = useState(true);
     let code = ""
     const [task, setTask] = useState<GameTask>()
     const [taskResultCheck, setTaskResultCheck] = useState(true)
     const [modalIsOpen, setIsOpen] = useState(false)
     const [buttonText, setButtonText] = useState('Submit')
     
-    let navigate = useNavigate();
+
     const [testCases, setTestCases] = useState([
         {
             input: 'Hello',
@@ -31,10 +31,6 @@ const GamePage = () => {
         {
             input: 'dudu',
             output: 'didi',
-        },
-        {
-            input: 'bibi',
-            output: 'lolo',
         },
         {
             input: 'bibi',
@@ -60,7 +56,7 @@ const GamePage = () => {
     }
 
 
-    const submitHandler = () => {
+    const submitTaskHandler = () => {
         fetch('https://localhost:7067/api/SubmitTask', {
             method: "POST",
             credentials: 'include',
@@ -80,14 +76,14 @@ const GamePage = () => {
                         setButtonText('prøv igjen')
                     } else {
                         setTaskResultCheck(true)
-                        setState(true)
+                        setEditor(true)
                     }
                 })).catch((error: Error) => {
             console.log(error.message)
         })
     }
 
-    const fetchTask = (id: number) => {
+    const selectedTaskHandler = (id: number) => {
         fetch(`https://localhost:7067/api/SelectTask?taskId=${id}`, {
             method: "GET",
             credentials: 'include',
@@ -104,7 +100,7 @@ const GamePage = () => {
                 .then(response => {
                     setTask(response)
                     console.log(response)
-                    setState(false)
+                    setEditor(false)
                 })).catch((error: Error) => {
             console.log(error.message)
         })
@@ -166,7 +162,7 @@ const GamePage = () => {
                                 })}
                             </div>
                             <div className='justify-between basis-2/6 bg-gameComps mt-2 ml-2'>
-                                <Actions text={buttonText} test='TestAll' handleOnClick={submitHandler}
+                                <Actions text={buttonText} test='TestAll' handleOnClick={submitTaskHandler}
                                          handleOnClickTest={testCaseHandler}/>
                                 {taskResultCheck && <RulesModal/>}
                             </div>
@@ -180,20 +176,20 @@ const GamePage = () => {
     }
     return (
         <>
-            {state &&
+            {editor &&
                 <>
                     <Header/>
                     <div className='pt-38'>
                         <NewCard>
                             <div>
                                 <Title title="Velg neste utfordring"/>
-                                <Questions onClick={fetchTask}/>
+                                <Questions onClick={selectedTaskHandler}/>
                             </div>
                             <ProgressBar/>
                         </NewCard>
                     </div>
                 </>}
-            {!state &&
+            {!editor &&
                 codeEditor()
             }
             <RulesButton openModal={openModal}/>
