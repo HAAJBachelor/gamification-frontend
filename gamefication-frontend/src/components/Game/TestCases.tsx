@@ -11,7 +11,6 @@ type Props = {
 const TestCases = (props:Props) => {
     return (
         <div>
-
             <TestCase input={props.input} output={props.output} onClick={props.onClick} id={0}/>
         </div>
     );
