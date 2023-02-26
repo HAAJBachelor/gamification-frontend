@@ -136,7 +136,9 @@ const GamePage = () => {
                         className='basis-2/6 max-h-[88vh] min-w-[300px] min-h-[400px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl m-4 '>
                         <Problem description={String(task?.description)}
                                  input={String(task?.testCases[0].input)}
-                                 output={String(task?.testCases[0].output)}/>
+                                 output={String(task?.testCases[0].output)}
+                                 error={String(task?.testCases[0].error)}
+                        />
                     </div>
                     <div className='flex flex-col basis-4/6 max-h-[88vh] m-4'>
                         <div

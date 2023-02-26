@@ -4,6 +4,7 @@ type Props = {
     description: string,
     input: string,
     output: string,
+    error: string,
 
 }
 const Problem = (props: Props) => {
@@ -24,6 +25,10 @@ const Problem = (props: Props) => {
 
                 <div>
                     <p className='text-white pl-4 pt-2'>{props.output}</p>
+                </div>
+
+                <div>
+                    <p className='text-white pl-4 pt-2'>{props.error}</p>
                 </div>
             </div>
         </>

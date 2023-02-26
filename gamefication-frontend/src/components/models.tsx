@@ -8,6 +8,7 @@ export interface rewards {
 export interface TestCase {
     input: string,
     output: string,
+    error: string,
 }
 
 export interface GameTask {
