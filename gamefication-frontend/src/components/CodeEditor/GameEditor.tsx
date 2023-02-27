@@ -5,19 +5,22 @@ import Editor from "@monaco-editor/react";
 type Props = {
     onChange: (value: string) => void
     editorCode: string,
+
 }
 
 const GameEditor = (props: Props) => {
     const [boilerCode, setBoilerCode] = useState('')
+    let code = ''
     const handleEditorChange = (value: any, event: any) => {
         props.onChange(value)
     }
 
-    const handleOnMount = (editor:any, monaco:any) => {
+    const handleOnMount = (editor: any, monaco: any) => {
         fetchStartCode()
     }
 
-    const fetchStartCode = () =>  {
+    const fetchStartCode = () => {
+
         fetch('https://localhost:7067/api/GetStartCode?language=java', {
             method: "GET",
             credentials: 'include',
@@ -33,11 +36,13 @@ const GameEditor = (props: Props) => {
             .then(response => response.text()
                 .then(response => {
                     setBoilerCode(response)
+                    code = response;
                     props.onChange(response)
                 })).catch((error: Error) => {
             console.log(error.message)
         })
     }
+
     return (
         <>
             <Editor
@@ -55,11 +60,10 @@ const GameEditor = (props: Props) => {
                     quickSuggestionsDelay: 100,
                     colorDecorators: true,
                     selectionHighlight: true,
-
                 }}
                 defaultLanguage="java"
                 onMount={handleOnMount}
-                defaultValue={boilerCode}
+                defaultValue={'//Some code ' + boilerCode + 'yoyoyoyoyo'}
                 theme={"vs-dark"}
                 onChange={handleEditorChange}
                 value={props.editorCode}

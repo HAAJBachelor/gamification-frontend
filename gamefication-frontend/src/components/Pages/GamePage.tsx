@@ -18,12 +18,13 @@ import LanguageSelector from "../Game/LanguageSelector";
 const GamePage = () => {
     const [editor, setEditor] = useState(true);
     let code = ""
+    let editorLanguage = ''
     const [task, setTask] = useState<GameTask>()
     const [taskResultCheck, setTaskResultCheck] = useState(true)
     const [modalIsOpen, setIsOpen] = useState(false)
     const [buttonText, setButtonText] = useState('Submit')
     const [language, setLanguage] = useState('');
-    const [bolerCode, setBoilerCode] = useState('')
+    const [boilerCode, setBoilerCode] = useState('')
 
     const setCode = (value: string) => {
         code = value
@@ -154,7 +155,7 @@ const GamePage = () => {
                         </div>
                         <div
                             className='overflow-auto resize h-screen shadow-2xl bg-gameComps p-4'>
-                            <GameEditor onChange={setCode} editorCode={bolerCode}/>
+                            <GameEditor onChange={setCode} editorCode={boilerCode}/>
                         </div>
 
                         <div className='flex flex-col sm:flex-row '>

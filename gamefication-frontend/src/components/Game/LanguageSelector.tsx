@@ -6,6 +6,7 @@ const LanguageSelector = (props: any) => {
         <div>
 
             <select className='bg-gameComps text-yellow-500 border-2 border-background' onChange={props.onChange}>
+                <option value='' disabled selected>Velg språk</option>
                 <option value="java">Java</option>
                 <option value="csharp">C#</option>
             </select>
