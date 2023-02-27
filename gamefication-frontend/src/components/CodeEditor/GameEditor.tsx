@@ -50,6 +50,8 @@ const GameEditor = (props: Props) => {
                     fontSize: 16,
                     scrollBeyondLastLine: false,
                     mouseWheelZoom: true,
+                    quickSuggestions: true,
+                    quickSuggestionsDelay: 100,
                 }}
                 defaultLanguage="java"
                 defaultValue={boilerCode}
