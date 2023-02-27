@@ -12,6 +12,7 @@ import RulesModal from "../UI/RulesModal";
 import RulesButton from "../RulesButton";
 import Header from "../Header/Header";
 import ToolTip from "../ToolTip";
+import LanguageSelector from "../Game/LanguageSelector";
 
 
 const GamePage = () => {
@@ -133,7 +134,7 @@ const GamePage = () => {
                 <Header/>
                 <div className='flex flex-col lg:flex-row justify-between items-stretch '>
                     <div
-                        className='basis-2/6 max-h-[88vh] min-w-[300px] min-h-[400px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl m-4 '>
+                        className='basis-2/6 max-h-[88vh] min-w-[400px] min-h-[400px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl m-4 '>
                         <Problem description={String(task?.description)}
                                  input={String(task?.testCases[0].input)}
                                  output={String(task?.testCases[0].output)}
@@ -141,11 +142,10 @@ const GamePage = () => {
                         />
                     </div>
                     <div className='flex flex-col basis-4/6 max-h-[88vh] m-4'>
+                        <LanguageSelector/>
                         <div
                             className='overflow-auto resize h-screen shadow-2xl bg-gameComps p-4'>
-
                             <GameEditor onChange={setCode}/>
-
                         </div>
 
                         <div className='flex flex-col sm:flex-row '>
