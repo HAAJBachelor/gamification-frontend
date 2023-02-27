@@ -1,4 +1,4 @@
-import rocket from '../../image/rocket.png';
+
 
 type Props = {
     text: string | number,

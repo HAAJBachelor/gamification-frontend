@@ -151,11 +151,12 @@ const GamePage = () => {
                         <div className='flex flex-col sm:flex-row '>
                             <div
                                 className='flex flex-row items-center justify-center basis-4/6 overflow-auto overflow-y-hidden bg-gameComps mt-2 p-4'>
-                                {testCases.map((test, index) => {
+                                {task?.testCases.map((test, index) => {
                                     return (
 
                                         <div className='ml-8 px-4 flex-grow border-t border-gray-400'>
-                                            <ToolTip message={(String)('Testcase:' + index)}>
+                                            <ToolTip
+                                                message={"Input: " + task?.testCases[index].input + "\n" + "Output:" + task?.testCases[index].output}>
                                                 <TestCases input={test.input} output={test.output}
                                                            onClick={() => testCaseHandler(index)}/>
                                             </ToolTip>

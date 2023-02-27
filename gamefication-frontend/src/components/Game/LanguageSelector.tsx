@@ -4,8 +4,7 @@ const LanguageSelector = () => {
     return (
         <div className='bg-gameComps'>
 
-            <select className='bg-gameComps border border-2 border-background'>
-
+            <select className='bg-gray-500'>
                 <option value="fruit">Fruit</option>
 
                 <option value="vegetable">Vegetable</option>
