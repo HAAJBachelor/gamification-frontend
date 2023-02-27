@@ -61,7 +61,7 @@ const GameEditor = (props: Props) => {
                     colorDecorators: true,
                     selectionHighlight: true,
                 }}
-                defaultLanguage="java"
+                language="java"
                 onMount={handleOnMount}
                 defaultValue={'//Some code ' + boilerCode + 'yoyoyoyoyo'}
                 theme={"vs-dark"}
