@@ -2,15 +2,13 @@ import React from 'react';
 
 const LanguageSelector = () => {
     return (
-        <div className='bg-gameComps'>
+        <div>
 
-            <select className='bg-gray-500'>
-                <option value="fruit">Fruit</option>
+            <select className='bg-gameComps text-yellow-500 border-2 border-background'>
 
-                <option value="vegetable">Vegetable</option>
+                <option value="java">Java</option>
 
-                <option value="meat">Meat</option>
-
+                <option value="csharp">C#</option>
             </select>
 
         </div>

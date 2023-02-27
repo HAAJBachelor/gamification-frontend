@@ -22,7 +22,7 @@ const GamePage = () => {
     const [taskResultCheck, setTaskResultCheck] = useState(true)
     const [modalIsOpen, setIsOpen] = useState(false)
     const [buttonText, setButtonText] = useState('Submit')
-    
+
 
     const [testCases, setTestCases] = useState([
         {
@@ -72,7 +72,7 @@ const GamePage = () => {
             return response
         })
             .then(response => response.json()
-                .then((response:TaskResult) => {
+                .then((response: TaskResult) => {
                     if (!response.success) {
                         setButtonText('prøv igjen')
                     } else {
@@ -142,7 +142,11 @@ const GamePage = () => {
                         />
                     </div>
                     <div className='flex flex-col basis-4/6 max-h-[88vh] m-4'>
-                        <LanguageSelector/>
+                        <div className='bg-gameComps'>
+                            <div className='flex justify-end'>
+                                <LanguageSelector/>
+                            </div>
+                        </div>
                         <div
                             className='overflow-auto resize h-screen shadow-2xl bg-gameComps p-4'>
                             <GameEditor onChange={setCode}/>
@@ -163,6 +167,7 @@ const GamePage = () => {
                                         </div>
                                     );
                                 })}
+
                             </div>
                             <div className='justify-between basis-2/6 bg-gameComps mt-2 ml-2'>
                                 <Actions text={buttonText} test='TestAll' handleOnClick={submitTaskHandler}

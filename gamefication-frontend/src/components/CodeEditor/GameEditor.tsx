@@ -17,7 +17,7 @@ const GameEditor = (props: Props) => {
     }
 
     const fetchStartCode = () =>  {
-        fetch('https://localhost:7067/api/GetStartCode?language=java', {
+        fetch('https://localhost:7067/api/GetStartCode?language=csharp', {
             method: "GET",
             credentials: 'include',
             headers: {
@@ -39,6 +39,7 @@ const GameEditor = (props: Props) => {
     }
     return (
         <>
+
             <Editor
                 options={{
                     automaticLayout: true,
@@ -53,7 +54,7 @@ const GameEditor = (props: Props) => {
                     quickSuggestions: true,
                     quickSuggestionsDelay: 100,
                 }}
-                defaultLanguage="java"
+                defaultLanguage="csharp"
                 defaultValue={boilerCode}
                 theme={"vs-dark"}
                 onChange={handleEditorChange}
