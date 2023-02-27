@@ -4,6 +4,7 @@ import Editor from "@monaco-editor/react";
 
 type Props = {
     onChange: (value: string) => void
+    editorCode: string,
 }
 
 const GameEditor = (props: Props) => {
@@ -55,7 +56,7 @@ const GameEditor = (props: Props) => {
                     quickSuggestionsDelay: 100,
                 }}
                 defaultLanguage="csharp"
-                defaultValue={boilerCode}
+                defaultValue={props.editorCode}
                 theme={"vs-dark"}
                 onChange={handleEditorChange}
                 onMount={handleOnMount}

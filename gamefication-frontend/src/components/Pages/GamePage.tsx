@@ -22,28 +22,8 @@ const GamePage = () => {
     const [taskResultCheck, setTaskResultCheck] = useState(true)
     const [modalIsOpen, setIsOpen] = useState(false)
     const [buttonText, setButtonText] = useState('Submit')
-
-
-    const [testCases, setTestCases] = useState([
-        {
-            input: 'Hello',
-            output: 'yoyo',
-        },
-        {
-            input: 'dudu',
-            output: 'didi',
-        },
-        {
-            input: 'bibi',
-            output: 'lolo',
-        },
-        {
-            input: 'bibi',
-            output: 'lolo',
-        },
-
-
-    ])
+    const [language, setLanguage] = useState('');
+    const [bolerCode, setBoilerCode] = useState('')
 
     const setCode = (value: string) => {
         code = value
@@ -127,6 +107,12 @@ const GamePage = () => {
             console.log(error.message)
         })
     }
+    const languageHandleOnChange = (event: any) => {
+        let value = event.target.value
+        setLanguage(value)
+
+        alert('language is ' + value)
+    }
 
     const codeEditor = () => {
         return (
@@ -144,12 +130,12 @@ const GamePage = () => {
                     <div className='flex flex-col basis-4/6 max-h-[88vh] m-4'>
                         <div className='bg-gameComps'>
                             <div className='flex justify-end'>
-                                <LanguageSelector/>
+                                <LanguageSelector onChange={languageHandleOnChange}/>
                             </div>
                         </div>
                         <div
                             className='overflow-auto resize h-screen shadow-2xl bg-gameComps p-4'>
-                            <GameEditor onChange={setCode}/>
+                            <GameEditor onChange={setCode} editorCode={'yo'}/>
                         </div>
 
                         <div className='flex flex-col sm:flex-row '>
