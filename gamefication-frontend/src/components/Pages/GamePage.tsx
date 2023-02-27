@@ -111,8 +111,27 @@ const GamePage = () => {
         let value = event.target.value
         setLanguage(value)
 
-        alert('language is ' + value)
+        fetch('https://localhost:7067/api/GetStartCode?language=' + value, {
+            method: "GET",
+            credentials: 'include',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            }
+        }).then(response => {
+            if (!response.ok)
+                throw new Error("no data")
+            return response
+        })
+            .then(response => response.text()
+                .then(response => {
+                    setBoilerCode(response)
+
+                })).catch((error: Error) => {
+            console.log(error.message)
+        })
     }
+
 
     const codeEditor = () => {
         return (
@@ -135,7 +154,7 @@ const GamePage = () => {
                         </div>
                         <div
                             className='overflow-auto resize h-screen shadow-2xl bg-gameComps p-4'>
-                            <GameEditor onChange={setCode} editorCode={'yo'}/>
+                            <GameEditor onChange={setCode} editorCode={bolerCode}/>
                         </div>
 
                         <div className='flex flex-col sm:flex-row '>
