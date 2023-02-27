@@ -1,12 +1,12 @@
-import React, {forwardRef, useEffect, useRef, useState} from 'react';
-import Editor, {Monaco} from "@monaco-editor/react";
+import React, {useState} from 'react';
+import Editor from "@monaco-editor/react";
 
 
 type Props = {
-    onChange: (value:string) => void
+    onChange: (value: string) => void
 }
 
-const GameEditor =  (props : Props)=> {
+const GameEditor = (props: Props) => {
     const [boilerCode, setBoilerCode] = useState('')
     const handleEditorChange = (value: any, event: any) => {
         props.onChange(value)
@@ -49,6 +49,7 @@ const GameEditor =  (props : Props)=> {
                     lineNumbersMinChars: 3,
                     fontSize: 16,
                     scrollBeyondLastLine: false,
+                    mouseWheelZoom: true,
                 }}
                 defaultLanguage="java"
                 defaultValue={boilerCode}
