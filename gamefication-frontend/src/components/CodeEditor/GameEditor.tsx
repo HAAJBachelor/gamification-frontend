@@ -11,8 +11,6 @@ type Props = {
 
 const GameEditor = (props: Props) => {
     const [boilerCode, setBoilerCode] = useState('')
-    let code = ''
-    let language = 'java'
     const handleEditorChange = (value: any, event: any) => {
         props.onChange(value)
     }
@@ -38,7 +36,6 @@ const GameEditor = (props: Props) => {
             .then(response => response.text()
                 .then(response => {
                     setBoilerCode(response)
-                    code = response;
                     props.onChange(response)
                 })).catch((error: Error) => {
             console.log(error.message)
@@ -63,9 +60,9 @@ const GameEditor = (props: Props) => {
                     colorDecorators: true,
                     selectionHighlight: true,
                 }}
-                language={language}
+                language={props.lang}
                 onMount={handleOnMount}
-                defaultValue={'//Skriv dine konde her'}
+                defaultValue={boilerCode}
                 theme={"vs-dark"}
                 onChange={handleEditorChange}
                 value={props.editorCode}
