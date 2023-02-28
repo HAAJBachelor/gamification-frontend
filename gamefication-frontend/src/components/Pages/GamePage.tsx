@@ -154,12 +154,12 @@ const GamePage = () => {
                     </div>
                     <div className='flex flex-col basis-4/6 max-h-[88vh] m-4'>
                         <div className='bg-gameComps'>
-                            <div className='flex justify-end'>
+                            <div className='flex justify-start mb-1'>
                                 <LanguageSelector onChange={languageHandleOnChange}/>
                             </div>
                         </div>
                         <div
-                            className='overflow-auto resize h-screen shadow-2xl bg-gameComps p-4'>
+                            className='overflow-auto resize h-screen shadow-2xl bg-gameComps pl-4 pb-4 pr-4'>
                             <GameEditor onChange={setCode} editorCode={boilerCode} lang={language}/>
                         </div>
 
@@ -169,7 +169,7 @@ const GamePage = () => {
                                 {task?.testCases.map((test, index) => {
                                     return (
 
-                                        <div className='ml-8 px-4 flex-grow border-t border-gray-400'>
+                                        <div className='ml-8 px-4 flex-grow '>
                                             <ToolTip
                                                 message={"Input: " + task?.testCases[index].input + "\n" + "Output:" + task?.testCases[index].output}>
                                                 <TestCases input={test.input} output={test.output}

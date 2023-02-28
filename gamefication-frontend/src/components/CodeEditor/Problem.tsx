@@ -15,21 +15,21 @@ const Problem = (props: Props) => {
                 <br/>
                 <p className='text-white'>{props.description}</p>
             </div>
-            <div className='bg-background mt-20 text-start'>
+            <div className='bg-background mt-20 text-start pb-8'>
                 <div>
-                    <div className='text-center text-yellow-500 uppercase m-10'>
+                    <div className='text-center text-yellow-500 uppercase m-10 pt-4'>
                         <h1>Foreventet input og output</h1>
                     </div>
+                    <h3 className='text-yellow-500 pl-2'>Input</h3>
                     <p className='text-white pl-4'>{props.input}</p>
                 </div>
 
                 <div>
+                    <h3 className='text-yellow-500 pl-2'>Output</h3>
                     <p className='text-white pl-4 pt-2'>{props.output}</p>
                 </div>
 
-                <div>
-                    <p className='text-white pl-4 pt-2'>{props.error}</p>
-                </div>
+
             </div>
         </>
     );

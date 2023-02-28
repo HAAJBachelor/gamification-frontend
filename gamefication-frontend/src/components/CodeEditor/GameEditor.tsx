@@ -65,7 +65,7 @@ const GameEditor = (props: Props) => {
                 }}
                 language={language}
                 onMount={handleOnMount}
-                defaultValue={'//Some code ' + code + 'yoyoyoyoyo'}
+                defaultValue={'//Skriv dine konde her'}
                 theme={"vs-dark"}
                 onChange={handleEditorChange}
                 value={props.editorCode}
