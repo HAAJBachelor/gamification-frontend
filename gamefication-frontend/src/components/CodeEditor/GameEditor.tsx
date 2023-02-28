@@ -5,12 +5,14 @@ import Editor from "@monaco-editor/react";
 type Props = {
     onChange: (value: string) => void
     editorCode: string,
+    lang: string,
 
 }
 
 const GameEditor = (props: Props) => {
     const [boilerCode, setBoilerCode] = useState('')
     let code = ''
+    let language = 'java'
     const handleEditorChange = (value: any, event: any) => {
         props.onChange(value)
     }
@@ -43,10 +45,6 @@ const GameEditor = (props: Props) => {
         })
     }
 
-    const changeLand = (lang: any) => {
-
-    }
-
     return (
         <>
             <Editor
@@ -65,9 +63,9 @@ const GameEditor = (props: Props) => {
                     colorDecorators: true,
                     selectionHighlight: true,
                 }}
-                language="java"
+                language={language}
                 onMount={handleOnMount}
-                defaultValue={'//Some code ' + boilerCode + 'yoyoyoyoyo'}
+                defaultValue={'//Some code ' + code + 'yoyoyoyoyo'}
                 theme={"vs-dark"}
                 onChange={handleEditorChange}
                 value={props.editorCode}

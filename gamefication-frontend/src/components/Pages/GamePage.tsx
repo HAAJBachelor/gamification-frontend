@@ -18,7 +18,7 @@ import LanguageSelector from "../Game/LanguageSelector";
 const GamePage = () => {
     const [editor, setEditor] = useState(true);
     let code = ""
-    let editorLanguage = ''
+    let editorLanguage = 'java'
     const [task, setTask] = useState<GameTask>()
     const [taskResultCheck, setTaskResultCheck] = useState(true)
     const [modalIsOpen, setIsOpen] = useState(false)
@@ -44,7 +44,7 @@ const GamePage = () => {
             credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             },
             body: JSON.stringify(code)
         }).then(response => {
@@ -71,7 +71,7 @@ const GamePage = () => {
             credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             }
         }).then(response => {
             if (!response.ok)
@@ -93,7 +93,7 @@ const GamePage = () => {
             credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             },
             body: JSON.stringify(code)
         }).then(response => {
@@ -134,6 +134,10 @@ const GamePage = () => {
         })
     }
 
+    const testAllHandler = () => {
+
+    }
+
 
     const codeEditor = () => {
         return (
@@ -156,7 +160,7 @@ const GamePage = () => {
                         </div>
                         <div
                             className='overflow-auto resize h-screen shadow-2xl bg-gameComps p-4'>
-                            <GameEditor onChange={setCode} editorCode={boilerCode}/>
+                            <GameEditor onChange={setCode} editorCode={boilerCode} lang={language}/>
                         </div>
 
                         <div className='flex flex-col sm:flex-row '>
@@ -177,8 +181,13 @@ const GamePage = () => {
 
                             </div>
                             <div className='justify-between basis-2/6 bg-gameComps mt-2 ml-2'>
-                                <Actions text={buttonText} test='TestAll' handleOnClick={submitTaskHandler}
-                                         handleOnClickTest={testCaseHandler}/>
+                                <Actions text={buttonText} test='TestAll'
+                                         handleOnClickSubmit={submitTaskHandler}
+                                         handleOnClickTest={testCaseHandler}
+                                         handleOnTestAllClick={testAllHandler}
+
+
+                                />
                                 {taskResultCheck && <RulesModal/>}
                             </div>
 

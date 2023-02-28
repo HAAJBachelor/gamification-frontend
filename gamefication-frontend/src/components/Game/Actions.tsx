@@ -6,7 +6,7 @@ const Actions = (props: any) => {
         <div className='flex flex-row sm:flex-col justify-between'>
 
             <div className='m-8'>
-                <button onClick={props.handleOnTestClick}
+                <button onClick={props.handleOnTestAllClick}
                         className="bg-gameComps hover:bg-hover text-yellow-500 font-semibold hover:text-yellow-300 py-2 px-4 border border-background hover:border-transparent rounded">
                     Test All
                 </button>
@@ -14,7 +14,7 @@ const Actions = (props: any) => {
 
             <div className='m-8'>
                 <button
-                    onClick={props.handleOnClick}
+                    onClick={props.handleOnClickSubmit}
                     className="bg-gameComps hover:bg-hover text-yellow-500 font-semibold hover:text-yellow-300 py-2 px-4 border border-background hover:border-transparent rounded">
                     {props.text}
                 </button>
