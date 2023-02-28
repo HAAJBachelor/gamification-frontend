@@ -43,6 +43,10 @@ const GameEditor = (props: Props) => {
         })
     }
 
+    const changeLand = (lang: any) => {
+
+    }
+
     return (
         <>
             <Editor
