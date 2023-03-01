@@ -110,6 +110,8 @@ const GamePage = () => {
     const languageHandleOnChange = (event: any) => {
         let value = event.target.value
         setLanguage(value)
+        editorLanguage = value
+
         fetch('https://localhost:7067/api/GetStartCode?language=' + value, {
             method: "GET",
             credentials: 'include',
