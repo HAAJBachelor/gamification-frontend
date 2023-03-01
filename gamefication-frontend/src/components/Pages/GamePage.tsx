@@ -24,6 +24,9 @@ const GamePage = () => {
     const [buttonText, setButtonText] = useState('Submit')
     const [language, setLanguage] = useState('java');
     const [boilerCode, setBoilerCode] = useState('')
+    let taskLenght = 0;
+    let taskResponse = '';
+
 
     const setCode = (value: string) => {
         setCodeState(value)
@@ -85,6 +88,12 @@ const GamePage = () => {
                 })).catch((error: Error) => {
             console.log(error.message)
         })
+
+    }
+    console.log(task?.testCases.length, ' her er lengden' , task?.testCases.length)
+
+    if(task?.testCases.length !== undefined){
+        taskLenght = task?.testCases.length
     }
     const testCaseHandler = (taskId: number) => {
         fetch(`https://localhost:7067/api/SubmitTestCase?index=${taskId}`, {
@@ -132,7 +141,10 @@ const GamePage = () => {
     }
 
     const testAllHandler = () => {
+       for(let i = 0; i < taskLenght; i++){
+           testCaseHandler(i);
 
+       }
     }
 
 
@@ -170,20 +182,18 @@ const GamePage = () => {
                                             <ToolTip
                                                 message={"Input: " + task?.testCases[index].input + "\n" + "Output:" + task?.testCases[index].output}>
                                                 <TestCases input={test.input} output={test.output}
-                                                           onClick={() => testCaseHandler(index)}/>
+                                                           onClick={() => testCaseHandler(index)}
+                                                />
                                             </ToolTip>
                                         </div>
                                     );
                                 })}
-
                             </div>
                             <div className='justify-between basis-2/6 bg-gameComps mt-2 ml-2'>
                                 <Actions text={buttonText} test='TestAll'
                                          handleOnClickSubmit={submitTaskHandler}
                                          handleOnClickTest={testCaseHandler}
                                          handleOnTestAllClick={testAllHandler}
-
-
                                 />
                                 {taskResultCheck && <RulesModal/>}
                             </div>
