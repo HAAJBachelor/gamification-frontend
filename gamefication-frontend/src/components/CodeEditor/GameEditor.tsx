@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Editor from "@monaco-editor/react";
 
 
@@ -14,6 +14,10 @@ const GameEditor = (props: Props) => {
     const handleEditorChange = (value: any, event: any) => {
         props.onChange(value)
     }
+
+    useEffect(() => {
+        fetchStartCode()
+    }, [props.lang])
 
     const handleOnMount = (editor: any, monaco: any) => {
         fetchStartCode()

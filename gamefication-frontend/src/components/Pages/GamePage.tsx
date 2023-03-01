@@ -17,17 +17,16 @@ import LanguageSelector from "../Game/LanguageSelector";
 
 const GamePage = () => {
     const [editor, setEditor] = useState(true);
-    let code = ""
-    let editorLanguage = 'java'
+    const [code, setCodeState] = useState<String>("")
     const [task, setTask] = useState<GameTask>()
     const [taskResultCheck, setTaskResultCheck] = useState(true)
     const [modalIsOpen, setIsOpen] = useState(false)
     const [buttonText, setButtonText] = useState('Submit')
-    const [language, setLanguage] = useState('');
+    const [language, setLanguage] = useState('java');
     const [boilerCode, setBoilerCode] = useState('')
 
     const setCode = (value: string) => {
-        code = value
+        setCodeState(value)
     }
 
     const openModal = () => {
@@ -111,8 +110,6 @@ const GamePage = () => {
     const languageHandleOnChange = (event: any) => {
         let value = event.target.value
         setLanguage(value)
-        editorLanguage = value
-
         fetch('https://localhost:7067/api/GetStartCode?language=' + value, {
             method: "GET",
             credentials: 'include',
