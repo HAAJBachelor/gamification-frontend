@@ -20,11 +20,13 @@ module.exports = {
         'amber': colors.amber,
         'pink': colors.pink,
         'purple': colors.purple,
-      'yellow': colors.yellow,
-      'slate': colors.slate,
-      'zinc': colors.zinc,
+        'yellow': colors.yellow,
+        'slate': colors.slate,
+        'zinc': colors.zinc,
 
     },
   },
-  plugins: [],
+    plugins: [
+        require('tailwind-scrollbar'),
+    ],
 }
