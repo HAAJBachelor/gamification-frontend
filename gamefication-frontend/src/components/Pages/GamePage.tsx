@@ -17,7 +17,7 @@ import LanguageSelector from "../Game/LanguageSelector";
 
 const GamePage = () => {
     const [editor, setEditor] = useState(true);
-    let code = ""
+
     let editorLanguage = 'java'
     const [task, setTask] = useState<GameTask>()
     const [taskResultCheck, setTaskResultCheck] = useState(true)
@@ -25,6 +25,11 @@ const GamePage = () => {
     const [buttonText, setButtonText] = useState('Submit')
     const [language, setLanguage] = useState('');
     const [boilerCode, setBoilerCode] = useState('')
+
+    let code = 'Public class{' +
+        'public static void main(String[] args){' +
+        '}' +
+        '}'
 
     const setCode = (value: string) => {
         code = value

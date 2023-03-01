@@ -11,6 +11,7 @@ type Props = {
 
 const GameEditor = (props: Props) => {
     const [boilerCode, setBoilerCode] = useState('')
+
     const handleEditorChange = (value: any, event: any) => {
         props.onChange(value)
     }
@@ -51,21 +52,21 @@ const GameEditor = (props: Props) => {
                     showUnused: false,
                     wordWrap: 'on',
                     folding: false,
+                    colorDecorators: true,
                     lineNumbersMinChars: 3,
                     fontSize: 16,
                     scrollBeyondLastLine: false,
                     mouseWheelZoom: true,
                     quickSuggestions: true,
                     quickSuggestionsDelay: 100,
-                    colorDecorators: true,
                     selectionHighlight: true,
                 }}
-                language={props.lang}
+                language={props.lang ? props.lang : 'java'}
                 onMount={handleOnMount}
-                defaultValue={boilerCode}
+                defaultValue='////hahahaskj.dbask.dbjkjab.sd'
                 theme={"vs-dark"}
                 onChange={handleEditorChange}
-                value={props.editorCode}
+                value={props.editorCode ? props.editorCode : boilerCode}
             />
         </>
     );
