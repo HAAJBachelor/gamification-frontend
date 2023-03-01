@@ -165,12 +165,9 @@ const GamePage = () => {
                 <Header/>
                 <div className='flex flex-col lg:flex-row justify-between items-stretch '>
                     <div
-                        className='basis-2/6 max-h-[88vh] min-w-[400px] min-h-[400px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl m-4 '>
-                        <Problem description={String(task?.description)}
-                                 input={String(task?.testCases[0].input)}
-                                 output={String(task?.testCases[0].output)}
-                                 error={String(task?.testCases[0].error)}
-                        />
+                        className='basis-2/6 max-h-[88vh] min-w-[400px] min-h-[400px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl m-4 rounded-2xl scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
+                        {task && <Problem task={task}
+                        />}
                     </div>
                     <div className='flex flex-col basis-4/6 max-h-[88vh] m-4'>
                         <div className='bg-gameComps'>
@@ -178,14 +175,13 @@ const GamePage = () => {
                                 <LanguageSelector onChange={languageHandleOnChange}/>
                             </div>
                         </div>
-                        <div
-                            className='overflow-auto resize h-screen shadow-2xl bg-gameComps pl-4 pb-4 pr-4'>
+                        <div className='group overflow-auto resize h-screen shadow-2xl bg-gameComps pl-4 pb-4 pr-4 '>
                             <GameEditor onChange={setCode} editorCode={boilerCode} lang={language}/>
                         </div>
 
                         <div className='flex flex-col sm:flex-row '>
                             <div
-                                className='flex flex-row items-center justify-center basis-4/6 overflow-auto overflow-y-hidden bg-gameComps mt-2 p-4'>
+                                className='flex flex-row items-center justify-center basis-4/6 overflow-auto overflow-y-hidden bg-gameComps mt-2 p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
                                 {task?.testCases.map((test, index) => {
                                     return (
 

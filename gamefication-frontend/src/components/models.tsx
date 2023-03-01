@@ -14,6 +14,9 @@ export interface TestCase {
 export interface GameTask {
     taskId: number,
     description: string,
+    inputDescription: string,
+    outputDescription: string,
+    constraints: string,
     startCode: string,
     testCases: TestCase[],
     rewards: rewards,
