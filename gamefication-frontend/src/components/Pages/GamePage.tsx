@@ -9,11 +9,9 @@ import TestCases from "../Game/TestCases";
 import Actions from "../Game/Actions";
 import {GameTask, TaskResult} from "../models";
 import RulesModal from "../UI/RulesModal";
-import RulesButton from "../RulesButton";
 import Header from "../Header/Header";
 import ToolTip from "../ToolTip";
 import LanguageSelector from "../Game/LanguageSelector";
-import {useNavigate} from "react-router-dom";
 
 
 const GamePage = () => {
@@ -165,12 +163,12 @@ const GamePage = () => {
                 <Header/>
                 <div className='flex flex-col lg:flex-row justify-between items-stretch '>
                     <div
-                        className='basis-2/6 max-h-[88vh] min-w-[400px] min-h-[400px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl m-4 rounded-2xl scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
+                        className='basis-2/6 max-h-[88vh] min-w-[400px] min-h-[400px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl m-4 rounded-tl-2xl rounded-bl-2xl scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
                         {task && <Problem task={task}
                         />}
                     </div>
-                    <div className='flex flex-col basis-4/6 max-h-[88vh] m-4'>
-                        <div className='bg-gameComps'>
+                    <div className='flex flex-col basis-4/6 max-h-[88vh] m-4 '>
+                        <div className='bg-gameComps rounded-tr-2xl'>
                             <div className='flex justify-start mb-1'>
                                 <LanguageSelector onChange={languageHandleOnChange}/>
                             </div>
@@ -196,7 +194,7 @@ const GamePage = () => {
                                     );
                                 })}
                             </div>
-                            <div className='justify-between basis-2/6 bg-gameComps mt-2 ml-2'>
+                            <div className='justify-between basis-2/6 bg-gameComps mt-2 ml-2 rounded-br-2xl'>
                                 <Actions text={buttonText} test='TestAll'
                                          handleOnClickSubmit={submitTaskHandler}
                                          handleOnClickTest={testCaseHandler}
