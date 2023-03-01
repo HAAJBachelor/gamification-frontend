@@ -13,6 +13,7 @@ import RulesButton from "../RulesButton";
 import Header from "../Header/Header";
 import ToolTip from "../ToolTip";
 import LanguageSelector from "../Game/LanguageSelector";
+import {useNavigate} from "react-router-dom";
 
 
 const GamePage = () => {
@@ -24,8 +25,8 @@ const GamePage = () => {
     const [buttonText, setButtonText] = useState('Submit')
     const [language, setLanguage] = useState('java');
     const [boilerCode, setBoilerCode] = useState('')
+    const [success, setSuccess] = useState(false);
     let taskLenght = 0;
-    let taskResponse = '';
 
 
     const setCode = (value: string) => {
@@ -58,9 +59,13 @@ const GamePage = () => {
                 .then((response: TaskResult) => {
                     if (!response.success) {
                         setButtonText('prøv igjen')
+                        console.log(success)
+                        setSuccess(false)
                     } else {
                         setTaskResultCheck(true)
-                        setEditor(true)
+                        setIsOpen(true)
+                        setSuccess(true)
+                        setButtonText('Submit')
                     }
                 })).catch((error: Error) => {
             console.log(error.message)
@@ -90,9 +95,8 @@ const GamePage = () => {
         })
 
     }
-    console.log(task?.testCases.length, ' her er lengden' , task?.testCases.length)
 
-    if(task?.testCases.length !== undefined){
+    if (task?.testCases.length !== undefined) {
         taskLenght = task?.testCases.length
     }
     const testCaseHandler = (taskId: number) => {
@@ -141,11 +145,18 @@ const GamePage = () => {
     }
 
     const testAllHandler = () => {
-       for(let i = 0; i < taskLenght; i++){
-           testCaseHandler(i);
+        for (let i = 0; i < taskLenght; i++) {
+            testCaseHandler(i);
 
-       }
+        }
     }
+
+    const nextAssignmentHandler = () => {
+        setEditor(true)
+        setSuccess(false)
+    }
+
+
 
 
     const codeEditor = () => {
@@ -223,8 +234,14 @@ const GamePage = () => {
             {!editor &&
                 codeEditor()
             }
-            <RulesButton openModal={openModal}/>
-            <RulesModal visible={modalIsOpen} onClose={closeModal}/>
+            {success &&
+                <>
+                    <RulesModal visible={modalIsOpen} onClose={nextAssignmentHandler} modalTitle={'Du vant'}
+                                modalText={'Herlig'} text={'Neste'}/>
+                </>
+            }
+
+
         </>
     );
 };
