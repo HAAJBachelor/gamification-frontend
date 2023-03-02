@@ -9,11 +9,9 @@ import TestCases from "../Game/TestCases";
 import Actions from "../Game/Actions";
 import {GameTask, TaskResult} from "../models";
 import RulesModal from "../UI/RulesModal";
-import RulesButton from "../RulesButton";
 import Header from "../Header/Header";
 import ToolTip from "../ToolTip";
 import LanguageSelector from "../Game/LanguageSelector";
-import {useNavigate} from "react-router-dom";
 
 
 const GamePage = () => {
@@ -26,8 +24,10 @@ const GamePage = () => {
     const [language, setLanguage] = useState('java');
     const [boilerCode, setBoilerCode] = useState('')
     const [success, setSuccess] = useState(false);
-    let taskLenght = 0;
+    const [taskResultFail, setTaskResultFail] = useState<TaskResult>()
+    const [taskResultSuccess, setTaskResultSuccess] = useState<TaskResult>()
 
+    let taskLenght = 0;
 
     const setCode = (value: string) => {
         setCodeState(value)
@@ -39,7 +39,6 @@ const GamePage = () => {
     const closeModal = () => {
         setIsOpen(false);
     }
-
 
     const submitTaskHandler = () => {
         fetch('https://localhost:7067/api/SubmitTask', {
@@ -60,12 +59,15 @@ const GamePage = () => {
                     if (!response.success) {
                         setButtonText('prøv igjen')
                         console.log(success)
+                        console.log(response)
                         setSuccess(false)
+                        setTaskResultFail(response)
                     } else {
                         setTaskResultCheck(true)
                         setIsOpen(true)
                         setSuccess(true)
                         setButtonText('Submit')
+                        setTaskResultSuccess(response);
                     }
                 })).catch((error: Error) => {
             console.log(error.message)
@@ -156,9 +158,6 @@ const GamePage = () => {
         setSuccess(false)
     }
 
-
-
-
     const codeEditor = () => {
         return (
             <div className='min-h-screen max-h-screen max-w-screen'>
@@ -180,23 +179,29 @@ const GamePage = () => {
                         </div>
 
                         <div className='flex flex-col sm:flex-row '>
-                            <div
-                                className='flex flex-row items-center justify-center basis-4/6 overflow-auto overflow-y-hidden bg-gameComps mt-2 p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
-                                {task?.testCases.map((test, index) => {
-                                    return (
+                            <div className='flex flex-col basis-4/6'>
+                                <div
+                                    className='flex flex-row items-center justify-center basis-4/6 overflow-auto overflow-y-hidden bg-gameComps mt-2 p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
+                                    {task?.testCases.map((test, index) => {
+                                        return (
 
-                                        <div className='ml-8 px-4 flex-grow '>
-                                            <ToolTip
-                                                message={"Input: " + task?.testCases[index].input + "\n" + "Output:" + task?.testCases[index].output}>
-                                                <TestCases input={test.input} output={test.output}
-                                                           onClick={() => testCaseHandler(index)}
-                                                />
-                                            </ToolTip>
-                                        </div>
-                                    );
-                                })}
+                                            <div className='ml-8 px-4 flex-grow basis-2/4'>
+                                                <ToolTip
+                                                    message={"Input: " + task?.testCases[index].input + "\n" + "Output:" + task?.testCases[index].output}>
+                                                    <TestCases input={test.input} output={test.output}
+                                                               onClick={() => testCaseHandler(index)}
+                                                    />
+                                                </ToolTip>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                                <div
+                                    className='basis-2/4 overflow-x-hidden bg-gameComps mt-2  p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
+                                    <h1>Her kommer consoll output</h1>
+                                </div>
                             </div>
-                            <div className='justify-between basis-2/6 bg-gameComps mt-2 ml-2'>
+                            <div className='justify-between basis-2/6 bg-gameComps mt-2 ml-2 rounded-br-2xl'>
                                 <Actions text={buttonText} test='TestAll'
                                          handleOnClickSubmit={submitTaskHandler}
                                          handleOnClickTest={testCaseHandler}
@@ -236,8 +241,6 @@ const GamePage = () => {
                                 modalText={'Herlig'} text={'Neste'}/>
                 </>
             }
-
-
         </>
     );
 };
