@@ -29,8 +29,6 @@ const Questions = (props: Props) => {
         }                     
     }, []);
 
-    console.log(problems);
-
     return (
         <div className="flex flex-wrap justify-center" >
             <Question onClick={props.onClick} id={0} problemsList={problems}/>

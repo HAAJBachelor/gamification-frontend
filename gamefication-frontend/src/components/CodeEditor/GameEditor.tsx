@@ -1,22 +1,31 @@
-import React, {forwardRef, useEffect, useRef, useState} from 'react';
-import Editor, {Monaco} from "@monaco-editor/react";
+import React, {useEffect, useState} from 'react';
+import Editor from "@monaco-editor/react";
 
 
 type Props = {
-    onChange: (value:string) => void
+    onChange: (value: string) => void
+    editorCode: string,
+    lang: string,
+
 }
 
-const GameEditor =  (props : Props)=> {
+const GameEditor = (props: Props) => {
     const [boilerCode, setBoilerCode] = useState('')
+
     const handleEditorChange = (value: any, event: any) => {
         props.onChange(value)
     }
 
-    const handleOnMount = (editor:any, monaco:any) => {
+    useEffect(() => {
+        fetchStartCode()
+    }, [props.lang])
+
+    const handleOnMount = (editor: any, monaco: any) => {
         fetchStartCode()
     }
 
-    const fetchStartCode = () =>  {
+    const fetchStartCode = () => {
+
         fetch('https://localhost:7067/api/GetStartCode?language=java', {
             method: "GET",
             credentials: 'include',
@@ -37,6 +46,7 @@ const GameEditor =  (props : Props)=> {
             console.log(error.message)
         })
     }
+
     return (
         <>
             <Editor
@@ -46,16 +56,21 @@ const GameEditor =  (props : Props)=> {
                     showUnused: false,
                     wordWrap: 'on',
                     folding: false,
+                    colorDecorators: true,
                     lineNumbersMinChars: 3,
                     fontSize: 16,
                     scrollBeyondLastLine: false,
+                    mouseWheelZoom: true,
+                    quickSuggestions: true,
+                    quickSuggestionsDelay: 100,
+                    selectionHighlight: true,
                 }}
-                defaultLanguage="java"
-                defaultValue={boilerCode}
+                language={props.lang ? props.lang : 'java'}
+                onMount={handleOnMount}
+                defaultValue='////hahahaskj.dbask.dbjkjab.sd'
                 theme={"vs-dark"}
                 onChange={handleEditorChange}
-                onMount={handleOnMount}
-                value={boilerCode}
+                value={props.editorCode ? props.editorCode : boilerCode}
             />
         </>
     );

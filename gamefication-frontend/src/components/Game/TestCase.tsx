@@ -1,27 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 type Props = {
     onClick: (id: number) => void;
 }
 
 const TestCase = (props: any) => {
+    const [ping, setPing] =useState(false)
+
 
     const onCLick = () => {
         props.onClick(props.id)
+        setPing(!ping)
     }
     return (
-        /*<div className='flex flex-row justify-between items-center'>
-            <p className='flex-none'>{props.input}</p>
-            <h4 className='justify-items-center items-center'>{props.output} </h4>
+        <div className=''>
             <button
-                className="bg-background hover:bg-hover text-yellow-500 font-semibold hover:text-yellow-300 py-2 px-4 border border-background hover:border-transparent rounded">
-                Play
-            </button>
-        </div>*/
-
-        <div className='rounded-full'>
-            <button
-                className='bg-red-500 hover:bg-red-700 text-white font-bold py-8 px-8 rounded-full border-2 border-background'
+                className={`bg-red-500 hover:bg-red-700 shadow-2xl shadow-red-500 text-white font-bold py-12 px-12 rounded-full transform hover:scale-125 transition ease-in-out delay-150 ${(ping === false)? '' : 'animate-pulse'}`}
                 onClick={onCLick}>
 
             </button>

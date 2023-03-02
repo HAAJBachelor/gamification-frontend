@@ -8,11 +8,15 @@ export interface rewards {
 export interface TestCase {
     input: string,
     output: string,
+    error: string,
 }
 
 export interface GameTask {
     taskId: number,
     description: string,
+    inputDescription: string,
+    outputDescription: string,
+    constraints: string,
     startCode: string,
     testCases: TestCase[],
     rewards: rewards,

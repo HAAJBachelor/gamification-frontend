@@ -1,4 +1,4 @@
-import React, {createRef, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import NewCard from "../UI/NewCard";
 import {Title} from "../Title/Title";
 import Questions from "../Questions/Questions";
@@ -9,47 +9,28 @@ import TestCases from "../Game/TestCases";
 import Actions from "../Game/Actions";
 import {GameTask, TaskResult} from "../models";
 import RulesModal from "../UI/RulesModal";
-import RulesButton from "../RulesButton";
 import Header from "../Header/Header";
 import ToolTip from "../ToolTip";
-import {useNavigate} from "react-router-dom";
+import LanguageSelector from "../Game/LanguageSelector";
+
 
 const GamePage = () => {
-    const [state, setState] = useState(true);
-    let code = ""
+    const [editor, setEditor] = useState(true);
+    const [code, setCodeState] = useState<String>("")
     const [task, setTask] = useState<GameTask>()
     const [taskResultCheck, setTaskResultCheck] = useState(true)
     const [modalIsOpen, setIsOpen] = useState(false)
     const [buttonText, setButtonText] = useState('Submit')
-    
-    let navigate = useNavigate();
-    const [testCases, setTestCases] = useState([
-        {
-            input: 'Hello',
-            output: 'yoyo',
-        },
-        {
-            input: 'dudu',
-            output: 'didi',
-        },
-        {
-            input: 'bibi',
-            output: 'lolo',
-        },
-        {
-            input: 'bibi',
-            output: 'lolo',
-        },
-        {
-            input: 'bibi',
-            output: 'lolo',
-        },
+    const [language, setLanguage] = useState('java');
+    const [boilerCode, setBoilerCode] = useState('')
+    const [success, setSuccess] = useState(false);
+    const [taskResultFail, setTaskResultFail] = useState<TaskResult>()
+    const [taskResultSuccess, setTaskResultSuccess] = useState<TaskResult>()
 
-
-    ])
+    let taskLenght = 0;
 
     const setCode = (value: string) => {
-        code = value
+        setCodeState(value)
     }
 
     const openModal = () => {
@@ -59,14 +40,13 @@ const GamePage = () => {
         setIsOpen(false);
     }
 
-
-    const submitHandler = () => {
+    const submitTaskHandler = () => {
         fetch('https://localhost:7067/api/SubmitTask', {
             method: "POST",
             credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             },
             body: JSON.stringify(code)
         }).then(response => {
@@ -75,25 +55,32 @@ const GamePage = () => {
             return response
         })
             .then(response => response.json()
-                .then((response:TaskResult) => {
+                .then((response: TaskResult) => {
                     if (!response.success) {
                         setButtonText('prøv igjen')
+                        console.log(success)
+                        console.log(response)
+                        setSuccess(false)
+                        setTaskResultFail(response)
                     } else {
                         setTaskResultCheck(true)
-                        setState(true)
+                        setIsOpen(true)
+                        setSuccess(true)
+                        setButtonText('Submit')
+                        setTaskResultSuccess(response);
                     }
                 })).catch((error: Error) => {
             console.log(error.message)
         })
     }
 
-    const fetchTask = (id: number) => {
+    const selectedTaskHandler = (id: number) => {
         fetch(`https://localhost:7067/api/SelectTask?taskId=${id}`, {
             method: "GET",
             credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             }
         }).then(response => {
             if (!response.ok)
@@ -104,10 +91,15 @@ const GamePage = () => {
                 .then(response => {
                     setTask(response)
                     console.log(response)
-                    setState(false)
+                    setEditor(false)
                 })).catch((error: Error) => {
             console.log(error.message)
         })
+
+    }
+
+    if (task?.testCases.length !== undefined) {
+        taskLenght = task?.testCases.length
     }
     const testCaseHandler = (taskId: number) => {
         fetch(`https://localhost:7067/api/SubmitTestCase?index=${taskId}`, {
@@ -115,7 +107,7 @@ const GamePage = () => {
             credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             },
             body: JSON.stringify(code)
         }).then(response => {
@@ -130,68 +122,125 @@ const GamePage = () => {
             console.log(error.message)
         })
     }
+    const languageHandleOnChange = (event: any) => {
+        let value = event.target.value
+        setLanguage(value)
+        fetch('https://localhost:7067/api/GetStartCode?language=' + value, {
+            method: "GET",
+            credentials: 'include',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            }
+        }).then(response => {
+            if (!response.ok)
+                throw new Error("no data")
+            return response
+        })
+            .then(response => response.text()
+                .then(response => {
+                    setBoilerCode(response)
+
+                })).catch((error: Error) => {
+            console.log(error.message)
+        })
+    }
+
+    const testAllHandler = () => {
+        for (let i = 0; i < taskLenght; i++) {
+            testCaseHandler(i);
+
+        }
+    }
+
+    const nextAssignmentHandler = () => {
+        setEditor(true)
+        setSuccess(false)
+    }
+
+    const codeEditor = () => {
+        return (
+            <div className='min-h-screen max-h-screen max-w-screen'>
+                <Header/>
+                <div className='flex flex-col lg:flex-row justify-between items-stretch '>
+                    <div
+                        className='animate-scale-up-down-opacity basis-2/6 max-h-[88vh] min-w-[400px] min-h-[400px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl m-4 rounded-2xl scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
+                        {task && <Problem task={task}
+                        />}
+                    </div>
+                    <div className='flex flex-col basis-4/6 max-h-[88vh] m-4 animate-scale-up-down-opacity '>
+                        <div className='bg-gameComps rounded-tr-2xl'>
+                            <div className='flex justify-start mb-1'>
+                                <LanguageSelector onChange={languageHandleOnChange}/>
+                            </div>
+                        </div>
+                        <div className='group overflow-auto resize h-screen shadow-2xl bg-gameComps pl-4 pb-4 pr-4 '>
+                            <GameEditor onChange={setCode} editorCode={boilerCode} lang={language}/>
+                        </div>
+
+                        <div className='flex flex-col sm:flex-row '>
+                            <div className='flex flex-col basis-4/6'>
+                                <div
+                                    className='flex flex-row items-center justify-center basis-4/6 overflow-auto overflow-y-hidden bg-gameComps mt-2 p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
+                                    {task?.testCases.map((test, index) => {
+                                        return (
+
+                                            <div className='ml-8 px-4 flex-grow basis-2/4'>
+                                                <ToolTip
+                                                    message={"Input: " + task?.testCases[index].input + "\n" + "Output:" + task?.testCases[index].output}>
+                                                    <TestCases input={test.input} output={test.output}
+                                                               onClick={() => testCaseHandler(index)}
+                                                    />
+                                                </ToolTip>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                                <div
+                                    className='basis-2/4 overflow-x-hidden bg-gameComps mt-2  p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
+                                    <h1>Her kommer consoll output</h1>
+                                </div>
+                            </div>
+                            <div className='justify-between basis-2/6 bg-gameComps mt-2 ml-2 rounded-br-2xl'>
+                                <Actions text={buttonText} test='TestAll'
+                                         handleOnClickSubmit={submitTaskHandler}
+                                         handleOnClickTest={testCaseHandler}
+                                         handleOnTestAllClick={testAllHandler}
+                                />
+                                {taskResultCheck && <RulesModal/>}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+
+    }
     return (
         <>
-            {state &&
+            {editor &&
                 <>
                     <Header/>
-                    <div className='pt-38'>
+                    <div className='pt-38 flex justify-center items-center'>
                         <NewCard>
                             <div>
                                 <Title title="Velg neste utfordring"/>
-                                <Questions onClick={fetchTask} />
+                                <Questions onClick={selectedTaskHandler}/>
                             </div>
                             <ProgressBar/>
                         </NewCard>
                     </div>
                 </>}
-            {!state &&
+            {!editor &&
+                codeEditor()
+            }
+            {success &&
                 <>
-                    <div className='min-h-screen max-h-screen max-w-screen'>
-                        <Header/>
-                        <div className='flex flex-col lg:flex-row justify-between items-stretch '>
-                            <div
-                                className='basis-2/6 max-h-[88vh] min-w-[300px] min-h-[400px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl m-4 '>
-                                <Problem description={String(task?.description)}
-                                         input={String(task?.testCases[0].input)}
-                                         output={String(task?.testCases[0].output)}/>
-                            </div>
-                            <div className='flex flex-col basis-4/6 max-h-[88vh] m-4'>
-                                <div
-                                    className='overflow-auto resize h-screen shadow-2xl bg-gameComps p-4'>
-
-                                    <GameEditor onChange={setCode}/>
-
-                                </div>
-
-                                <div className='flex flex-col sm:flex-row '>
-                                    <div
-                                        className='flex flex-row items-center justify-center basis-4/6 overflow-auto overflow-y-hidden bg-gameComps mt-2 p-4'>
-                                        {testCases.map((test, index) => {
-                                            return (
-
-                                                <div className='ml-8 px-4 flex-grow border-t border-gray-400'>
-                                                    <ToolTip message={(String)('Testcase:' + index)}>
-                                                        <TestCases input={test.input} output={test.output}
-                                                                   onClick={() => testCaseHandler(index)}/>
-                                                    </ToolTip>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                    <div className='justify-between basis-2/6 bg-gameComps mt-2 ml-2'>
-                                        <Actions text={buttonText} test='TestAll' handleOnClick={submitHandler}
-                                                 handleOnClickTest={testCaseHandler}/>
-                                        {taskResultCheck && <RulesModal/>}
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </>}
-            <RulesButton openModal={openModal}/>
-            <RulesModal visible={modalIsOpen} onClose={closeModal}/>
+                    <RulesModal visible={modalIsOpen} onClose={nextAssignmentHandler} modalTitle={'Du vant'}
+                                modalText={'Herlig'} text={'Neste'}/>
+                </>
+            }
         </>
     );
 };
