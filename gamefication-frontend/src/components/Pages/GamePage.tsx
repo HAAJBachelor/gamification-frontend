@@ -39,6 +39,7 @@ const GamePage = () => {
     const closeModal = () => {
         setIsOpen(false);
     }
+
     const submitTaskHandler = () => {
         fetch('https://localhost:7067/api/SubmitTask', {
             method: "POST",
@@ -72,6 +73,7 @@ const GamePage = () => {
             console.log(error.message)
         })
     }
+
     const selectedTaskHandler = (id: number) => {
         fetch(`https://localhost:7067/api/SelectTask?taskId=${id}`, {
             method: "GET",
@@ -95,6 +97,7 @@ const GamePage = () => {
         })
 
     }
+
     if (task?.testCases.length !== undefined) {
         taskLenght = task?.testCases.length
     }
@@ -142,28 +145,31 @@ const GamePage = () => {
             console.log(error.message)
         })
     }
+
     const testAllHandler = () => {
         for (let i = 0; i < taskLenght; i++) {
             testCaseHandler(i);
 
         }
     }
+
     const nextAssignmentHandler = () => {
         setEditor(true)
         setSuccess(false)
     }
+
     const codeEditor = () => {
         return (
             <div className='min-h-screen max-h-screen max-w-screen'>
                 <Header/>
                 <div className='flex flex-col lg:flex-row justify-between items-stretch '>
                     <div
-                        className='basis-2/6 max-h-[88vh] min-w-[400px] min-h-[400px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl m-4 rounded-tl-2xl rounded-bl-2xl scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
+                        className='animate-scale-up-down-opacity basis-2/6 max-h-[88vh] min-w-[400px] min-h-[400px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl m-4 rounded-2xl scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
                         {task && <Problem task={task}
                         />}
                     </div>
-                    <div className='flex flex-col basis-4/6 max-h-[88vh] m-4'>
-                        <div className='bg-gameComps rounded-tr-2xl'>
+                    <div className='flex flex-col basis-4/6 max-h-[88vh] m-4 animate-scale-up-down-opacity'>
+                        <div className='bg-gameComps'>
                             <div className='flex justify-start mb-1'>
                                 <LanguageSelector onChange={languageHandleOnChange}/>
                             </div>
@@ -195,7 +201,6 @@ const GamePage = () => {
                                     <h1>Her kommer consoll output</h1>
                                 </div>
                             </div>
-
                             <div className='justify-between basis-2/6 bg-gameComps mt-2 ml-2 rounded-br-2xl'>
                                 <Actions text={buttonText} test='TestAll'
                                          handleOnClickSubmit={submitTaskHandler}
@@ -210,13 +215,14 @@ const GamePage = () => {
                 </div>
             </div>
         )
+
     }
     return (
         <>
             {editor &&
                 <>
                     <Header/>
-                    <div className='pt-38'>
+                    <div className='pt-38 flex justify-center items-center'>
                         <NewCard>
                             <div>
                                 <Title title="Velg neste utfordring"/>
