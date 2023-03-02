@@ -168,8 +168,8 @@ const GamePage = () => {
                         {task && <Problem task={task}
                         />}
                     </div>
-                    <div className='flex flex-col basis-4/6 max-h-[88vh] m-4 animate-scale-up-down-opacity'>
-                        <div className='bg-gameComps'>
+                    <div className='flex flex-col basis-4/6 max-h-[88vh] m-4 animate-scale-up-down-opacity '>
+                        <div className='bg-gameComps rounded-tr-2xl'>
                             <div className='flex justify-start mb-1'>
                                 <LanguageSelector onChange={languageHandleOnChange}/>
                             </div>
