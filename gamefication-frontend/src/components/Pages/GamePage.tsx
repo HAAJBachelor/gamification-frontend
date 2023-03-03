@@ -7,12 +7,11 @@ import Problem from "../CodeEditor/Problem";
 import ProgressBar from "../ProgressBar";
 import TestCases from "../Game/TestCases";
 import Actions from "../Game/Actions";
-import {GameTask, TaskResult, TestCaseResult} from "../models";
+import {GameTask, TaskResult} from "../models";
 import RulesModal from "../UI/RulesModal";
 import Header from "../Header/Header";
 import ToolTip from "../ToolTip";
 import LanguageSelector from "../Game/LanguageSelector";
-import testCases from "../Game/TestCases";
 
 
 const GamePage = () => {
@@ -27,10 +26,8 @@ const GamePage = () => {
     const [success, setSuccess] = useState(false);
     const [taskResultFail, setTaskResultFail] = useState<TaskResult>()
     const [taskResultSuccess, setTaskResultSuccess] = useState<TaskResult>()
-    const [ping, setPing] = useState(false)
     const [succesfulTestCases, setSuccessfulTestCases] = useState<boolean[]>([])
     let data = '';
-
     let taskLenght = 0;
 
     const setCode = (value: string) => {
