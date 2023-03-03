@@ -27,7 +27,6 @@ const GamePage = () => {
     const [taskResultFail, setTaskResultFail] = useState<TaskResult>()
     const [taskResultSuccess, setTaskResultSuccess] = useState<TaskResult>()
     const [succesfulTestCases, setSuccessfulTestCases] = useState<boolean[]>([])
-    let data = '';
     let taskLenght = 0;
 
     const setCode = (value: string) => {
