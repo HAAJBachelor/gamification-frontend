@@ -99,6 +99,7 @@ const dataView = (title: string, data: string) => {
 
 const Problem = (props: Props) => {
     const task = props.task
+
     return (
         <>
             <div>

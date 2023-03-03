@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {RefObject, useEffect, useState} from 'react';
 import NewCard from "../UI/NewCard";
 import {Title} from "../Title/Title";
 import Questions from "../Questions/Questions";
@@ -10,9 +10,12 @@ import Actions from "../Game/Actions";
 import {GameTask, TaskResult} from "../models";
 import RulesModal from "../UI/RulesModal";
 import Header from "../Header/Header";
-import ToolTip from "../ToolTip";
 import LanguageSelector from "../Game/LanguageSelector";
 
+interface MousePosition {
+    x: number;
+    y: number;
+}
 
 const GamePage = () => {
     const [editor, setEditor] = useState(true);
@@ -26,6 +29,14 @@ const GamePage = () => {
     const [success, setSuccess] = useState(false);
     const [taskResultFail, setTaskResultFail] = useState<TaskResult>()
     const [taskResultSuccess, setTaskResultSuccess] = useState<TaskResult>()
+    const [elementRef, setElementRef] = useState<RefObject<HTMLDivElement>[]>([])
+    let mousePosition: MousePosition = {x: 0, y: 0}
+    const [manhattanDistance, setManhattanDistance] = useState<Array<number>>([]);
+
+    useEffect(() => {
+        setElementRef(refs => Array(5).fill([{}, {}, {}, {}, {}]).map((_, i) => refs[i] || React.createRef<HTMLDivElement>()))
+        console.log("!!!!!", elementRef)
+    }, [task?.testCases])
 
     let taskLenght = 0;
 
@@ -98,9 +109,6 @@ const GamePage = () => {
 
     }
 
-    if (task?.testCases.length !== undefined) {
-        taskLenght = task?.testCases.length
-    }
     const testCaseHandler = (taskId: number) => {
         fetch(`https://localhost:7067/api/SubmitTestCase?index=${taskId}`, {
             method: "POST",
@@ -158,6 +166,27 @@ const GamePage = () => {
         setSuccess(false)
     }
 
+    const handleOnMouseMove = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        if (!task)
+            return
+        for (let i = 0; i < task.testCases.length; i++) {
+            const {left, top, width, height} = elementRef[i]?.current!.getBoundingClientRect();
+            const x = event.clientX - left;
+            const y = event.clientY - top;
+            mousePosition = {x: x, y: y}
+            const centerX = width / 2;
+            const centerY = height / 2;
+            let md = Math.abs(centerX - x) + Math.abs(centerY - y);
+            md /= 50;
+            md = 5 - md;
+            if (md === manhattanDistance[i] || md < 1)
+                continue
+            manhattanDistance[i] = md
+            console.log(manhattanDistance)
+        }
+        setManhattanDistance([...manhattanDistance])
+    }
+
     const codeEditor = () => {
         return (
             <div className='min-h-screen max-h-screen max-w-screen'>
@@ -174,25 +203,22 @@ const GamePage = () => {
                                 <LanguageSelector onChange={languageHandleOnChange}/>
                             </div>
                         </div>
-                        <div className='group overflow-auto resize h-screen shadow-2xl bg-gameComps pl-4 pb-4 pr-4 '>
+                        <div className='group overflow-auto resize h-screen shadow-2xl bg-gameComps pl-4 pb-4 pr-4 z-0'>
                             <GameEditor onChange={setCode} editorCode={boilerCode} lang={language}/>
                         </div>
 
-                        <div className='flex flex-col sm:flex-row '>
-                            <div className='flex flex-col basis-4/6'>
+                        <div className='flex flex-col sm:flex-row'>
+                            <div className='flex flex-col '>
                                 <div
-                                    className='flex flex-row items-center justify-center basis-4/6 overflow-auto overflow-y-hidden bg-gameComps mt-2 p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
+                                    className='flex flex-row justify-center gap-12 items-center  bg-gameComps mt-2 px-4 py-20 w-[40rem] max-h-48 translate-all overflow-visible'
+                                    onMouseMove={handleOnMouseMove}>
                                     {task?.testCases.map((test, index) => {
                                         return (
 
-                                            <div className='ml-8 px-4 flex-grow basis-2/4'>
-                                                <ToolTip
-                                                    message={"Input: " + task?.testCases[index].input + "\n" + "Output:" + task?.testCases[index].output}>
-                                                    <TestCases input={test.input} output={test.output}
-                                                               onClick={() => testCaseHandler(index)}
-                                                    />
-                                                </ToolTip>
-                                            </div>
+                                            <TestCases ref={elementRef[index]} input={test.input} output={test.output}
+                                                       onClick={() => testCaseHandler(index)}
+                                                       distance={manhattanDistance[index]}
+                                            />
                                         );
                                     })}
                                 </div>
