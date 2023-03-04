@@ -1,21 +1,17 @@
-import React, {RefObject, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import NewCard from "../UI/NewCard";
 import {Title} from "../Title/Title";
 import Questions from "../Questions/Questions";
 import GameEditor from "../CodeEditor/GameEditor";
 import Problem from "../CodeEditor/Problem";
 import ProgressBar from "../ProgressBar";
-import TestCases from "../Game/TestCases";
 import Actions from "../Game/Actions";
-import {GameTask, TaskResult} from "../models";
+import {GameTask, TaskResult, TestCaseResult} from "../models";
 import RulesModal from "../UI/RulesModal";
 import Header from "../Header/Header";
 import LanguageSelector from "../Game/LanguageSelector";
+import TestCaseContainer from "../CodeEditor/TestCaseContainer";
 
-interface MousePosition {
-    x: number;
-    y: number;
-}
 
 const GamePage = () => {
     const [editor, setEditor] = useState(true);
@@ -29,14 +25,8 @@ const GamePage = () => {
     const [success, setSuccess] = useState(false);
     const [taskResultFail, setTaskResultFail] = useState<TaskResult>()
     const [taskResultSuccess, setTaskResultSuccess] = useState<TaskResult>()
-    const [elementRef, setElementRef] = useState<RefObject<HTMLDivElement>[]>([])
-    let mousePosition: MousePosition = {x: 0, y: 0}
-    const [manhattanDistance, setManhattanDistance] = useState<Array<number>>([]);
+    const [successfulTestCases, setSuccessfulTestCases] = useState<number[]>(new Array(10).fill(0))
 
-    useEffect(() => {
-        setElementRef(refs => Array(5).fill([{}, {}, {}, {}, {}]).map((_, i) => refs[i] || React.createRef<HTMLDivElement>()))
-        console.log("!!!!!", elementRef)
-    }, [task?.testCases])
 
     let taskLenght = 0;
 
@@ -124,8 +114,10 @@ const GamePage = () => {
             return response
         })
             .then(response => response.json()
-                .then(response => {
+                .then((response: TestCaseResult) => {
                     console.log(response)
+                    successfulTestCases[taskId] = response.success ? 1 : -1
+                    setSuccessfulTestCases([...successfulTestCases])
                 })).catch((error: Error) => {
             console.log(error.message)
         })
@@ -166,26 +158,6 @@ const GamePage = () => {
         setSuccess(false)
     }
 
-    const handleOnMouseMove = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        if (!task)
-            return
-        for (let i = 0; i < task.testCases.length; i++) {
-            const {left, top, width, height} = elementRef[i]?.current!.getBoundingClientRect();
-            const x = event.clientX - left;
-            const y = event.clientY - top;
-            mousePosition = {x: x, y: y}
-            const centerX = width / 2;
-            const centerY = height / 2;
-            let md = Math.abs(centerX - x) + Math.abs(centerY - y);
-            md /= 50;
-            md = 5 - md;
-            if (md === manhattanDistance[i] || md < 1)
-                continue
-            manhattanDistance[i] = md
-            console.log(manhattanDistance)
-        }
-        setManhattanDistance([...manhattanDistance])
-    }
 
     const codeEditor = () => {
         return (
@@ -209,19 +181,10 @@ const GamePage = () => {
 
                         <div className='flex flex-col sm:flex-row'>
                             <div className='flex flex-col '>
-                                <div
-                                    className='flex flex-row justify-center gap-12 items-center  bg-gameComps mt-2 px-4 py-20 w-[40rem] max-h-48 translate-all overflow-visible'
-                                    onMouseMove={handleOnMouseMove}>
-                                    {task?.testCases.map((test, index) => {
-                                        return (
-
-                                            <TestCases ref={elementRef[index]} input={test.input} output={test.output}
-                                                       onClick={() => testCaseHandler(index)}
-                                                       distance={manhattanDistance[index]}
-                                            />
-                                        );
-                                    })}
-                                </div>
+                                <TestCaseContainer task={task ? task.testCases : []}
+                                                   testCaseHandler={testCaseHandler}
+                                                   successfulTests={successfulTestCases}
+                                ></TestCaseContainer>
                                 <div
                                     className='basis-2/4 overflow-x-hidden bg-gameComps mt-2  p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
                                     <h1>Her kommer consoll output</h1>

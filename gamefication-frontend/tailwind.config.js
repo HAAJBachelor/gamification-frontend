@@ -4,7 +4,6 @@ module.exports = {
     content: [
         "./src/**/*.{js,jsx,ts,tsx}",
     ],
-
     theme: {
         colors: {
             background: 'rgb(43,43,43)',
@@ -28,6 +27,9 @@ module.exports = {
             animation: {
                 'scale-up-down-opacity': 'scaleupdownopacity 0.5s ease-in-out ',
                 'scale-up-down': 'scaleupdown 0.5s ease-in-out ',
+                'blow-up': 'blowup 0.2s ease-in ',
+                'blow-up-big': 'blowupBig 0.2s ease-in ',
+                'fade-in': 'fadeIn 1s ease-in 1',
             },
             keyframes: {
                 scaleupdownopacity: {
@@ -38,7 +40,25 @@ module.exports = {
                 scaleupdown: {
                     '0%': {transform: 'scale(0.75)'},
                     '50%': {transform: 'scale(1)'}
+                },
+                blowup: {
+                    '0%': {transform: 'scale(0.5)'},
+                    '75%': {transform: 'scale(1.2)'},
+                    '100%': {transform: 'scale(1) '},
+                },
+                blowupBig: {
+                    '0%': {transform: 'scale(0.5)'},
+                    '50%': {transform: 'scale(4)'},
+                    '100%': {transform: 'scale(1) '},
+                },
+                fadeIn: {
+                    '0%': {opacity: '0%', transform: 'scale(0)'},
+                    '100%': {opacity: '100%', transform: 'scale(50)'}
                 }
+            },
+            transitionProperty: {
+                width: 'width',
+                height: 'height',
             }
         }
 

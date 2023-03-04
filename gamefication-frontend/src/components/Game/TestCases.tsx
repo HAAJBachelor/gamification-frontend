@@ -7,14 +7,14 @@ type Props = {
     onClick: (id: number) => void;
     ref: React.Ref<HTMLDivElement>
     distance: number
+    success: number
+    id: number
 }
 
 const TestCases: React.FC<Props> = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     return (
-        <div className={""}>
-            <TestCase input={props.input} output={props.output} onClick={props.onClick} id={0} ref={ref}
-                      distance={props.distance}/>
-        </div>
+        <TestCase input={props.input} output={props.output} onClick={props.onClick} id={props.id} ref={ref}
+                  distance={props.distance} success={props.success}/>
     );
 });
 

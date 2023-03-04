@@ -57,7 +57,6 @@ const parseText = (data: string) => {
     }
     if (currentData.length > 0)
         output.push({bold: bold, highlight: highlight, data: currentData});
-    console.log(output)
     return output.map(t => {
         if (t.bold && !t.highlight)
             return <span className="font-bold text-white rounded">{t.data}</span>
