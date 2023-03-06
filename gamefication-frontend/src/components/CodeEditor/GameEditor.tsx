@@ -67,7 +67,7 @@ const GameEditor = (props: Props) => {
                 }}
                 language={props.lang ? props.lang : 'java'}
                 onMount={handleOnMount}
-                defaultValue='////hahahaskj.dbask.dbjkjab.sd'
+                defaultValue='//'
                 theme={"vs-dark"}
                 onChange={handleEditorChange}
                 value={props.editorCode ? props.editorCode : boilerCode}

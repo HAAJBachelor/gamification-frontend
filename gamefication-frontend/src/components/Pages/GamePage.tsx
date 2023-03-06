@@ -27,7 +27,7 @@ const GamePage = () => {
     const [taskResultSuccess, setTaskResultSuccess] = useState<TaskResult>()
     const [successfulTestCases, setSuccessfulTestCases] = useState<number[]>(new Array(10).fill(0))
 
-
+    let data = '';
     let taskLenght = 0;
 
     const setCode = (value: string) => {
@@ -89,8 +89,9 @@ const GamePage = () => {
             return response
         })
             .then(response => response.json()
-                .then(response => {
+                .then((response:GameTask) => {
                     setTask(response)
+                    setSuccessfulTestCases(new Array<boolean>(response.testCases.length));
                     console.log(response)
                     setEditor(false)
                 })).catch((error: Error) => {
@@ -99,8 +100,21 @@ const GamePage = () => {
 
     }
 
-    const testCaseHandler = (taskId: number) => {
-        fetch(`https://localhost:7067/api/SubmitTestCase?index=${taskId}`, {
+    const testCaseHandler = (taskId : number) => {
+        runTestCase(taskId).then(response => {
+            if (!response.ok)
+                throw new Error("no data")
+            return response
+        })
+            .then(response => response.json()
+                .then(response => {
+                    console.log(response)
+                })).catch((error: Error) => {
+            console.log(error.message)
+        })
+    }
+    const runTestCase = async (taskId: number) => {
+        return await fetch(`https://localhost:7067/api/SubmitTestCase?index=${taskId}`, {
             method: "POST",
             credentials: 'include',
             headers: {
@@ -108,20 +122,9 @@ const GamePage = () => {
                 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             },
             body: JSON.stringify(code)
-        }).then(response => {
-            if (!response.ok)
-                throw new Error("no data")
-            return response
-        })
-            .then(response => response.json()
-                .then((response: TestCaseResult) => {
-                    console.log(response)
-                    successfulTestCases[taskId] = response.success ? 1 : -1
-                    setSuccessfulTestCases([...successfulTestCases])
-                })).catch((error: Error) => {
-            console.log(error.message)
         })
     }
+
     const languageHandleOnChange = (event: any) => {
         let value = event.target.value
         setLanguage(value)
@@ -146,10 +149,25 @@ const GamePage = () => {
         })
     }
 
-    const testAllHandler = () => {
-        for (let i = 0; i < taskLenght; i++) {
-            testCaseHandler(i);
+    const validateTestCase =  async (taskId : number) : Promise<boolean> => {
+        let success = await runTestCase(taskId)
+        let results = await success.json()
+        return results.success
+    }
 
+    const testAllHandler = async () => {
+        for (let i = 0; i < taskLenght; i++) {
+            let success = await validateTestCase(i)
+            console.log(success)
+            if(!success) {
+                succesfulTestCases[i] = false
+                setSuccessfulTestCases([...succesfulTestCases])
+                break;
+            }
+            else {
+                succesfulTestCases[i] = true
+                setSuccessfulTestCases([...succesfulTestCases])
+            }
         }
     }
 
@@ -157,7 +175,6 @@ const GamePage = () => {
         setEditor(true)
         setSuccess(false)
     }
-
 
     const codeEditor = () => {
         return (
