@@ -1,11 +1,14 @@
 import TestCases from "../Game/TestCases";
 import React, {RefObject, useEffect, useState} from "react";
 import {TestCase} from "../models";
+import {ConsoleData, ConsoleDisplayType} from "../Pages/GamePage";
 
 type Props = {
     task: TestCase[]
-    testCaseHandler: (index: number) => void
-    successfulTests: number[]
+    testCaseHandler: (index: number) => Promise<Response>
+    runAllTestCases: boolean
+    setRunAllTestCases: (val: boolean) => void
+    setConsoleOutput: (val: ConsoleData) => void
 }
 
 interface MousePosition {
@@ -13,19 +16,37 @@ interface MousePosition {
     y: number;
 }
 
-
 const TestCaseContainer = (props: Props) => {
     const testCases = props.task
     const [elementRef, setElementRef] = useState<RefObject<HTMLDivElement>[]>([])
     let mousePosition: MousePosition = {x: 0, y: 0}
-    const [mouseDistance, setMouseDistance] = useState<Array<number>>([]);
+    const [mouseDistance, setMouseDistance] = useState<Array<number>>([])
+    const [running, setRunning] = useState<boolean[]>([])
 
     useEffect(() => {
-        setElementRef(refs => Array(5).fill([{}, {}, {}, {}, {}]).map((_, i) => refs[i] || React.createRef<HTMLDivElement>()))
+        setElementRef(refs => Array(testCases.length).fill([{}]).map((_, i) => refs[i] || React.createRef<HTMLDivElement>()))
     }, [testCases])
 
-    const handleOnMouseMove = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const setRunningCase = (index: number, val: boolean, done?: boolean) => {
+        if (index == testCases.length || done) {
+            props.setRunAllTestCases(false)
+            for (let i = 0; i < running.length; i++)
+                running[i] = false
+            setRunning([...running])
+            return
+        }
+        running[index] = val
+        setRunning([...running])
+    }
 
+    useEffect(() => {
+        if (props.runAllTestCases) {
+            setRunningCase(0, true)
+            props.setConsoleOutput({data: "", display: ConsoleDisplayType.DEFAULT})
+        }
+    }, [props.runAllTestCases])
+
+    const handleOnMouseMove = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         for (let i = 0; i < testCases.length; i++) {
             if (!elementRef[i])
                 continue
@@ -61,8 +82,10 @@ const TestCaseContainer = (props: Props) => {
                     <TestCases ref={elementRef[index]} input={test.input} output={test.output}
                                onClick={() => props.testCaseHandler(index)}
                                distance={mouseDistance[index]}
-                               success={props.successfulTests[index]}
                                id={index}
+                               setRunning={setRunningCase}
+                               running={running[index]}
+                               setConsoleOutput={props.setConsoleOutput}
                     />
                 );
             })}

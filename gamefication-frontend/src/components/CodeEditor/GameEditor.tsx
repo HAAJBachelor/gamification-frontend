@@ -4,7 +4,6 @@ import Editor from "@monaco-editor/react";
 
 type Props = {
     onChange: (value: string) => void
-    editorCode: string,
     lang: string,
 
 }
@@ -25,8 +24,7 @@ const GameEditor = (props: Props) => {
     }
 
     const fetchStartCode = () => {
-
-        fetch('https://localhost:7067/api/GetStartCode?language=java', {
+        fetch(`https://localhost:7067/api/GetStartCode?language=${props.lang}`, {
             method: "GET",
             credentials: 'include',
             headers: {
@@ -70,7 +68,7 @@ const GameEditor = (props: Props) => {
                 defaultValue='//'
                 theme={"vs-dark"}
                 onChange={handleEditorChange}
-                value={props.editorCode ? props.editorCode : boilerCode}
+                value={boilerCode}
             />
         </>
     );

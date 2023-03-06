@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import NewCard from "../UI/NewCard";
 import {Title} from "../Title/Title";
 import Questions from "../Questions/Questions";
@@ -6,12 +6,22 @@ import GameEditor from "../CodeEditor/GameEditor";
 import Problem from "../CodeEditor/Problem";
 import ProgressBar from "../ProgressBar";
 import Actions from "../Game/Actions";
-import {GameTask, TaskResult, TestCaseResult} from "../models";
+import {GameTask, TaskResult} from "../models";
 import RulesModal from "../UI/RulesModal";
 import Header from "../Header/Header";
 import LanguageSelector from "../Game/LanguageSelector";
 import TestCaseContainer from "../CodeEditor/TestCaseContainer";
 
+export enum ConsoleDisplayType {
+    SUCCESS,
+    ERROR,
+    DEFAULT
+}
+
+export interface ConsoleData {
+    data: string
+    display: ConsoleDisplayType
+}
 
 const GamePage = () => {
     const [editor, setEditor] = useState(true);
@@ -25,9 +35,9 @@ const GamePage = () => {
     const [success, setSuccess] = useState(false);
     const [taskResultFail, setTaskResultFail] = useState<TaskResult>()
     const [taskResultSuccess, setTaskResultSuccess] = useState<TaskResult>()
-    const [successfulTestCases, setSuccessfulTestCases] = useState<number[]>(new Array(10).fill(0))
+    const [runAllTestCases, setRunAllTestCases] = useState(false)
+    const [consoleOutput, setConsoleOutput] = useState<ConsoleData>({data: "", display: ConsoleDisplayType.DEFAULT})
 
-    let data = '';
     let taskLenght = 0;
 
     const setCode = (value: string) => {
@@ -89,9 +99,8 @@ const GamePage = () => {
             return response
         })
             .then(response => response.json()
-                .then((response:GameTask) => {
+                .then((response: GameTask) => {
                     setTask(response)
-                    setSuccessfulTestCases(new Array<boolean>(response.testCases.length));
                     console.log(response)
                     setEditor(false)
                 })).catch((error: Error) => {
@@ -100,7 +109,7 @@ const GamePage = () => {
 
     }
 
-    const testCaseHandler = (taskId : number) => {
+    const testCaseHandler = (taskId: number) => {
         runTestCase(taskId).then(response => {
             if (!response.ok)
                 throw new Error("no data")
@@ -125,51 +134,21 @@ const GamePage = () => {
         })
     }
 
-    const languageHandleOnChange = (event: any) => {
-        let value = event.target.value
-        setLanguage(value)
-        fetch('https://localhost:7067/api/GetStartCode?language=' + value, {
-            method: "GET",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            }
-        }).then(response => {
-            if (!response.ok)
-                throw new Error("no data")
-            return response
-        })
-            .then(response => response.text()
-                .then(response => {
-                    setBoilerCode(response)
+    useEffect(() => {
+        console.log(consoleOutput)
+    }, [consoleOutput])
 
-                })).catch((error: Error) => {
-            console.log(error.message)
-        })
+    const languageHandleOnChange = (event: any) => {
+        const lang = event.target.value
+        setLanguage(lang)
     }
 
-    const validateTestCase =  async (taskId : number) : Promise<boolean> => {
+    const validateTestCase = async (taskId: number): Promise<boolean> => {
         let success = await runTestCase(taskId)
         let results = await success.json()
         return results.success
     }
 
-    const testAllHandler = async () => {
-        for (let i = 0; i < taskLenght; i++) {
-            let success = await validateTestCase(i)
-            console.log(success)
-            if(!success) {
-                succesfulTestCases[i] = false
-                setSuccessfulTestCases([...succesfulTestCases])
-                break;
-            }
-            else {
-                succesfulTestCases[i] = true
-                setSuccessfulTestCases([...succesfulTestCases])
-            }
-        }
-    }
 
     const nextAssignmentHandler = () => {
         setEditor(true)
@@ -193,25 +172,36 @@ const GamePage = () => {
                             </div>
                         </div>
                         <div className='group overflow-auto resize h-screen shadow-2xl bg-gameComps pl-4 pb-4 pr-4 z-0'>
-                            <GameEditor onChange={setCode} editorCode={boilerCode} lang={language}/>
+                            <GameEditor onChange={setCode} lang={language}/>
                         </div>
 
                         <div className='flex flex-col sm:flex-row'>
-                            <div className='flex flex-col '>
+                            <div className='flex flex-col  h-max'>
                                 <TestCaseContainer task={task ? task.testCases : []}
-                                                   testCaseHandler={testCaseHandler}
-                                                   successfulTests={successfulTestCases}
+                                                   testCaseHandler={runTestCase}
+                                                   runAllTestCases={runAllTestCases}
+                                                   setRunAllTestCases={setRunAllTestCases}
+                                                   setConsoleOutput={setConsoleOutput}
                                 ></TestCaseContainer>
                                 <div
-                                    className='basis-2/4 overflow-x-hidden bg-gameComps mt-2  p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
+                                    className='bg-gameComps mt-2  p-4 w-full h-full'>
                                     <h1>Her kommer consoll output</h1>
+                                    <div
+                                        className={"bg-background w-full max-h-[10rem] p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900"}>
+                                        <p className={`
+                                        ${consoleOutput.display == ConsoleDisplayType.DEFAULT ? "text-white" : consoleOutput.display == ConsoleDisplayType.SUCCESS ? "text-green-500" : "text-red-500"} whitespace-pre-wrap`}>
+                                            {
+                                                consoleOutput.data
+                                            }
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                            <div className='justify-between basis-2/6 bg-gameComps mt-2 ml-2 rounded-br-2xl'>
+                            <div className='justify-between bg-gameComps mt-2 ml-2 rounded-br-2xl'>
                                 <Actions text={buttonText} test='TestAll'
                                          handleOnClickSubmit={submitTaskHandler}
                                          handleOnClickTest={testCaseHandler}
-                                         handleOnTestAllClick={testAllHandler}
+                                         handleOnTestAllClick={() => setRunAllTestCases(true)}
                                 />
                                 {taskResultCheck && <RulesModal/>}
                             </div>

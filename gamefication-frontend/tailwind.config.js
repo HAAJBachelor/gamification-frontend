@@ -30,6 +30,7 @@ module.exports = {
                 'blow-up': 'blowup 0.2s ease-in ',
                 'blow-up-big': 'blowupBig 0.2s ease-in ',
                 'fade-in': 'fadeIn 1s ease-in 1',
+                'shake': 'shake 0.1s ease-in-out 5'
             },
             keyframes: {
                 scaleupdownopacity: {
@@ -54,7 +55,12 @@ module.exports = {
                 fadeIn: {
                     '0%': {opacity: '0%', transform: 'scale(0)'},
                     '100%': {opacity: '100%', transform: 'scale(50)'}
-                }
+                },
+                shake: {
+                    '0%': {transform: 'translateX(0px)'},
+                    '50%': {transform: 'translateX(2px)'},
+                    '100%': {transform: 'translateX(-2px)'},
+                },
             },
             transitionProperty: {
                 width: 'width',
