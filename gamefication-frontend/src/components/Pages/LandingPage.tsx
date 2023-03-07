@@ -49,8 +49,8 @@ const LandingPage = () => {
             <div className='pt-38'>
                 <NewCard>
                     <Title title="Velkommen til Gamification"/>
-                    <div className='flex justify-center cursor-pointer'>
-                        <img onClick={startSession} className="max-w-52 max-h-52 m-6 rounded-2xl group-hover:shadow-md group-hover:shadow-yellow-500" src={yellowFolk} alt="two OXX yellow folk"/>
+                    <div className='flex justify-center'>
+                        <img onClick={startSession} className="max-w-52 max-h-52 m-6 rounded-2xl group-hover:shadow-md group-hover:shadow-yellow-500 cursor-pointer" src={yellowFolk} alt="two OXX yellow folk"/>
                     </div>
                     <div className='flex justify-center align-center'>
                        <Button text="Start" handleOnClick={startSession}></Button>
