@@ -1,30 +1,26 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import TestCase from "./TestCase";
+import {ConsoleData} from "../Pages/GamePage";
 
 type Props = {
     input: string,
     output: string,
-    onClick: (id: number) => void;
-    taskIndex : number,
-    successful : boolean[]
-
-
+    onClick: (id: number) => Promise<Response>
+    ref: React.Ref<HTMLDivElement>
+    distance: number
+    id: number
+    setRunning: (index: number, val: boolean) => void
+    running: boolean
+    setConsoleOutput: (val: ConsoleData) => void
 }
 
-const TestCases = (props:Props) => {
-    const [state, setState] = useState(false)
-    const [successful, setSuccessful] = useState(false)
-
-    useEffect(() => {
-        setSuccessful(props.successful[props.taskIndex])
-        console.log("setting success")
-    }, [props.successful])
-
+const TestCases: React.FC<Props> = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     return (
-        <div>
-            <TestCase successful={successful} input={props.input} output={props.output} onClick={props.onClick} id={0} />
-        </div>
+        <TestCase input={props.input} output={props.output} onClick={props.onClick} id={props.id} ref={ref}
+                  distance={props.distance} setRunning={props.setRunning} running={props.running}
+                  setConsoleOutput={props.setConsoleOutput}
+        />
     );
-};
+});
 
 export default TestCases;
