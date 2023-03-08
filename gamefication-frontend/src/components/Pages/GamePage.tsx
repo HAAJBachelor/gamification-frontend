@@ -6,7 +6,7 @@ import GameEditor from "../CodeEditor/GameEditor";
 import Problem from "../CodeEditor/Problem";
 import ProgressBar from "../ProgressBar";
 import Actions from "../Game/Actions";
-import {GameTask, TaskResult, TestCaseResult} from "../models";
+import {GameTask, TaskResult} from "../models";
 import RulesModal from "../UI/RulesModal";
 import Header from "../Header/Header";
 import LanguageSelector from "../Game/LanguageSelector";
@@ -165,7 +165,7 @@ const GamePage = () => {
                         {task && <Problem task={task}
                         />}
                     </div>
-                    <div className='flex flex-col basis-4/6 max-h-fit m-4 animate-scale-up-down-opacity '>
+                    <div className='flex flex-col basis-4/6 max-h-[88vh] m-4 animate-scale-up-down-opacity '>
                         <div className='bg-gameComps rounded-tr-2xl'>
                             <div className='flex justify-start mb-1'>
                                 <LanguageSelector onChange={languageHandleOnChange}/>
@@ -184,7 +184,7 @@ const GamePage = () => {
                                                    setConsoleOutput={setConsoleOutput}
                                 ></TestCaseContainer>
                                 <div
-                                    className='bg-gameComps mt-2  p-4 w-full h-full'>
+                                    className='bg-gameComps mt-2 p-4 w-full h-full'>
                                     <h1>Her kommer consoll output</h1>
                                     <div
                                         className={"bg-background w-full max-h-[10rem] p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900"}>
