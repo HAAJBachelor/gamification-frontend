@@ -67,7 +67,7 @@ const LandingPage = () => {
   });
 
   return (
-    <div className='pt-38'>
+    <div className='justify-center pt-38'>
       <NewCard>
         <Title title='Velkommen til Gamification' />
         <div className="group">
