@@ -73,13 +73,12 @@ const LandingPage = () => {
         <div className="group">
           <div className='flex justify-center'>
             <img
-              onClick={startSession}
-              className='max-w-52 max-h-52 m-6 rounded-2xl group-hover:shadow-md group-hover:shadow-yellow-500 cursor-pointer'
+              className='max-w-52 max-h-52 m-6 rounded-2xl group-hover:shadow-md group-hover:shadow-yellow-500'
               src={yellowFolk}
               alt='two OXX yellow folk'
             />
           </div>
-          <div className='flex flex-col justify-center items-center w-full gap-4'>
+          <div className='flex flex-row justify-center items-center w-full gap-6'>
             {sessionInProgress && (
               <Button text='Fortsett spill' handleOnClick={startSession} />
             )}
