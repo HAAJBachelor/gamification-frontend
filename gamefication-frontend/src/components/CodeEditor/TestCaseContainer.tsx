@@ -75,7 +75,7 @@ const TestCaseContainer = (props: Props) => {
 
     return (
         <div
-            className='flex flex-row justify-center gap-24 items-center bg-gameComps mt-2 px-4 py-20 w-[40rem] h-56 max-h-48 translate-all'
+            className='flex flex-row justify-center gap-24 items-center bg-gameComps mt-2 px-4 py-20 h-56 max-h-48 translate-all'
             onMouseMove={handleOnMouseMove} onMouseLeave={handleOnMouseLeave}>
             {testCases.map((test, index) => {
                 return (

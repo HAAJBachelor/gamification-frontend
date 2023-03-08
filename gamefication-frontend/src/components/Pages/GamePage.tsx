@@ -175,8 +175,8 @@ const GamePage = () => {
                             <GameEditor onChange={setCode} lang={language}/>
                         </div>
 
-                        <div className='flex flex-col sm:flex-row'>
-                            <div className='flex flex-col  h-max'>
+                        <div className='flex flex-col sm:flex-row '>
+                            <div className='flex flex-col h-max basis-5/6'>
                                 <TestCaseContainer task={task ? task.testCases : []}
                                                    testCaseHandler={runTestCase}
                                                    runAllTestCases={runAllTestCases}
@@ -184,10 +184,10 @@ const GamePage = () => {
                                                    setConsoleOutput={setConsoleOutput}
                                 ></TestCaseContainer>
                                 <div
-                                    className='bg-gameComps mt-2 p-4 w-full h-full'>
+                                    className='bg-gameComps mt-2 p-4 w-full h-full basis-5/6'>
                                     <h1>Her kommer consoll output</h1>
                                     <div
-                                        className={"bg-background w-full max-h-[10rem] p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900"}>
+                                        className={"bg-background w-full h-full max-h-[15rem] p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900"}>
                                         <p className={`
                                         ${consoleOutput.display == ConsoleDisplayType.DEFAULT ? "text-white" : consoleOutput.display == ConsoleDisplayType.SUCCESS ? "text-green-500" : "text-red-500"} whitespace-pre-wrap`}>
                                             {
@@ -197,7 +197,7 @@ const GamePage = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className='justify-between bg-gameComps mt-2 ml-2 rounded-br-2xl'>
+                            <div className='justify-between bg-gameComps mt-2 ml-2 rounded-br-2xl basis-1/6'>
                                 <Actions text={buttonText} test='TestAll'
                                          handleOnClickSubmit={submitTaskHandler}
                                          handleOnClickTest={testCaseHandler}
