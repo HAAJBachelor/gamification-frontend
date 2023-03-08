@@ -171,23 +171,27 @@ const GamePage = () => {
                                 <LanguageSelector onChange={languageHandleOnChange}/>
                             </div>
                         </div>
-                        <div className='group overflow-auto resize h-screen shadow-2xl bg-gameComps pl-4 pb-4 pr-4 z-0'>
+                        <div
+                            className='group overflow-auto resize h-screen min-w-[400px] min-h-[400px] shadow-2xl bg-gameComps pl-4 pb-4 pr-4 z-0'>
                             <GameEditor onChange={setCode} lang={language}/>
                         </div>
 
-                        <div className='flex flex-col sm:flex-row '>
+                        <div className='flex flex-col sm:flex-row footer'>
                             <div className='flex flex-col h-max basis-5/6'>
-                                <TestCaseContainer task={task ? task.testCases : []}
-                                                   testCaseHandler={runTestCase}
-                                                   runAllTestCases={runAllTestCases}
-                                                   setRunAllTestCases={setRunAllTestCases}
-                                                   setConsoleOutput={setConsoleOutput}
-                                ></TestCaseContainer>
+
+                                <div className='basis-2/4'>
+                                    <TestCaseContainer task={task ? task.testCases : []}
+                                                       testCaseHandler={runTestCase}
+                                                       runAllTestCases={runAllTestCases}
+                                                       setRunAllTestCases={setRunAllTestCases}
+                                                       setConsoleOutput={setConsoleOutput}
+                                    ></TestCaseContainer>
+                                </div>
                                 <div
-                                    className='bg-gameComps mt-2 p-4 w-full h-full basis-5/6'>
+                                    className='bg-gameComps mt-2 p-4 w-full h-full basis-2/4'>
                                     <h1>Her kommer consoll output</h1>
                                     <div
-                                        className={"bg-background w-full h-full max-h-[15rem] p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900"}>
+                                        className={"bg-background w-full h-[90px] max-h-[15rem] p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900"}>
                                         <p className={`
                                         ${consoleOutput.display == ConsoleDisplayType.DEFAULT ? "text-white" : consoleOutput.display == ConsoleDisplayType.SUCCESS ? "text-green-500" : "text-red-500"} whitespace-pre-wrap`}>
                                             {
@@ -195,9 +199,11 @@ const GamePage = () => {
                                             }
                                         </p>
                                     </div>
+
                                 </div>
                             </div>
-                            <div className='justify-between bg-gameComps mt-2 ml-2 rounded-br-2xl basis-1/6'>
+                            <div
+                                className='justify-between bg-gameComps mt-2 ml-2 rounded-br-2xl basis-1/6 lg:mt-2 ml-2 rounded bl-2xl'>
                                 <Actions text={buttonText} test='TestAll'
                                          handleOnClickSubmit={submitTaskHandler}
                                          handleOnClickTest={testCaseHandler}
