@@ -157,7 +157,7 @@ const GamePage = () => {
 
     const codeEditor = () => {
         return (
-            <div className='min-h-screen max-h-screen max-w-screen'>
+            <div className='max-w-screen'>
                 <div className='flex flex-col lg:flex-row justify-between items-stretch '>
                     <div
                         className='animate-scale-up-down-opacity basis-2/6 max-h-[88vh] min-w-[400px] min-h-[400px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl m-4 rounded-2xl scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
@@ -213,7 +213,7 @@ const GamePage = () => {
 
     }
     return (
-        <>
+        <div className={"max-h-screen h-screen"}>
             <Header/>
             {editor &&
                 <>
@@ -236,7 +236,7 @@ const GamePage = () => {
                                 modalText={'Herlig'} text={'Neste'}/>
                 </>
             }
-        </>
+        </div>
     );
 };
 
