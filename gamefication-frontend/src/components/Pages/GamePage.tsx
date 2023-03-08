@@ -158,21 +158,21 @@ const GamePage = () => {
     const codeEditor = () => {
         return (
             <div className='max-w-screen'>
-                <div className='flex flex-col lg:flex-row justify-between items-stretch '>
+                <div className='flex flex-col lg:flex-row justify-between'>
                     <div
-                        className='animate-scale-up-down-opacity basis-2/6 max-h-[88vh] min-w-[400px] min-h-[400px] whitespace-pre-wrap overflow-x-hidden bg-gameComps resize-x p-4 shadow-2xl m-4 rounded-2xl scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
+                        className='animate-scale-up-down-opacity w-fit max-w-full max-h-[88vh] max-w-[60vh]  min-h-[400px] whitespace-pre-wrap bg-gameComps p-4 shadow-2xl m-4 rounded-2xl scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
                         {task && <Problem task={task}
                         />}
                     </div>
                     <div
-                        className='flex flex-col basis-4/6 max-h-[88vh] m-4 animate-scale-up-down-opacity max-w-screen-2xl'>
+                        className='flex flex-col max-h-[88vh] m-4 animate-scale-up-down-opacity w-full'>
                         <div className='bg-gameComps rounded-tr-2xl'>
                             <div className='flex justify-start mb-1'>
                                 <LanguageSelector onChange={languageHandleOnChange}/>
                             </div>
                         </div>
                         <div
-                            className='group overflow-auto resize h-screen max-w-screen-xl min-w-[400px] min-h-[200px] shadow-2xl bg-gameComps pl-4 pb-4 pr-4 z-0'>
+                            className='group overflow-auto h-screen min-w-full min-h-[200px] shadow-2xl bg-gameComps pl-4 pb-4 pr-4 z-0'>
                             <GameEditor onChange={setCode} lang={language}/>
                         </div>
 
@@ -220,7 +220,7 @@ const GamePage = () => {
 
     }
     return (
-        <div className={"max-h-screen h-screen"}>
+        <div className={"h-screen"}>
             <Header/>
             {editor &&
                 <>
