@@ -3,12 +3,19 @@ import useWebSocket from 'react-use-websocket';
 
 const Tid = () => {
     const [time, setTime] = useState("00:00");
+    const [alarm, setAlarm] = useState(true);
+
     useWebSocket('wss://localhost:7067/ws', {
         onOpen: () => console.log('opened'),
         shouldReconnect: (closeEvent) => true,
         onMessage: (message) => message.data.arrayBuffer().then((buffer: any) => {
             let data = new Int32Array(buffer);
-            setTime(formatTime(data[0]))
+            setTime(formatTime(data[0]));
+            if(data[0] <= 60){
+                setAlarm(false)
+            }else{
+                setAlarm(true)
+            }
         }),
         onError: (e => console.log(e)),
     });
@@ -26,9 +33,12 @@ const Tid = () => {
     return (
         <>
             <div className={"w-full flex items-center justify-center"}>
-                <span className={"text-4xl"}>
+                { alarm && <span className={"text-4xl"}>
                     {time}
-                </span>
+                </span>}
+                { !alarm && <span className={"text-4xl text-red-500 animate-shake"}>
+                    {time}
+                </span>}
             </div>
         </>
     );
