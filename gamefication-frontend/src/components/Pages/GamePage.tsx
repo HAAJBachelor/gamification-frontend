@@ -165,21 +165,22 @@ const GamePage = () => {
                         {task && <Problem task={task}
                         />}
                     </div>
-                    <div className='flex flex-col basis-4/6 max-h-[88vh] m-4 animate-scale-up-down-opacity '>
+                    <div
+                        className='flex flex-col basis-4/6 max-h-[88vh] m-4 animate-scale-up-down-opacity max-w-screen-2xl'>
                         <div className='bg-gameComps rounded-tr-2xl'>
                             <div className='flex justify-start mb-1'>
                                 <LanguageSelector onChange={languageHandleOnChange}/>
                             </div>
                         </div>
                         <div
-                            className='group overflow-auto resize h-screen min-w-[400px] min-h-[400px] shadow-2xl bg-gameComps pl-4 pb-4 pr-4 z-0'>
+                            className='group overflow-auto resize h-screen max-w-screen-xl min-w-[400px] min-h-[200px] shadow-2xl bg-gameComps pl-4 pb-4 pr-4 z-0'>
                             <GameEditor onChange={setCode} lang={language}/>
                         </div>
 
-                        <div className='flex flex-col sm:flex-row footer'>
-                            <div className='flex flex-col h-max basis-5/6'>
+                        <div className='flex flex-col sm:flex-row '>
+                            <div className='flex flex-col h-max basis-5/6 '>
 
-                                <div className='basis-2/4'>
+                                <div className='basis-2/4 '>
                                     <TestCaseContainer task={task ? task.testCases : []}
                                                        testCaseHandler={runTestCase}
                                                        runAllTestCases={runAllTestCases}
