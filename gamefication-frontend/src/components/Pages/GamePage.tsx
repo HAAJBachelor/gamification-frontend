@@ -236,8 +236,8 @@ const GamePage = () => {
             }
             {success &&
                 <>
-                    <RulesModal visible={modalIsOpen} onClose={nextAssignmentHandler} modalTitle={'Du vant'}
-                                modalText={'Herlig'} text={'Neste'}/>
+                    <RulesModal visible={modalIsOpen} onClose={nextAssignmentHandler} modalTitle={'Riktig Svar'}
+                                modalText={'Trykk neste for å prøve vår neste utfordringç'} text={'Neste'}/>
                 </>
             }
         </div>
