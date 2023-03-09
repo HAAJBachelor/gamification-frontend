@@ -1,15 +1,27 @@
 import React, {useState} from "react";
 import useWebSocket from 'react-use-websocket';
 
+type Data = {
+    type: DataTypes
+    data: string
+}
+
+enum DataTypes {
+    Update = "Update",
+    StateChange = "StateChange"
+}
+
 const Tid = () => {
     const [time, setTime] = useState("00:00");
     useWebSocket('wss://localhost:7067/ws', {
         onOpen: () => console.log('opened'),
         shouldReconnect: (closeEvent) => true,
-        onMessage: (message) => message.data.arrayBuffer().then((buffer: any) => {
-            let data = new Int32Array(buffer);
-            setTime(formatTime(data[0]))
-        }),
+        onMessage: (message) => {
+            const data: Data = JSON.parse(message.data);
+            if (data.type === DataTypes.Update) {
+                setTime(formatTime(parseInt(data.data)));
+            }
+        },
         onError: (e => console.log(e)),
     });
 
