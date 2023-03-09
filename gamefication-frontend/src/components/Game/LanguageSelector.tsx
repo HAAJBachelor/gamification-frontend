@@ -5,6 +5,7 @@ const LanguageSelector = (props: any) => {
                     onChange={props.onChange}>
                 <option value="java" selected>Java</option>
                 <option value="csharp">C#</option>
+                <option value="typeScript">Typescript</option>
             </select>
 
         </div>
