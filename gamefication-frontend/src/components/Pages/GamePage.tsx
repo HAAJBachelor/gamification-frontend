@@ -84,7 +84,6 @@ const GamePage = () => {
             console.log(error.message)
         })
     }
-
     const selectedTaskHandler = (id: number) => {
         fetch(`https://localhost:7067/api/SelectTask?taskId=${id}`, {
             method: "GET",
@@ -160,12 +159,12 @@ const GamePage = () => {
             <div className='max-w-screen'>
                 <div className='flex flex-col lg:flex-row justify-between gap-2'>
                     <div
-                        className='animate-scale-up-down-opacity  max-h-[88vh] w-[80vh]  min-h-[400px] whitespace-pre-wrap bg-gameComps p-4 shadow-2xl my-4 ml-4 rounded-bl-2xl rounded-tl-2xl rounded scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
+                        className='animate-scale-up-down-opacity max-h-[85vh] w-[80vh]  min-h-[400px] whitespace-pre-wrap bg-gameComps p-4 shadow-2xl my-4 ml-4 rounded-bl-2xl rounded-tl-2xl rounded scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
                         {task && <Problem task={task}
                         />}
                     </div>
                     <div
-                        className='flex flex-col max-h-[88vh] my-4 mr-4 animate-scale-up-down-opacity w-full'>
+                        className='flex flex-col max-h-[85vh] my-4 mr-4 animate-scale-up-down-opacity w-full'>
                         <div className='bg-gameComps rounded-tr-2xl'>
                             <div className='flex justify-start mb-1'>
                                 <LanguageSelector onChange={languageHandleOnChange}/>
@@ -178,7 +177,6 @@ const GamePage = () => {
 
                         <div className='flex flex-col sm:flex-row '>
                             <div className='flex flex-col h-max basis-5/6 '>
-
                                 <div className='basis-2/4 '>
                                     <TestCaseContainer task={task ? task.testCases : []}
                                                        testCaseHandler={runTestCase}
@@ -191,7 +189,7 @@ const GamePage = () => {
                                     className='bg-gameComps mt-2 p-4 w-full h-full basis-2/4'>
                                     <h1>Her kommer consoll output</h1>
                                     <div
-                                        className={"bg-background w-full h-[90px] max-h-[15rem] p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900"}>
+                                        className={"bg-background w-full h-[120px] max-h-[15rem] p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900"}>
                                         <p className={`
                                         ${consoleOutput.display == ConsoleDisplayType.DEFAULT ? "text-white" : consoleOutput.display == ConsoleDisplayType.SUCCESS ? "text-green-500" : "text-red-500"} whitespace-pre-wrap`}>
                                             {
@@ -211,7 +209,6 @@ const GamePage = () => {
                                 />
                                 {taskResultCheck && <RulesModal/>}
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -220,7 +217,7 @@ const GamePage = () => {
 
     }
     return (
-        <div className={"h-screen"}>
+        <div className={"h-screen max-h-screen"}>
             <Header/>
             {editor &&
                 <>
