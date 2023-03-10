@@ -17,7 +17,6 @@ function App() {
                 <Routes>
                     <Route path="/" element={<LandingPage/>}/>
                     <Route path='/game' element={<GamePage/>}/>
-                    <Route path="/rules" element={<RulesPage/>}/>
                     <Route path="/TestTaskPage" element={<TestTaskPage/>}/>
 
                 </Routes>
