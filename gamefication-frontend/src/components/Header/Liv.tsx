@@ -12,8 +12,7 @@ export const Liv = () => {
                 const response = await fetch("https://localhost:7067/api/GetState", {
                     credentials: 'include',
                     headers: {
-                        "Content-Type": "application/json",
-                        'Access-Control-Allow-Headers': 'Content-Type, Authorization, Set-Cookie',
+                        'Access-Control-Allow-Headers': 'Authorization',
                     }
                 })
                 if (!response.ok) throw new Error("no data")

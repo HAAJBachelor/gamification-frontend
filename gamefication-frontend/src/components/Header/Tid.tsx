@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import useWebSocket from 'react-use-websocket';
 
 type Data = {
     type: DataTypes
@@ -13,17 +12,19 @@ enum DataTypes {
 
 const Tid = () => {
     const [time, setTime] = useState("00:00");
-    useWebSocket('wss://localhost:7067/ws', {
+/*    useWebSocket('wss://localhost:7067/ws', {
         onOpen: () => console.log('opened'),
-        shouldReconnect: (closeEvent) => true,
+        shouldReconnect: (closeEvent) => false,
+
         onMessage: (message) => {
             const data: Data = JSON.parse(message.data);
+            console.log(data);
             if (data.type === DataTypes.Update) {
                 setTime(formatTime(parseInt(data.data)));
             }
         },
         onError: (e => console.log(e)),
-    });
+    });*/
 
     const formatTime = (seconds: number) => {
         let res = "";
@@ -45,5 +46,4 @@ const Tid = () => {
         </>
     );
 }
-
 export default Tid;
