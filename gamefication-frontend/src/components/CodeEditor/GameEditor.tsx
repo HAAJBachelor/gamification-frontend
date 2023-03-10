@@ -19,9 +19,6 @@ const GameEditor = (props: Props) => {
         fetchStartCode()
     }, [props.lang])
 
-    const handleOnMount = (editor: any, monaco: any) => {
-        fetchStartCode()
-    }
 
     const fetchStartCode = () => {
         fetch(`https://localhost:7067/api/GetStartCode?language=${props.lang}`, {
@@ -64,7 +61,6 @@ const GameEditor = (props: Props) => {
                     selectionHighlight: true,
                 }}
                 language={props.lang ? props.lang : 'java'}
-                onMount={handleOnMount}
                 defaultValue='//'
                 theme={"vs-dark"}
                 onChange={handleEditorChange}
