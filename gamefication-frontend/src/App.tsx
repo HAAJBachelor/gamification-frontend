@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
 import GamePage from './components/Pages/GamePage';
 import LandingPage from "./components/Pages/LandingPage";
+import TestTaskPage from "./components/Pages/TestTaskPage";
 
 
 function App() {
@@ -16,6 +17,8 @@ function App() {
                 <Routes>
                     <Route path="/" element={<LandingPage/>}/>
                     <Route path='/game' element={<GamePage/>}/>
+                    <Route path="/rules" element={<RulesPage/>}/>
+                    <Route path="/TestTaskPage" element={<TestTaskPage/>}/>
 
                 </Routes>
             </Router>

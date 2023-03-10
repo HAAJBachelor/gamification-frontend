@@ -5,12 +5,11 @@ import Editor from "@monaco-editor/react";
 type Props = {
     onChange: (value: string) => void
     lang: string,
-
+    test?: boolean
 }
 
 const GameEditor = (props: Props) => {
     const [boilerCode, setBoilerCode] = useState('')
-
     const handleEditorChange = (value: any, event: any) => {
         props.onChange(value)
     }
@@ -19,12 +18,9 @@ const GameEditor = (props: Props) => {
         fetchStartCode()
     }, [props.lang])
 
-    const handleOnMount = (editor: any, monaco: any) => {
-        fetchStartCode()
-    }
 
     const fetchStartCode = () => {
-        fetch(`https://localhost:7067/api/GetStartCode?language=${props.lang}`, {
+        fetch(`https://localhost:7067/api/GetStartCode?language=${props.lang}&test=${!!props.test}`, {
             method: "GET",
             credentials: 'include',
             headers: {
@@ -64,7 +60,6 @@ const GameEditor = (props: Props) => {
                     selectionHighlight: true,
                 }}
                 language={props.lang ? props.lang : 'java'}
-                onMount={handleOnMount}
                 defaultValue='//'
                 theme={"vs-dark"}
                 onChange={handleEditorChange}
