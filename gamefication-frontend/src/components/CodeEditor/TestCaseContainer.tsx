@@ -28,7 +28,7 @@ const TestCaseContainer = (props: Props) => {
     }, [testCases])
 
     const setRunningCase = (index: number, val: boolean, done?: boolean) => {
-        if (index == testCases.length || done) {
+        if (index === testCases.length || done) {
             props.setRunAllTestCases(false)
             for (let i = 0; i < running.length; i++)
                 running[i] = false

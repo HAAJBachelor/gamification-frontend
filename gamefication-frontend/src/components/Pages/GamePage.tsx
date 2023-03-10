@@ -31,7 +31,7 @@ const GamePage = () => {
     const [modalIsOpen, setIsOpen] = useState(false)
     const [buttonText, setButtonText] = useState('Submit')
     const [language, setLanguage] = useState('java');
-    const [boilerCode, setBoilerCode] = useState('')
+
     const [success, setSuccess] = useState(false);
     const [taskResultFail, setTaskResultFail] = useState<TaskResult>()
     const [taskResultSuccess, setTaskResultSuccess] = useState<TaskResult>()
@@ -191,7 +191,7 @@ const GamePage = () => {
                                     <div
                                         className={"bg-background w-full h-[120px] max-h-[15rem] p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900"}>
                                         <p className={`
-                                        ${consoleOutput.display == ConsoleDisplayType.DEFAULT ? "text-white" : consoleOutput.display == ConsoleDisplayType.SUCCESS ? "text-green-500" : "text-red-500"} whitespace-pre-wrap`}>
+                                        ${consoleOutput.display === ConsoleDisplayType.DEFAULT ? "text-white" : consoleOutput.display === ConsoleDisplayType.SUCCESS ? "text-green-500" : "text-red-500"} whitespace-pre-wrap`}>
                                             {
                                                 consoleOutput.data
                                             }

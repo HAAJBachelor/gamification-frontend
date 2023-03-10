@@ -1,7 +1,6 @@
-import {useEffect, useState} from "react";
 import {GameTask} from "../models";
 import Capsule from "../UI/Capsule";
-import LoadingSpinner from "../UI/LoadingSpinner";
+
 import QuestionContainer from "../UI/QuestionContainer";
 
 import rocket from '../../image/rocket.png'
