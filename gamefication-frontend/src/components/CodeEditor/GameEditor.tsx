@@ -10,7 +10,6 @@ type Props = {
 
 const GameEditor = (props: Props) => {
     const [boilerCode, setBoilerCode] = useState('')
-
     const handleEditorChange = (value: any, event: any) => {
         props.onChange(value)
     }
@@ -21,7 +20,7 @@ const GameEditor = (props: Props) => {
 
 
     const fetchStartCode = () => {
-        fetch(`https://localhost:7067/api/GetStartCode?language=${props.lang}&test=${props.test}`, {
+        fetch(`https://localhost:7067/api/GetStartCode?language=${props.lang}&test=${!!props.test}`, {
             method: "GET",
             credentials: 'include',
             headers: {
