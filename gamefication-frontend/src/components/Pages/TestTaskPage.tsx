@@ -134,7 +134,6 @@ const TestTaskPage = () => {
                                 </div>
                                 <div
                                     className='bg-gameComps mt-2 p-4 w-full h-full basis-2/4'>
-                                    <h1>Her kommer consoll output</h1>
                                     <div
                                         className={"bg-background w-full h-[120px] max-h-[15rem] p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900"}>
                                         <p className={`
