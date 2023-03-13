@@ -67,7 +67,7 @@ const LandingPage = () => {
   });
 
   return (
-    <div className='justify-center flex mt-[10rem]'>
+    <div className='justify-center flex mt-[2%]'>
       <NewCard>
         <Title title='Velkommen' />
         <div className="w-[35rem] p-[2.5rem]">
