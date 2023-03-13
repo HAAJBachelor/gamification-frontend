@@ -41,6 +41,12 @@ const GameEditor = (props: Props) => {
         })
     }
 
+    const beforeMount = (monaco: any) => {
+        monaco.languages.typescript.typescriptDefaults.addExtraLib(
+            ['declare function readline(): string;'
+            ].join('\n'));
+    }
+
     return (
         <>
             <Editor
@@ -62,6 +68,7 @@ const GameEditor = (props: Props) => {
                 language={props.lang ? props.lang : 'java'}
                 defaultValue='//'
                 theme={"vs-dark"}
+                beforeMount={beforeMount}
                 onChange={handleEditorChange}
                 value={boilerCode}
             />
