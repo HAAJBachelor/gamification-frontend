@@ -67,13 +67,13 @@ const LandingPage = () => {
   });
 
   return (
-    <div className='justify-center flex mt-[2%]'>
+    <div className='justify-center flex mt-[1%]'>
       <NewCard>
         <Title title='Velkommen' />
         <div className="w-[35rem] p-[2.5rem]">
           <div className='flex justify-center'>
             <img
-              className='max-w-52 max-h-52 m-6 rounded-2xl hover:shadow-md hover:shadow-yellow-500'
+              className='max-w-52 max-h-52 rounded-2xl hover:shadow-md hover:shadow-yellow-500'
               src={yellowFolk}
               alt='two OXX yellow folk'
             />
