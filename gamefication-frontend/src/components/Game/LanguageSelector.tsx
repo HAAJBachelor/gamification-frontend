@@ -7,6 +7,7 @@ const LanguageSelector = (props: any) => {
                 <option value="csharp">C#</option>
                 <option value="typescript">Typescript</option>
                 <option value="javascript">Javascript</option>
+                <option value="python">Python</option>
             </select>
 
         </div>
