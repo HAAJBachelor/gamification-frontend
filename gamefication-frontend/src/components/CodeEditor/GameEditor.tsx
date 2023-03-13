@@ -45,9 +45,7 @@ const GameEditor = (props: Props) => {
         monaco.languages.typescript.typescriptDefaults.addExtraLib(
             ['declare function readline(): string;',
             ].join('\n'));
-        monaco.languages.javascript.javascriptDefaults.addExtraLib(
-            ['declare function readline();',
-            ].join('\n'));
+
     }
 
     return (
