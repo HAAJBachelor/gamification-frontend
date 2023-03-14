@@ -49,13 +49,14 @@ const EndGamePage = () => {
                                 <input
                                     type="text" id="username"
                                     onChange={handleChange}
-                                    className="shadow-2xl text-yellow-500 font-light bg-gray-200 text-2xl border rounded-xl w-full py-2 border-yellow-500 border-4 focus:border-yellow-500"
+                                    className="shadow-md shadow-yellow-500 hover:border-yellow-400 outline-yellow-500 text-center border-transparent border-2 font-light bg-gray-200 text-2xl border rounded-xl w-full py-2 border-4 focus:border-yellow-500"
                                 />
                                 <div className='pt-10'>
                                     <Button text='Lagre' handleOnClick={submitUserNameHandler}/>
-                                    <div className={'pt-5'}>
-                                        <Button text='Lagre Anonymt'/>
-                                    </div>
+
+                                </div>
+                                <div className={'pt-5 '}>
+                                    <Button text='Lagre Anonymt'/>
                                 </div>
                             </div>
                         </form>
