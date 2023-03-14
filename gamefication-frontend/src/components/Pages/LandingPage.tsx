@@ -12,6 +12,7 @@ const LandingPage = () => {
   const [session, setSession] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [sessionInProgress, setSessionInProgress] = useState(false);
+  const nagivage = useNavigate();
 
   let navigate = useNavigate();
   const openModal = () => {
@@ -20,6 +21,10 @@ const LandingPage = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  const handleTilGamePage = () => {
+    navigate('/game')
+  }
 
   const startSession = () => {
     fetch("https://localhost:7067/api/CreateSession", {
@@ -80,7 +85,7 @@ const LandingPage = () => {
           </div>
           <div className='flex flex-row justify-center items-center w-full gap-6 mt-4'>
             {sessionInProgress && (
-              <Button text='Fortsett spill' handleOnClick={startSession} />
+              <Button text='Fortsett spill' handleOnClick={handleTilGamePage} />
             )}
             <Button
               text='Start nytt spill'
