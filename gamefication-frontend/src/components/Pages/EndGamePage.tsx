@@ -11,7 +11,8 @@ const EndGamePage = () => {
     const handleChange = (event:any) =>{
         setUsername(event.target.value)
     }
-    const submitUserNameHandler = (username:any) => {
+    const submitUserNameHandler = (e:any) => {
+        e.preventDefault();
         fetch(`https://localhost:7067/api/SubmitUsername?username=${username}`, {
             method: "GET",
             credentials: 'include',
@@ -27,23 +28,21 @@ const EndGamePage = () => {
             .then(response => response.json()
                 .then((response) => {
                 console.log(response)
+                    console.log(username)
                 })).catch((error: Error) => {
             console.log(error.message)
         })
-
     }
+    console.log(username)
 
     return (
         <>
-            <div className='pt-10'>
-
-
+            <div className='mx-auto'>
                 <NewCard>
-                    <div className='text-center mb-20'>
+                    <div className='text-center mb-4'>
                         <Title title='Tiden er nå ferdig. Registrer brukernavn for å lagre score'/>
                     </div>
                     <div className="w-full max-w-xs mx-auto">
-
                         <form className="bg-gameComps shadow-2xl mb-20 rounded-2xl  p-8 ">
                             <p className={'text-xl text-yellow-500'}>Skriv inn ønsket brukernavn</p>
                             <div className="m-4">

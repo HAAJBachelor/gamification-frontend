@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useWebSocket from "react-use-websocket";
+import {useNavigate} from "react-router-dom";
 
 type Data = {
   type: DataTypes;
@@ -12,8 +13,9 @@ enum DataTypes {
 }
 
 const Tid = () => {
-  const [time, setTime] = useState("00:00");
+  const [time, setTime] = useState("10:00");
   const [alert, setAlert] = useState(false);
+  const navigate = useNavigate();
 
   useWebSocket("wss://localhost:7067/ws", {
     onOpen: () => console.log("opened"),
@@ -32,6 +34,10 @@ const Tid = () => {
     },
     onError: (e) => console.log(e),
   });
+
+  if(time === '00:01'){
+    navigate('/EndGamePage');
+  }
 
   const formatTime = (seconds: number) => {
     let res = "";
