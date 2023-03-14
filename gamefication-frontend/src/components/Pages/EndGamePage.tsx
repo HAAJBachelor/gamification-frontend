@@ -36,8 +36,6 @@ const EndGamePage = () => {
     return (
         <>
             <div className='pt-10'>
-
-
                 <NewCard>
                     <div className='text-center mb-20'>
                         <Title title='Tiden er nå ferdig. Registrer brukernavn for å lagre score'/>
@@ -53,7 +51,7 @@ const EndGamePage = () => {
                                     className="shadow-2xl text-yellow-500 font-light bg-gray-200 text-2xl border rounded-xl w-full py-2 border-yellow-500 border-4 focus:border-yellow-500"
                                 />
                                 <div className='pt-10'>
-                                    <Button text='Lagre' handleOnClick={submitUserNameHandler}/>
+                                    <Button text='Lagre' handleOnClick={submitUserNameHandler(username)}/>
                                     <div className={'pt-5'}>
                                         <Button text='Lagre Anonymt'/>
                                     </div>
