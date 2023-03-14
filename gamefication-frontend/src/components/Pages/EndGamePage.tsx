@@ -37,13 +37,12 @@ const EndGamePage = () => {
 
     return (
         <>
-            <div className='pt-10'>
+            <div className='mx-auto'>
                 <NewCard>
-                    <div className='text-center mb-20'>
+                    <div className='text-center mb-4'>
                         <Title title='Tiden er nå ferdig. Registrer brukernavn for å lagre score'/>
                     </div>
                     <div className="w-full max-w-xs mx-auto">
-
                         <form className="bg-gameComps shadow-2xl mb-20 rounded-2xl  p-8 ">
                             <p className={'text-xl text-yellow-500'}>Skriv inn ønsket brukernavn</p>
                             <div className="m-4">
