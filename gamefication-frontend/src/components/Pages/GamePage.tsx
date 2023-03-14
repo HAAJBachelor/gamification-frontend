@@ -164,7 +164,7 @@ const GamePage = () => {
                         />}
                     </div>
                     <div
-                        className='flex flex-col h-max min-w-[60vh] my-2 mr-4 animate-scale-up-down-opacity w-full h-[89vh]'>
+                        className='flex flex-col min-w-[60vh] my-2 mr-4 animate-scale-up-down-opacity w-full h-[89vh]'>
                         <div className='bg-gameComps rounded-tr-2xl'>
                             <div className='flex justify-start ml-2'>
                                 <LanguageSelector onChange={languageHandleOnChange}/>
