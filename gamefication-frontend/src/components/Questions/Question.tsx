@@ -15,19 +15,27 @@ const Question = (props: Props) => {
         props.onClick(props.id)
     }
 
+    const colors = {
+        EASY: "bg-green-400 border-green-800",
+        MID: "bg-yellow-400 border-yellow-600",
+        HARD: "bg-red-400 border-red-600",
+        INSANE: "bg-red-900 border-red-900",
+        ERROR: "bg-magenta-500 border-magenta-200",
+    }
 
     const backgroundColorDifficulty = (difficulty: string) => {
-        let bgcolor = "";
-        if (difficulty.toUpperCase() === "EASY") {
-            bgcolor = "bg-[#C8DF52]";
+        switch (difficulty.toUpperCase()) {
+            case "EASY":
+                return colors.EASY;
+            case "MID":
+                return colors.MID;
+            case "HARD":
+                return colors.HARD;
+            case "INSANE":
+                return colors.INSANE;
+            default:
+                return colors.ERROR;
         }
-        if (difficulty.toUpperCase() === "MID") {
-            bgcolor = "bg-yellow-400";
-        }
-        if (difficulty.toUpperCase() === "HARD") {
-            bgcolor = "bg-red-600";
-        }
-        return bgcolor;
     }
 
     const picture = <img className=" inline w-[25px] h-[25px] ml-[8px]" src={rocket} alt='yellow rocket'/>
@@ -51,11 +59,11 @@ const Question = (props: Props) => {
                     <QuestionContainer onClick={onCLick}>
                         <Capsule
                             index={1}
-                            bgcolor={backgroundColorDifficulty(props.problemsList[props.id].difficulty.toUpperCase()) + " border-red-800"}
+                            bgcolor={backgroundColorDifficulty(props.problemsList[props.id].difficulty)}
                             text={props.problemsList[props.id].difficulty.toUpperCase()}/>
                         <Capsule
                             index={2}
-                            bgcolor="bg-yellow-400 border-yellow-600"
+                            bgcolor={"bg-blue-400 border-blue-600"}
                             text={props.problemsList[props.id].rewards.time + " min | " +
                                 props.problemsList[props.id].rewards.lives + " X"}
                             picture={picture}
