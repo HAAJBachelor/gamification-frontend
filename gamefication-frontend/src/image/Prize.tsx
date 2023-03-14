@@ -1,5 +1,6 @@
 type Props = {
     className: string;
+    onClick: () => void
   }
   
   export const Prize = (props:Props) => {
@@ -11,6 +12,7 @@ type Props = {
           viewBox='0 0 512 512'
           fill='#000000'
           className={props.className}
+          onClick={props.onClick}
         >
           <g id='SVGRepo_bgCarrier' stroke-width='0'></g>
           <g
