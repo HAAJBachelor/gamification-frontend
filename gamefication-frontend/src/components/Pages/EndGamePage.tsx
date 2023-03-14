@@ -11,7 +11,8 @@ const EndGamePage = () => {
     const handleChange = (event:any) =>{
         setUsername(event.target.value)
     }
-    const submitUserNameHandler = (username:any) => {
+    const submitUserNameHandler = (e:any) => {
+        e.preventDefault();
         fetch(`https://localhost:7067/api/SubmitUsername?username=${username}`, {
             method: "GET",
             credentials: 'include',
@@ -27,11 +28,12 @@ const EndGamePage = () => {
             .then(response => response.json()
                 .then((response) => {
                 console.log(response)
+                    console.log(username)
                 })).catch((error: Error) => {
             console.log(error.message)
         })
-
     }
+    console.log(username)
 
     return (
         <>
@@ -51,7 +53,7 @@ const EndGamePage = () => {
                                     className="shadow-2xl text-yellow-500 font-light bg-gray-200 text-2xl border rounded-xl w-full py-2 border-yellow-500 border-4 focus:border-yellow-500"
                                 />
                                 <div className='pt-10'>
-                                    <Button text='Lagre' handleOnClick={submitUserNameHandler(username)}/>
+                                    <Button text='Lagre' handleOnClick={submitUserNameHandler}/>
                                     <div className={'pt-5'}>
                                         <Button text='Lagre Anonymt'/>
                                     </div>
