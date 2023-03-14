@@ -6,6 +6,7 @@ import { Button } from "../UI/Button";
 import { useNavigate } from "react-router-dom";
 import RulesButton from "../RulesButton";
 import RulesModal from "../UI/RulesModal";
+import { Prize } from "../../image/Prize";
 
 const LandingPage = () => {
   const [gameSession, setGameSession] = useState("");
@@ -72,7 +73,7 @@ const LandingPage = () => {
   });
 
   return (
-    <div className='justify-center flex mt-[1%]'>
+    <div className='justify-center flex mt-[1%] relative'>
       <NewCard>
         <Title title='Velkommen' />
         <div className="w-[35rem]">
@@ -94,9 +95,10 @@ const LandingPage = () => {
           </div>
         </div>
       </NewCard>
+      <Prize className={"cursor-pointer h-20 w-20 absolute left-2 top-0" } />
       <RulesButton openModal={openModal} />
       <RulesModal visible={modalIsOpen} onClose={closeModal} />
-    </div>
+    </div>   
   );
 };
 export default LandingPage;
