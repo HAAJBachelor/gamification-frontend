@@ -8,10 +8,10 @@ const EndGamePage = () => {
 
     const [username, setUsername] = useState('');
 
-    const handleChange = (event:any) =>{
+    const handleChange = (event: any) => {
         setUsername(event.target.value)
     }
-    const submitUserNameHandler = (e:any) => {
+    const submitUserNameHandler = (e: any) => {
         e.preventDefault();
         fetch(`https://localhost:7067/api/SubmitUsername?username=${username}`, {
             method: "GET",
@@ -27,7 +27,7 @@ const EndGamePage = () => {
         })
             .then(response => response.json()
                 .then((response) => {
-                console.log(response)
+                    console.log(response)
                     console.log(username)
                 })).catch((error: Error) => {
             console.log(error.message)
@@ -37,7 +37,15 @@ const EndGamePage = () => {
 
     return (
         <>
-            <div className='mx-auto'>
+            <div className="absolute top-5 right-0 h-16 w-16 ...">
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="40p" height="40">
+                    <path
+                        d="m2.828 17.828 6.086-6.086L15 17.828 17.828 15l-6.086-6.086 6.086-6.086L15 0 8.914 6.086 2.828 0 0 2.828l6.085 6.086L0 15l2.828 2.828z"/>
+                </svg>
+
+            </div>
+            <div className='mx-auto pt-10'>
                 <NewCard>
                     <div className='text-center mb-4'>
                         <Title title='Tiden er nå ferdig. Registrer brukernavn for å lagre score'/>
