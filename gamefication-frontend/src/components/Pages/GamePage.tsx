@@ -159,7 +159,7 @@ const GamePage = () => {
             <div className='max-w-screen'>
                 <div className='flex flex-col lg:flex-row justify-between gap-2 '>
                     <div
-                        className='animate-scale-up-down-opacity h-screen min-w-[40vh] min-h-[400px] h-[89vh] whitespace-pre-wrap bg-gameComps p-4 shadow-2xl my-2 ml-4 rounded-bl-2xl rounded-tl-2xl rounded scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
+                        className='animate-scale-up-down-opacity h-screen min-w-[50vh] min-h-[400px] h-[89vh] whitespace-pre-wrap bg-gameComps p-4 shadow-2xl my-2 ml-4 rounded-bl-2xl rounded-tl-2xl rounded scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
                         {task && <Problem task={task}
                         />}
                     </div>
