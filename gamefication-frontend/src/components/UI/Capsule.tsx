@@ -15,9 +15,9 @@ const Capsule = (props: Props) => {
             <div className={capsule}>
                 <p className={"z-20 w-full"}>{props.text}</p>
                 <div
-                    className={"border-2 group-hover:border-white w-full h-full bg-red-500 absolute rounded-full z-10 " + props.bgcolor}></div>
+                    className={"border-2 group-hover:border-white w-full h-full absolute rounded-full z-10 " + props.bgcolor}></div>
                 <div
-                    className={"w-full h-full bg-red-500 absolute rounded blur-md animate-pulse opacity-75 z-0 group-hover:animate-bounce " + props.bgcolor}></div>
+                    className={"w-full h-full absolute rounded blur-md animate-pulse opacity-75 z-0 group-hover:animate-bounce " + props.bgcolor}></div>
             </div>
 
         </>
