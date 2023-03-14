@@ -6,12 +6,14 @@ import { Button } from "../UI/Button";
 import { useNavigate } from "react-router-dom";
 import RulesButton from "../RulesButton";
 import RulesModal from "../UI/RulesModal";
+import { Prize } from "../../image/Prize";
 
 const LandingPage = () => {
   const [gameSession, setGameSession] = useState("");
   const [session, setSession] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [sessionInProgress, setSessionInProgress] = useState(false);
+  const [showList, setShowList] = useState(false);
 
   let navigate = useNavigate();
   const openModal = () => {
@@ -20,6 +22,16 @@ const LandingPage = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  const handleTilGamePage = () => {
+    navigate('/game')
+  }
+
+  const handleList = () => {
+    setShowList((prev) => {
+      return (prev = !prev)
+    });
+  }
 
   const startSession = () => {
     fetch("https://localhost:7067/api/CreateSession", {
@@ -67,7 +79,7 @@ const LandingPage = () => {
   });
 
   return (
-    <div className='justify-center flex mt-[1%]'>
+    <div className='justify-center flex mt-[1%] relative'>
       <NewCard>
         <Title title='Velkommen' />
         <div className="w-[35rem]">
@@ -80,7 +92,7 @@ const LandingPage = () => {
           </div>
           <div className='flex flex-row justify-center items-center w-full gap-6 mt-4'>
             {sessionInProgress && (
-              <Button text='Fortsett spill' handleOnClick={startSession} />
+              <Button text='Fortsett spill' handleOnClick={handleTilGamePage} />
             )}
             <Button
               text='Start nytt spill'
@@ -89,9 +101,11 @@ const LandingPage = () => {
           </div>
         </div>
       </NewCard>
+      <Prize className={"cursor-pointer h-20 w-20 absolute left-2 top-0"} onClick={handleList}/>        
+      {showList && <h1 className="text-zinc-50 absolute left-2 top-20">Heihei</h1>}
       <RulesButton openModal={openModal} />
       <RulesModal visible={modalIsOpen} onClose={closeModal} />
-    </div>
+    </div>   
   );
 };
 export default LandingPage;
