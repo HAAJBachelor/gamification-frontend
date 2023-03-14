@@ -8,7 +8,7 @@ export default function Header() {
         <>
             <header>
                 <nav
-                    className="flex items-center bg-background text-white font-bold  w-full z-20">
+                    className="flex items-center bg-background text-white font-bold  w-full">
                     <Logo/>
                     <Tid/>
                     <Liv/>

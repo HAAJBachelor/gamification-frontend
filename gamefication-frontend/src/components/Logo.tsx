@@ -10,7 +10,7 @@ export const Logo = () => {
     return (
         <>
             <div className='bg-black'>
-                <img src={oxx} onClick={handleOnClick} className='object-scale-down h-20 w-20 cursor-pointer' alt='No images'/>
+                <img src={oxx} onClick={handleOnClick} className='object-scale-down h-16 w-16 cursor-pointer' alt='No images'/>
             </div>
         </>
     );
