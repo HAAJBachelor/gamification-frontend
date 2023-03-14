@@ -13,7 +13,7 @@ const LandingPage = () => {
   const [session, setSession] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [sessionInProgress, setSessionInProgress] = useState(false);
-  const nagivage = useNavigate();
+  const [showList, setShowList] = useState(false);
 
   let navigate = useNavigate();
   const openModal = () => {
@@ -25,6 +25,12 @@ const LandingPage = () => {
 
   const handleTilGamePage = () => {
     navigate('/game')
+  }
+
+  const handleList = () => {
+    setShowList((prev) => {
+      return (prev = !prev)
+    });
   }
 
   const startSession = () => {
@@ -95,7 +101,8 @@ const LandingPage = () => {
           </div>
         </div>
       </NewCard>
-      <Prize className={"cursor-pointer h-20 w-20 absolute left-2 top-0" } />
+      <Prize className={"cursor-pointer h-20 w-20 absolute left-2 top-0"} onClick={handleList}/>        
+      {showList && <h1 className="text-zinc-50 absolute left-2 top-20">Heihei</h1>}
       <RulesButton openModal={openModal} />
       <RulesModal visible={modalIsOpen} onClose={closeModal} />
     </div>   
