@@ -13,6 +13,7 @@ export interface TestCase {
 
 export interface GameTask {
     taskId: number,
+    title: string,
     description: string,
     inputDescription: string,
     outputDescription: string,

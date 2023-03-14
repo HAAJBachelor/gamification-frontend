@@ -102,7 +102,7 @@ const Problem = (props: Props) => {
     return (
         <>
             <div>
-                <h1 className='text-yellow-500 text-2xl text-center'>Solve this</h1>
+                <h1 className='text-yellow-500 text-2xl text-center'>{task.title}</h1>
                 <br/>
                 {parseText(task.description)}
             </div>
