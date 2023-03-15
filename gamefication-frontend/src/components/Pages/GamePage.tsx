@@ -156,39 +156,44 @@ const GamePage = () => {
 
     const codeEditor = () => {
         return (
-            <div className='max-w-screen'>
-                <div className='flex flex-col lg:flex-row justify-between gap-2 '>
+            <div className='max-w-screen my-2  flex justify-center '>
+                <div
+                    className='flex flex-col sm:flex-row justify-between gap-2 sm:w-full md:w-full lg:w-full xl:w-full 2xl:w-[90%] shadow-2xl'>
                     <div
-                        className='animate-scale-up-down-opacity h-screen min-w-[50vh] min-h-[400px] h-[89vh] whitespace-pre-wrap bg-gameComps p-4 shadow-2xl my-2 ml-4 rounded-bl-2xl rounded-tl-2xl rounded scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
+                        className='animate-scale-up-down-opacity h-screen min-w-[50vh] min-h-[400px] h-[89vh] whitespace-pre-wrap bg-gameComps p-4  rounded-bl-2xl rounded-tl-2xl rounded scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
                         {task && <Problem task={task}
                         />}
                     </div>
                     <div
-                        className='flex flex-col min-w-[60vh] my-2 mr-4 animate-scale-up-down-opacity w-full h-[89vh]'>
-                        <div className='bg-gameComps rounded-tr-2xl'>
-                            <div className='flex justify-start ml-2'>
-                                <LanguageSelector onChange={languageHandleOnChange}/>
+                        className='flex flex-col min-w-[60vh] animate-scale-up-down-opacity w-full'>
+                        <div className={"h-[60vh] flex flex-col bg-gameComps rounded-tr-2xl"}>
+                            <div className='rounded-tr-2xl '>
+                                <div className='flex justify-start ml-2'>
+                                    <LanguageSelector onChange={languageHandleOnChange}/>
+                                </div>
+                            </div>
+                            <div
+                                className='group overflow-auto h-full min-w-full min-h-[200px] bg-gameComps'>
+                                <GameEditor onChange={setCode} lang={language}/>
+                            </div>
+                            <div className='w-full items-center flex pl-8'>
+                                <h1 className={"text-yellow-500 text-2xl"}>Tester</h1>
+                                <TestCaseContainer task={task ? task.testCases : []}
+                                                   testCaseHandler={runTestCase}
+                                                   runAllTestCases={runAllTestCases}
+                                                   setRunAllTestCases={setRunAllTestCases}
+                                                   setConsoleOutput={setConsoleOutput}
+                                ></TestCaseContainer>
                             </div>
                         </div>
-                        <div
-                            className='group overflow-auto h-[50vh] min-w-full min-h-[200px] shadow-2xl bg-gameComps pl-4 pb-4 pr-4 z-0'>
-                            <GameEditor onChange={setCode} lang={language}/>
-                        </div>
 
-                        <div className='flex flex-col sm:flex-row '>
-                            <div className='flex flex-col h-max basis-5/6 '>
-                                <div className='basis-2/4 '>
-                                    <TestCaseContainer task={task ? task.testCases : []}
-                                                       testCaseHandler={runTestCase}
-                                                       runAllTestCases={runAllTestCases}
-                                                       setRunAllTestCases={setRunAllTestCases}
-                                                       setConsoleOutput={setConsoleOutput}
-                                    ></TestCaseContainer>
-                                </div>
+                        <div className='flex flex-col sm:flex-row h-[29vh] '>
+                            <div className='flex flex-col h-full basis-11/12 '>
+
                                 <div
-                                    className='bg-gameComps mt-2 p-4 w-full h-full basis-2/4'>
+                                    className='bg-gameComps mt-2 p-4 h-full overflow-hidden'>
                                     <div
-                                        className={"bg-background w-full h-[120px] max-h-[15rem] p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900"}>
+                                        className={"bg-background h-full p-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900"}>
                                         <p className={`
                                         ${consoleOutput.display === ConsoleDisplayType.DEFAULT ? "text-white" : consoleOutput.display === ConsoleDisplayType.SUCCESS ? "text-green-500" : "text-red-500"} whitespace-pre-wrap`}>
                                             {
@@ -200,7 +205,7 @@ const GamePage = () => {
                                 </div>
                             </div>
                             <div
-                                className='justify-between bg-gameComps mt-2 ml-2 rounded-br-2xl basis-1/6 lg:mt-2 ml-2 rounded bl-2xl'>
+                                className='bg-gameComps mt-2 ml-2 rounded-br-2xl basis-1/12 lg:mt-2 ml-2'>
                                 <Actions text={buttonText} test='TestAll'
                                          handleOnClickSubmit={submitTaskHandler}
                                          handleOnClickTest={testCaseHandler}

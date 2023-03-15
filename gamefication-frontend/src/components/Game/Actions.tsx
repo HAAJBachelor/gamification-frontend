@@ -1,31 +1,28 @@
 import React from 'react';
 
 
+type Props = {
+    handleOnTestAllClick: () => void
+    handleOnSubmitClick: () => void
+    handleOnResetClick: () => void
+}
+
+const actionButton = (callback: any, text: string) => {
+    return (
+        <button onClick={callback}
+                className="overflow-hidden whitespace-nowrap  xl:p-2  md:text-[12px] md:p-1 lg:text-md xl:text-xl max-h-fit max-w-fit text-yellow-500 font-semibold hover:text-yellow-300 border border-background hover:border-transparent rounded hover:scale-110 transition-all duration-300 mt-2 text-left rounded-2xl bg-gameComps shadow-lg shadow-yellow-900 transform hover:scale-125">
+            {text}
+        </button>
+    );
+}
+
+
 const Actions = (props: any) => {
     return (
-        <div className='flex flex-row sm:flex-col justify-between'>
-
-            <div className='m-8'>
-                <button onClick={props.handleOnTestAllClick}
-                        className="text-yellow-500 font-semibold hover:text-yellow-300 py-2 px-4 border border-background hover:border-transparent rounded hover:scale-110 transition-all duration-300 mt-2 text-left rounded-2xl p-4 bg-gameComps shadow-lg shadow-yellow-900 transform hover:scale-125">
-                    Test All
-                </button>
-            </div>
-
-            <div className='m-8  '>
-                <button
-                    onClick={props.handleOnClickSubmit}
-                    className="text-yellow-500 font-semibold hover:text-yellow-300 py-2 px-4 border border-background hover:border-transparent rounded transition-all duration-300 mt-2 text-left rounded-2xl p-4 bg-gameComps shadow-lg shadow-yellow-900 hover:scale-125">
-                    {props.text}
-                </button>
-            </div>
-            <div className='m-8'>
-                <button
-                    onClick={props.handleOnClickTest}
-                    className="text-yellow-500 font-semibold hover:text-yellow-300 py-2 px-4 border border-background hover:border-transparent rounded transition-all duration-300 mt-2 text-left rounded-2xl p-4 bg-gameComps shadow-lg shadow-yellow-900 hover:scale-125">
-                    {props.test}
-                </button>
-            </div>
+        <div className='flex flex-row sm:flex-col justify-evenly items-center  h-full'>
+            {actionButton(props.handleOnTestAllClick, "Test alle")}
+            {actionButton(props.handleOnSubmitClick, "Fullfør")}
+            {actionButton(props.handleOnResetClick, "Nullstill")}
         </div>
     );
 };

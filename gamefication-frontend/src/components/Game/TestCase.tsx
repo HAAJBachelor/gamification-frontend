@@ -104,10 +104,10 @@ const TestCase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
     return (
         <>
-            <div className={"group"} ref={ref}>
+            <div className={"group shadow drop-shadow-lg"} ref={ref} style={{zIndex: (hover && !running ? 10 : 0)}}>
                 <div
                     style={{transform: `scale(${Math.max(mouseDistance, 2)})`}}
-                    className={"flex justify-center"}
+                    className={"flex justify-center relative"}
                 >
                     <div
                         className={`${
@@ -116,10 +116,10 @@ const TestCase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                                 : "bg-red-500 shadow-red-500"
                         } ${ping && "scale-150"} ${
                             shake && "animate-shake"
-                        } transition-all flex justify-center items-center shadow-2xl z-0 transition-[width,height] duration-300 text-white rounded-full h-4 w-4 ${
+                        } transition-all flex justify-center items-center transition-[width,height] duration-300 text-white rounded-full h-6 w-6 ${
                             hover &&
                             openDialog &&
-                            " h-[3rem] w-[3.8rem] translate-y-4 opacity-0 "
+                            " h-[3rem] w-[3.7rem] translate-y-4 opacity-0 "
                         }`}
                         onMouseEnter={handleOnMouseEnter}
                     >
@@ -133,7 +133,7 @@ const TestCase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                                     : "bg-red-500 shadow-red-500"
                             } ${
                                 ping ? "animate-ping scale-150" : ""
-                            } absolute shadow-2xl transition-[width,height] duration-300 text-white rounded-full h-4 w-4 ${
+                            } absolute shadow-2xl transition-[width,height] duration-300 text-white rounded-full h-6 w-6 ${
                                 hover && openDialog && " h-[4rem] w-[4rem] opacity-0"
                             }`}
                         ></div>
@@ -141,7 +141,7 @@ const TestCase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                 </div>
 
                 {hover && !running && (
-                    <div onMouseLeave={handleOnMouseLeave} className={"z-10"}>
+                    <div onMouseLeave={handleOnMouseLeave} className={""}>
                         <div className={`flex justify-center items-center`}>
                             <div
                                 className={`bg-background opacity-0  shadow-2xl shadow-red-500 text-white font-bold h-24 rounded-full hover:scale-x-110`}
@@ -151,7 +151,7 @@ const TestCase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                                     success ? "border-green-500" : "border-red-500"
                                 } bg-background p-4 rounded-2xl ${
                                     clickFullScreen ? fullScreen : "h-fit w-48"
-                                } animate-blow-up absolute z-10`}
+                                } animate-blow-up absolute`}
                             >
                                 <div className={"flex flex-col gap-2"}>
                                     <div
