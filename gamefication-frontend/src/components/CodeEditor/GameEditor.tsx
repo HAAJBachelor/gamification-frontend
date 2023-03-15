@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import Editor from "@monaco-editor/react";
+import Editor, {Monaco} from "@monaco-editor/react";
 
 
 type Props = {
@@ -41,11 +41,10 @@ const GameEditor = (props: Props) => {
         })
     }
 
-    const beforeMount = (monaco: any) => {
+    const beforeMount = (monaco: Monaco) => {
         monaco.languages.typescript.typescriptDefaults.addExtraLib(
             ['declare function readline(): string;',
             ].join('\n'));
-
     }
 
     return (
