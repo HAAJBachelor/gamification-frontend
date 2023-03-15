@@ -104,7 +104,9 @@ const Problem = (props: Props) => {
             <div>
                 <h1 className='text-yellow-500 text-2xl text-center'>{task.title != null ? task.title : "No title"}</h1>
                 <br/>
-                {parseText(task.description)}
+                <div className={"pt-4 px-10"}>
+                    {parseText(task.description)}
+                </div>
             </div>
             <div className='bg-background mt-20 text-start pb-8 rounded-2xl'>
                 {Descriptions("Forklaring av input", task.inputDescription, "shadow-green-900", "0.8")}
