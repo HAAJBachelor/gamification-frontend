@@ -3,7 +3,7 @@ import React from 'react';
 
 type Props = {
     handleOnTestAllClick: () => void
-    handleOnSubmitClick: () => void
+    handleOnClickSubmit: () => void
     handleOnResetClick: () => void
 }
 
@@ -21,7 +21,7 @@ const Actions = (props: any) => {
     return (
         <div className='flex flex-row sm:flex-col justify-evenly items-center  h-full'>
             {actionButton(props.handleOnTestAllClick, "Test alle")}
-            {actionButton(props.handleOnSubmitClick, "Fullfør")}
+            {actionButton(props.handleOnClickSubmit, "Fullfør")}
             {actionButton(props.handleOnResetClick, "Nullstill")}
         </div>
     );
