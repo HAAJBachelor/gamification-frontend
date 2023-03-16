@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import useWebSocket from "react-use-websocket";
 import {useNavigate} from "react-router-dom";
 
@@ -26,6 +26,10 @@ const Tid = () => {
       if (data.type === DataTypes.Update) {
         setTime(formatTime(parseInt(data.data)));
       }
+      if (data.type === DataTypes.StateChange) {
+        navigate('/EndGamePage');
+        return;
+      }
       if (parseInt(data.data) <= 60) {
         setAlert(true);
       } else {
@@ -35,9 +39,6 @@ const Tid = () => {
     onError: (e) => console.log(e),
   });
 
-  if(time === '00:01'){
-    navigate('/EndGamePage');
-  }
 
   const formatTime = (seconds: number) => {
     let res = "";
