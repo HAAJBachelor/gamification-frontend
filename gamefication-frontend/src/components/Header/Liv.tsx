@@ -30,10 +30,12 @@ export const Liv = () => {
     console.log(lives);
     return (
         <>
-            <div className='flex flex-row items-center w-fit mr-10 gap-2'>
+            <div className='flex flex-row items-center justify-center gap-2'>
                 <img className="w-[40px] h-[40px]" src={rocket} alt='yellow rocket'/>
                 <span className={"whitespace-nowrap"}> X</span>
-                <span className={"whitespace-nowrap text-2xl"}> {lives}</span>
+                <div className=''>
+                    <span className={"whitespace-nowrap text-2xl"}> {lives}</span>
+                </div>
             </div>
 
         </>

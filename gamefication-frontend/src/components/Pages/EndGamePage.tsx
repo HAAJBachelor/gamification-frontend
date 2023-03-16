@@ -2,11 +2,13 @@ import React, {useState} from 'react';
 import NewCard from "../UI/NewCard";
 import {Button} from "../UI/Button";
 import {Title} from "../Title/Title";
+import {useNavigate} from "react-router-dom";
 
 
 const EndGamePage = () => {
 
     const [username, setUsername] = useState('');
+    const navigate = useNavigate()
 
     const handleChange = (event: any) => {
         setUsername(event.target.value)
@@ -29,6 +31,7 @@ const EndGamePage = () => {
                 .then((response) => {
                     console.log(response)
                     console.log(username)
+                    navigate('/Landingpage')
                 })).catch((error: Error) => {
             console.log(error.message)
         })
