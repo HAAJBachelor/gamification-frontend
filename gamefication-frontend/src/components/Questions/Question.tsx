@@ -17,7 +17,7 @@ const Question = (props: Props) => {
 
     const colors = {
         EASY: "bg-green-400 border-green-800",
-        MID: "bg-yellow-400 border-yellow-600",
+        MEDIUM: "bg-yellow-400 border-yellow-600",
         HARD: "bg-red-400 border-red-600",
         INSANE: "bg-red-900 border-red-900",
         ERROR: "bg-magenta-500 border-magenta-200",
@@ -27,8 +27,8 @@ const Question = (props: Props) => {
         switch (difficulty.toUpperCase()) {
             case "EASY":
                 return colors.EASY;
-            case "MID":
-                return colors.MID;
+            case "MEDIUM":
+                return colors.MEDIUM;
             case "HARD":
                 return colors.HARD;
             case "INSANE":
