@@ -31,7 +31,7 @@ const EndGamePage = () => {
                 .then((response) => {
                     console.log(response)
                     console.log(username)
-                    navigate('/Landingpage')
+                    navigate('/')
                 })).catch((error: Error) => {
             console.log(error.message)
         })
