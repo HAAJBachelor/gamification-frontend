@@ -31,7 +31,7 @@ const RulesModal = (props: any) => {
                     <p className="text-base leading-relaxed text-gray-400 text-2xl">
                         {props.logo}
                     </p>
-                    <p className="text-base leading-relaxed text-white text-3xl">
+                    <p className="text-base leading-relaxed text-white text-2xl">
                         {props.modalText}
                     </p>
                 </div>
