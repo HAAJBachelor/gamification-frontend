@@ -204,9 +204,15 @@ const GamePage = () => {
                         className='flex flex-col min-w-[60vh] animate-scale-up-down-opacity w-full'>
                         <div className={"h-[60vh] flex flex-col bg-gameComps rounded-tr-2xl"}>
                             <div className='rounded-tr-2xl '>
-                                <div className='flex justify-start'>
+                                <div className='flex justify-start justify-between'>
                                     <LanguageSelector onChange={languageHandleOnChange}/>
+                                    <div className={'flex justify-end '}>
+                                        <button className={"overflow-hidden mr-2 whitespace-nowrap max-h-fit max-w-fit text-yellow-500 font-semibold hover:text-yellow-300 border border-background hover:border-transparent rounded hover:scale-110 transition-all duration-300 text-left rounded-2xl bg-gameComps shadow-lg shadow-yellow-900 transform hover:scale-125"}
+                                        onClick={languageHandleOnChange}
+                                        >Reset Code</button>
+                                    </div>
                                 </div>
+
                             </div>
                             <div
                                 className='group overflow-auto h-full min-w-full min-h-[200px] bg-gameComps'>
@@ -314,7 +320,8 @@ const GamePage = () => {
                 {success &&
                     <>
                         <RulesModal visible={modalIsOpen} onClose={nextAssignmentHandler} modalTitle={'Riktig Svar'}
-                                    modalText={'Trykk neste for å prøve vår neste utfordring'} text={'Neste'}/>
+                                    modalText={'Trykk neste for å prøve vår neste utfordring'} text={'Neste'}
+                                    showConfetti={true}/>
                     </>
                 }
             </div>

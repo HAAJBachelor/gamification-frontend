@@ -4,20 +4,25 @@ import Confetti from "react-confetti";
 
 const RulesModal = (props: any) => {
     if (!props.visible) return null
+    let colors = ['#FFEB3B'];
+    const confetti = props.showConfetti;
 
     const handleOnClose = (e: any) => {
         if (e.target.id === 'container') props.onClose();
     }
-    let colors = ['#FFEB3B'];
+
 
     return (
 
         <div id='container'
              onClick={handleOnClose}
              className="fixed inset-0 bg-gameComps bg-opacity-60 backdrop-blur-sm w-full flex justify-center items-center px-4 h-full md:h-auto mx-auto">
+            {confetti &&
+                <Confetti numberOfPieces={350} width={window.innerWidth} height={window.innerHeight} colors={colors} />
+            }
             <div className='max-w-2xl rounded-lg relative bg-background w-[600px] '>
 
-                <Confetti numberOfPieces={350} width={600} height={250} colors={colors} />
+
                 <div className="flex justify-center items-center p-5 border-b rounded-t dark:border-gray-600">
                     <h3 className="text-xl lg:text-4xl font-semibold text-white">
                         {props.modalTitle}
@@ -27,7 +32,7 @@ const RulesModal = (props: any) => {
                     <p className="text-base leading-relaxed text-gray-400 text-2xl">
                         {props.logo}
                     </p>
-                    <p className="text-base leading-relaxed text-white text-3xl">
+                    <p className="text-base leading-relaxed text-white text-2xl">
                         {props.modalText}
                     </p>
                 </div>
