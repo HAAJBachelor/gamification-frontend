@@ -22,6 +22,7 @@ export interface GameTask {
     testCases: TestCase[],
     rewards: rewards,
     difficulty: string
+    category: string[],
 }
 
 export interface TestCaseResult {

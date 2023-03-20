@@ -226,7 +226,7 @@ const GamePage = () => {
             <Header/>
             {editor &&
                 <>
-                    <div className='pt-38 flex justify-center items-center'>
+                    <div className='pt-38 flex justify-center items-center '>
                         <NewCard>
                             <div>
                                 <Title title="Velg neste utfordring"/>

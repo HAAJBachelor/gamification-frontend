@@ -4,6 +4,7 @@ import Capsule from "../UI/Capsule";
 import QuestionContainer from "../UI/QuestionContainer";
 
 import rocket from '../../image/rocket.png'
+import {useState} from "react";
 
 type Props = {
     onClick: (id: number) => void;
@@ -16,7 +17,7 @@ const Question = (props: Props) => {
     }
 
     const colors = {
-        EASY: "bg-green-400 border-green-800",
+        EASY: "bg-green-400 border-green-600",
         MEDIUM: "bg-yellow-400 border-yellow-600",
         HARD: "bg-red-400 border-red-600",
         INSANE: "bg-red-900 border-red-900",
@@ -38,6 +39,19 @@ const Question = (props: Props) => {
         }
     }
 
+    const [blurs, setBlurs] = useState<boolean[]>([false, false, false])
+
+    const setBlur = (index: number, off: boolean = false) => {
+        if (off) {
+            setBlurs([false, false, false])
+            return
+        }
+        for (let i = 0; i < blurs.length; i++) {
+            blurs[i] = i !== index;
+        }
+        console.log(blurs)
+        setBlurs([...blurs])
+    }
     const picture = <img className=" inline w-[25px] h-[25px] ml-[8px]" src={rocket} alt='yellow rocket'/>
 
     return (
@@ -60,16 +74,30 @@ const Question = (props: Props) => {
                         <Capsule
                             index={1}
                             bgcolor={backgroundColorDifficulty(props.problemsList[props.id].difficulty)}
-                            text={props.problemsList[props.id].difficulty.toUpperCase()}/>
+                            text={props.problemsList[props.id].difficulty.toUpperCase()}
+                            multiLineText={[props.problemsList[props.id].difficulty.toUpperCase()]}
+                            title={"Difficulty"}
+                            blur={blurs[0]}
+                            setBlur={setBlur}
+                        />
                         <Capsule
                             index={2}
                             bgcolor={"bg-blue-400 border-blue-600"}
+                            multiLineText={[props.problemsList[props.id].rewards.time + " min", props.problemsList[props.id].rewards.lives + " liv"]}
+                            picture={picture}
                             text={props.problemsList[props.id].rewards.time + " min | " +
                                 props.problemsList[props.id].rewards.lives + " X"}
-                            picture={picture}
+                            title={"Rewards"}
+                            blur={blurs[1]}
+                            setBlur={setBlur}
                         />
                         <Capsule index={3} bgcolor="bg-yellow-400 border-yellow-600"
-                                 text={props.problemsList[props.id].rewards.lives}/>
+                                 text={props.problemsList[props.id].category[0] + (props.problemsList[props.id].category.length > 1 ? "..." : "")}
+                                 multiLineText={props.problemsList[props.id].category}
+                                 title={props.problemsList[props.id].category && props.problemsList[props.id].category.length > 1 ? "Kategorier" : "Kategori"}
+                                 blur={blurs[2]}
+                                 setBlur={setBlur}
+                        />
                     </QuestionContainer>
                 </>
             }
