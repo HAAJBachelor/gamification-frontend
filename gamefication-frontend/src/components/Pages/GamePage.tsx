@@ -51,12 +51,6 @@ const GamePage = () => {
         setCodeState(value)
     }
 
-    const openModal = () => {
-        setIsOpen(true);
-    }
-    const closeModal = () => {
-        setIsOpen(false);
-    }
 
     const openGameEditor = (task: GameTask) => {
         setTask(task)
