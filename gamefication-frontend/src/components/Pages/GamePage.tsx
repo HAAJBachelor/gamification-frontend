@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import NewCard from "../UI/NewCard";
 import {Title} from "../Title/Title";
 import Questions from "../Questions/Questions";
