@@ -3,7 +3,7 @@ import NewCard from "../UI/NewCard";
 import {Title} from "../Title/Title";
 import Questions from "../Questions/Questions";
 import ProgressBar from "../ProgressBar";
-import {GameTask, RunningState, State, TaskResult} from "../models";
+import {GameTask, RunningState, State} from "../models";
 import RulesModal from "../UI/RulesModal";
 import Header from "../Header/Header";
 import CodeEditor from './CodeEditorPage';
@@ -128,7 +128,11 @@ const GamePage = () => {
                     </NewCard>
                 </div>
             case GamePageComponent.Editor:
-                return <CodeEditor task={task}/>
+                return <CodeEditor
+                    task={task}
+                    setSuccess={setSuccess}
+                    setIsOpen={setIsOpen}
+                />
             case GamePageComponent.None:
                 return <></>
         }

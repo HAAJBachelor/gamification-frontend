@@ -11,6 +11,8 @@ import LoadingSpinner from "../UI/LoadingSpinner";
 
 type Props = {
     task?: GameTask
+    setSuccess: (value: boolean) => void
+    setIsOpen: (value: boolean) => void
 }
 
 const CodeEditor = (props: Props) => {
@@ -19,7 +21,6 @@ const CodeEditor = (props: Props) => {
     const [taskResultCheck, setTaskResultCheck] = useState(true)
     const [buttonText, setButtonText] = useState('Submit')
     const [language, setLanguage] = useState('java')
-    const [modalIsOpen, setIsOpen] = useState(false)
     const [code, setCodeState] = useState<String>("")
     const [success, setSuccess] = useState(false)
     const [taskResultFail, setTaskResultFail] = useState<TaskResult>()
@@ -29,13 +30,6 @@ const CodeEditor = (props: Props) => {
     
     const setCode = (value: string) => {
         setCodeState(value)
-    }
-
-    const openModal = () => {
-        setIsOpen(true);
-    }
-    const closeModal = () => {
-        setIsOpen(false);
     }
 
     const resetConsoleOutput = () => {
@@ -67,8 +61,8 @@ const CodeEditor = (props: Props) => {
                         setTaskResultFail(response)
                     } else {
                         setTaskResultCheck(true)
-                        setIsOpen(true)
-                        setSuccess(true)
+                        props.setIsOpen(true)
+                        props.setSuccess(true)
                         setButtonText('Submit')
                         setTaskResultSuccess(response);
                     }
