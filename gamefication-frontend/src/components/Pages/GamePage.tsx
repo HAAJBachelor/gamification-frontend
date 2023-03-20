@@ -25,7 +25,7 @@ export interface ConsoleData {
 }
 
 const GamePage = () => {
-    const [editor, setEditor] = useState(false);
+    const [showEditor, setShowEditor] = useState(false);
     const [code, setCodeState] = useState<String>("")
     const [task, setTask] = useState<GameTask>()
     const [taskResultCheck, setTaskResultCheck] = useState(true)
@@ -151,7 +151,7 @@ const GamePage = () => {
 
 
     const nextAssignmentHandler = () => {
-        setEditor(false)
+        setShowEditor(false)
         setSuccess(false)
     }
 
@@ -224,7 +224,7 @@ const GamePage = () => {
     return (
         <div className={"h-screen max-h-screen"}>
             <Header/>
-            {editor ?
+            {showEditor ?
                 codeEditor()
                 :
                 <>
