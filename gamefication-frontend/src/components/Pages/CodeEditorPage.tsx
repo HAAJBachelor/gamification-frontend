@@ -1,19 +1,20 @@
-import { useState } from "react";
+import {useState} from "react";
 import GameEditor from "../CodeEditor/GameEditor";
 import Problem from "../CodeEditor/Problem";
 import TestCaseContainer from "../CodeEditor/TestCaseContainer";
 import Actions from "../Game/Actions";
 import LanguageSelector from "../Game/LanguageSelector";
-import { GameTask, TaskResult } from "../models";
+import {GameTask, TaskResult} from "../models";
 import RulesModal from "../UI/RulesModal";
-import { ConsoleData, ConsoleDisplayType } from "./GamePage";
+import {ConsoleData, ConsoleDisplayType} from "./GamePage";
+import LoadingSpinner from "../UI/LoadingSpinner";
 
 type Props = {
     task?: GameTask
 }
 
 const CodeEditor = (props: Props) => {
-    
+
     const [task, setTask] = useState<GameTask>()
     const [taskResultCheck, setTaskResultCheck] = useState(true)
     const [buttonText, setButtonText] = useState('Submit')
@@ -37,7 +38,12 @@ const CodeEditor = (props: Props) => {
         setIsOpen(false);
     }
 
+    const resetConsoleOutput = () => {
+        setConsoleOutput({data: "", display: ConsoleDisplayType.DEFAULT})
+    }
+
     const submitTaskHandler = () => {
+        resetConsoleOutput()
         fetch('https://localhost:7067/api/SubmitTask', {
             method: "POST",
             credentials: 'include',
@@ -75,6 +81,7 @@ const CodeEditor = (props: Props) => {
     }
 
     const testCaseHandler = (taskId: number) => {
+        resetConsoleOutput()
         runTestCase(taskId).then(response => {
             if (!response.ok)
                 throw new Error("no data")
@@ -130,6 +137,35 @@ const CodeEditor = (props: Props) => {
                                                setRunAllTestCases={setRunAllTestCases}
                                                setConsoleOutput={setConsoleOutput}
                             ></TestCaseContainer>
+                            <div>
+                                {
+                                    runAllTestCases ?
+                                        <div
+                                            className={"w-fit h-fit flex items-center justify-center align-center bg-gray-900 text-xl text-yellow-500 p-2 rounded-full border shadow-lg shadow-yellow-900 border-black"}>
+                                            <LoadingSpinner/>
+                                        </div>
+                                        :
+                                        <>
+                                            <button
+                                                className={"w-fit h-fit flex items-center justify-center align-center bg-gray-900 text-xl text-yellow-500 p-2 rounded-full border shadow-lg shadow-yellow-900 border-black transition-all hover:scale-125 hover:border-white"}
+                                                onClick={() => setRunAllTestCases(true)}
+                                            >
+                                                <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                       stroke-linejoin="round"></g>
+                                                    <g id="SVGRepo_iconCarrier">
+                                                        <path
+                                                            d="M7 17.259V6.74104C7 5.96925 7.83721 5.48837 8.50387 5.87726L18.2596 11.5681C18.5904 11.761 18.5904 12.2389 18.2596 12.4319L8.50387 18.1227C7.83721 18.5116 7 18.0308 7 17.259Z"
+                                                            stroke="#eab308" stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round"></path>
+                                                    </g>
+                                                </svg>
+                                            </button>
+                                        </>
+                                }
+                            </div>
                         </div>
                     </div>
 
