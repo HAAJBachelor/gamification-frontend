@@ -24,6 +24,7 @@ const LandingPage = () => {
   };
 
   const handleContinueGame = () => {
+
     navigate('/game')
   }
 

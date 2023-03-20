@@ -36,9 +36,15 @@ export interface TaskResult {
 
 }
 
-export interface State{
+export enum RunningState {
+    InTask,
+    TaskSelect,
+    GameEnded
+}
+
+export interface State {
     _points: number,
     _lives: number,
     _time: number,
-
+    _runningState: RunningState
 }
