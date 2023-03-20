@@ -104,7 +104,8 @@ const LandingPage = () => {
       <Prize className={"cursor-pointer h-20 w-20 absolute left-2 top-0"} onClick={handleList}/>        
       {showList && <h1 className="text-zinc-50 absolute left-2 top-20">Heihei</h1>}
       <RulesButton openModal={openModal} />
-      <RulesModal visible={modalIsOpen} onClose={closeModal} />
+      <RulesModal visible={modalIsOpen} onClose={closeModal} showConfetti={false} modalTitle={'Velkommen til OXX Game'}
+                  modalText={'Test dine ferdigheter'} text={'Lukk'}/>
     </div>   
   );
 };

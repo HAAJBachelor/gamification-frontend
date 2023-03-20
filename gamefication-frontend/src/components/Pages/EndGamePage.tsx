@@ -3,15 +3,21 @@ import NewCard from "../UI/NewCard";
 import {Button} from "../UI/Button";
 import {Title} from "../Title/Title";
 import {useNavigate} from "react-router-dom";
+import RulesModal from "../UI/RulesModal";
 
 
 const EndGamePage = () => {
 
     const [username, setUsername] = useState('');
+    const [modalIsOpen, setIsOpen] = useState(false)
     const navigate = useNavigate()
 
     const handleChange = (event: any) => {
         setUsername(event.target.value)
+    }
+
+    const closeModal = () => {
+        navigate('/')
     }
     const submitUserNameHandler = (e: any) => {
         e.preventDefault();
@@ -23,10 +29,13 @@ const EndGamePage = () => {
                 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             }
         }).then(response => {
-            if (!response.ok)
-                throw new Error("no data")
-            navigate('/')
-        })
+                if (!response.ok)
+                    throw new Error("no data")
+                setIsOpen(true)
+
+
+            }
+        )
     }
 
     return (
@@ -65,6 +74,13 @@ const EndGamePage = () => {
                     </div>
 
                 </NewCard>
+
+                {modalIsOpen &&
+                    <RulesModal visible={modalIsOpen} onClose={closeModal} modalTitle={'Brukernavn Registrert'}
+                                modalText={'Takk for registrering'} text={'Lukk'}
+                                showConfetti={false}/>
+
+                }
 
             </div>
         </>
