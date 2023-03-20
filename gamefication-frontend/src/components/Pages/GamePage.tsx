@@ -12,6 +12,7 @@ import Header from "../Header/Header";
 import LanguageSelector from "../Game/LanguageSelector";
 import TestCaseContainer from "../CodeEditor/TestCaseContainer";
 import CodeEditor from './CodeEditorPage';
+import LoadingSpinner from "../UI/LoadingSpinner";
 
 
 export enum ConsoleDisplayType {
@@ -36,7 +37,6 @@ const GamePage = () => {
     const [code, setCodeState] = useState<String>("")
     const [task, setTask] = useState<GameTask>()
     const [modalIsOpen, setIsOpen] = useState(false)
-    const [success, setSuccess] = useState(false)    
 
     const openGameEditor = (task: GameTask) => {
         setTask(task)
@@ -147,7 +147,8 @@ const GamePage = () => {
                 {success &&
                     <>
                         <RulesModal visible={modalIsOpen} onClose={nextAssignmentHandler} modalTitle={'Riktig Svar'}
-                                    modalText={'Trykk neste for å prøve vår neste utfordring'} text={'Neste'} showConfetti={true}/>
+                                    modalText={'Trykk neste for å prøve vår neste utfordring'} text={'Neste'}
+                                    showConfetti={true}/>
                     </>
                 }
             </div>
