@@ -25,18 +25,9 @@ const EndGamePage = () => {
         }).then(response => {
             if (!response.ok)
                 throw new Error("no data")
-            return response
-        })
-            .then(response => response.json()
-                .then((response) => {
-                    console.log(response)
-                    console.log(username)
-                    navigate('/')
-                })).catch((error: Error) => {
-            console.log(error.message)
+            navigate('/')
         })
     }
-    console.log(username)
 
     return (
         <>

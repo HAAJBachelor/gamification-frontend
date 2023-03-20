@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import NewCard from "../UI/NewCard";
 import {Title} from "../Title/Title";
 import Questions from "../Questions/Questions";
@@ -124,11 +124,7 @@ const GamePage = () => {
             if (!response.ok)
                 throw new Error("no data")
             return response
-        })
-            .then(response => response.json()
-                .then(response => {
-                    console.log(response)
-                })).catch((error: Error) => {
+        }).catch((error: Error) => {
             console.log(error.message)
         })
     }
@@ -143,10 +139,6 @@ const GamePage = () => {
             body: JSON.stringify(code)
         })
     }
-
-    useEffect(() => {
-        console.log(consoleOutput)
-    }, [consoleOutput])
 
     const languageHandleOnChange = (event: any) => {
         const lang = event.target.value
@@ -209,7 +201,7 @@ const GamePage = () => {
                         className='flex flex-col min-w-[60vh] animate-scale-up-down-opacity w-full'>
                         <div className={"h-[60vh] flex flex-col bg-gameComps rounded-tr-2xl"}>
                             <div className='rounded-tr-2xl '>
-                                <div className='flex justify-start ml-2'>
+                                <div className='flex justify-start'>
                                     <LanguageSelector onChange={languageHandleOnChange}/>
                                 </div>
                             </div>

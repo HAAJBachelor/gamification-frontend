@@ -18,7 +18,6 @@ const Tid = () => {
     const navigate = useNavigate();
 
     useWebSocket("wss://localhost:7067/ws", {
-        onOpen: () => console.log("opened"),
         shouldReconnect: (closeEvent) => false,
 
         onMessage: (message) => {
