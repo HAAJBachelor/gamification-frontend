@@ -51,13 +51,9 @@ const Tid = () => {
     };
 
     return (
-        <>
-            {alert ? (
-                <span className={"text-4xl text-red-500 animate-shake"}>{time}</span>
-            ) : (
-                <span className={"text-4xl "}>{time}</span>
-            )}
-        </>
+        <div className={"flex items-center"}>
+            <span className={`text-4xl ${alert && "text-red-500 animate-shake"}`}>{time}</span>
+        </div>
     );
 };
 export default Tid;
