@@ -45,7 +45,6 @@ const GamePage = () => {
     const [runAllTestCases, setRunAllTestCases] = useState(false)
     const [consoleOutput, setConsoleOutput] = useState<ConsoleData>({data: "", display: ConsoleDisplayType.DEFAULT})
 
-    let taskLenght = 0;
 
     const setCode = (value: string) => {
         setCodeState(value)
