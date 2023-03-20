@@ -23,7 +23,8 @@ const LandingPage = () => {
     setIsOpen(false);
   };
 
-  const handleTilGamePage = () => {
+  const handleContinueGame = () => {
+
     navigate('/game')
   }
 
@@ -92,7 +93,7 @@ const LandingPage = () => {
           </div>
           <div className='flex flex-row justify-center items-center w-full gap-6 mt-4'>
             {sessionInProgress && (
-              <Button text='Fortsett spill' handleOnClick={handleTilGamePage} />
+                <Button text='Fortsett spill' handleOnClick={handleContinueGame}/>
             )}
             <Button
               text='Start nytt spill'

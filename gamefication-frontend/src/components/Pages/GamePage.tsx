@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import NewCard from "../UI/NewCard";
 import {Title} from "../Title/Title";
 import Questions from "../Questions/Questions";
@@ -6,7 +6,7 @@ import GameEditor from "../CodeEditor/GameEditor";
 import Problem from "../CodeEditor/Problem";
 import ProgressBar from "../ProgressBar";
 import Actions from "../Game/Actions";
-import {GameTask, TaskResult} from "../models";
+import {GameTask, RunningState, State, TaskResult} from "../models";
 import RulesModal from "../UI/RulesModal";
 import Header from "../Header/Header";
 import LanguageSelector from "../Game/LanguageSelector";
@@ -24,8 +24,14 @@ export interface ConsoleData {
     display: ConsoleDisplayType
 }
 
+enum GamePageComponent {
+    Editor,
+    TaskSelect,
+    None
+}
+
 const GamePage = () => {
-    const [editor, setEditor] = useState(true);
+    const [gamePageComponent, setGamePageComponent] = useState<GamePageComponent>(GamePageComponent.None);
     const [code, setCodeState] = useState<String>("")
     const [task, setTask] = useState<GameTask>()
     const [taskResultCheck, setTaskResultCheck] = useState(true)
@@ -50,6 +56,11 @@ const GamePage = () => {
     }
     const closeModal = () => {
         setIsOpen(false);
+    }
+
+    const openGameEditor = (task: GameTask) => {
+        setTask(task)
+        setGamePageComponent(GamePageComponent.Editor)
     }
 
     const submitTaskHandler = () => {
@@ -81,10 +92,14 @@ const GamePage = () => {
                         setButtonText('Submit')
                         setTaskResultSuccess(response);
                     }
+                    if (response.compilerError) {
+                        setConsoleOutput({data: response.compilerErrorMessage, display: ConsoleDisplayType.ERROR})
+                    }
                 })).catch((error: Error) => {
             console.log(error.message)
         })
     }
+
     const selectedTaskHandler = (id: number) => {
         fetch(`https://localhost:7067/api/SelectTask?taskId=${id}`, {
             method: "GET",
@@ -100,9 +115,7 @@ const GamePage = () => {
         })
             .then(response => response.json()
                 .then((response: GameTask) => {
-                    setTask(response)
-                    console.log(response)
-                    setEditor(false)
+                    openGameEditor(response);
                 })).catch((error: Error) => {
             console.log(error.message)
         })
@@ -143,9 +156,39 @@ const GamePage = () => {
 
 
     const nextAssignmentHandler = () => {
-        setEditor(true)
+        setGamePageComponent(GamePageComponent.TaskSelect)
         setSuccess(false)
     }
+
+    const fetchGameTask = () => {
+        fetch("https://localhost:7067/api/GetSelectedTask", {
+            credentials: 'include',
+        })
+            .then(response => response.json())
+            .then((response: GameTask) => {
+                openGameEditor(response)
+            })
+            .catch((error: Error) => {
+                console.log(error.message)
+            })
+    }
+
+    useEffect(() => {
+        fetch('https://localhost:7067/api/GetState', {
+            credentials: 'include',
+        })
+            .then(response => response.json())
+            .then((response: State) => {
+                if (response._runningState === RunningState.InTask) {
+                    fetchGameTask()
+                } else if (response._runningState === RunningState.TaskSelect) {
+                    setGamePageComponent(GamePageComponent.TaskSelect)
+                }
+            })
+            .catch((error: Error) => {
+                setGamePageComponent(GamePageComponent.TaskSelect)
+            })
+    }, [])
 
     const codeEditor = () => {
         return (
@@ -161,7 +204,7 @@ const GamePage = () => {
                         className='flex flex-col min-w-[60vh] animate-scale-up-down-opacity w-full'>
                         <div className={"h-[60vh] flex flex-col bg-gameComps rounded-tr-2xl"}>
                             <div className='rounded-tr-2xl '>
-                                <div className='flex justify-start ml-2'>
+                                <div className='flex justify-start'>
                                     <LanguageSelector onChange={languageHandleOnChange}/>
                                 </div>
                             </div>
@@ -213,31 +256,40 @@ const GamePage = () => {
         )
 
     }
+
+    const renderGamePageComponent = () => {
+        switch (gamePageComponent) {
+            case GamePageComponent.TaskSelect:
+                return <div
+                    className='pt-38 flex justify-center items-center animate-scale-up-down-opacity'>
+                    <NewCard>
+                        <div>
+                            <Title title="Velg neste utfordring"/>
+                            <Questions onClick={selectedTaskHandler}/>
+                        </div>
+                        <ProgressBar/>
+                    </NewCard>
+                </div>
+            case GamePageComponent.Editor:
+                return codeEditor()
+            case GamePageComponent.None:
+                return <></>
+        }
+    }
+
     return (
-        <div className={"h-screen max-h-screen"}>
-            <Header/>
-            {editor &&
-                <>
-                    <div className='pt-38 flex justify-center items-center'>
-                        <NewCard>
-                            <div>
-                                <Title title="Velg neste utfordring"/>
-                                <Questions onClick={selectedTaskHandler}/>
-                            </div>
-                            <ProgressBar/>
-                        </NewCard>
-                    </div>
-                </>}
-            {!editor &&
-                codeEditor()
-            }
-            {success &&
-                <>
-                    <RulesModal visible={modalIsOpen} onClose={nextAssignmentHandler} modalTitle={'Riktig Svar'}
-                                modalText={'Trykk neste for å prøve vår neste utfordring'} text={'Neste'} showConfetti={true}/>
-                </>
-            }
-        </div>
+        <>
+            <div className={"h-screen max-h-screen"}>
+                <Header/>
+                {renderGamePageComponent()}
+                {success &&
+                    <>
+                        <RulesModal visible={modalIsOpen} onClose={nextAssignmentHandler} modalTitle={'Riktig Svar'}
+                                    modalText={'Trykk neste for å prøve vår neste utfordring'} text={'Neste'}/>
+                    </>
+                }
+            </div>
+        </>
     );
 };
 

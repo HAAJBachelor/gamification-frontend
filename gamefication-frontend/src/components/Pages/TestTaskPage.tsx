@@ -107,7 +107,7 @@ const TestTaskPage = () => {
                     <div
                         className='flex flex-col max-h-[85vh] my-4 mr-4 animate-scale-up-down-opacity w-full'>
                         <div className='bg-gameComps rounded-tr-2xl'>
-                            <div className='flex justify-start mb-1'>
+                            <div className='flex justify-start'>
                                 <LanguageSelector onChange={languageHandleOnChange}/>
                             </div>
                         </div>
