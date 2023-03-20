@@ -25,7 +25,7 @@ export interface ConsoleData {
 }
 
 const GamePage = () => {
-    const [editor, setEditor] = useState(true);
+    const [editor, setEditor] = useState(false);
     const [code, setCodeState] = useState<String>("")
     const [task, setTask] = useState<GameTask>()
     const [taskResultCheck, setTaskResultCheck] = useState(true)
@@ -102,7 +102,7 @@ const GamePage = () => {
                 .then((response: GameTask) => {
                     setTask(response)
                     console.log(response)
-                    setEditor(false)
+                    setEditor(true)
                 })).catch((error: Error) => {
             console.log(error.message)
         })
@@ -151,7 +151,7 @@ const GamePage = () => {
 
 
     const nextAssignmentHandler = () => {
-        setEditor(true)
+        setEditor(false)
         setSuccess(false)
     }
 
@@ -224,7 +224,9 @@ const GamePage = () => {
     return (
         <div className={"h-screen max-h-screen"}>
             <Header/>
-            {editor &&
+            {editor ?
+                codeEditor()
+                :
                 <>
                     <div className='pt-38 flex justify-center items-center'>
                         <NewCard>
@@ -235,9 +237,7 @@ const GamePage = () => {
                             <ProgressBar/>
                         </NewCard>
                     </div>
-                </>}
-            {!editor &&
-                codeEditor()
+                </>
             }
             {success &&
                 <>
