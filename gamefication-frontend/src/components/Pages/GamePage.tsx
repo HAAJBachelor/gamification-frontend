@@ -92,6 +92,9 @@ const GamePage = () => {
                         setButtonText('Submit')
                         setTaskResultSuccess(response);
                     }
+                    if (response.compilerError) {
+                        setConsoleOutput({data: response.compilerErrorMessage, display: ConsoleDisplayType.ERROR})
+                    }
                 })).catch((error: Error) => {
             console.log(error.message)
         })

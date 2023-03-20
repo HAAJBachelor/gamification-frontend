@@ -32,8 +32,9 @@ export interface TestCaseResult {
 
 export interface TaskResult {
     success: boolean,
+    compilerError: boolean,
+    compilerErrorMessage: string,
     testCaseResults: TestCaseResult[],
-
 }
 
 export enum RunningState {
