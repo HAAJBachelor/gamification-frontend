@@ -28,7 +28,6 @@ const EndGamePage = () => {
             navigate('/')
         })
     }
-    console.log(username)
 
     return (
         <>

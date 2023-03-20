@@ -90,10 +90,6 @@ const TestTaskPage = () => {
         })
     }
 
-    useEffect(() => {
-        console.log(consoleOutput)
-    }, [consoleOutput])
-
     const languageHandleOnChange = (event: any) => {
         const lang = event.target.value
         setLanguage(lang)

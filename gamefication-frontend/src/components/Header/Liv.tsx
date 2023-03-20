@@ -17,7 +17,6 @@ export const Liv = () => {
                 })
                 if (!response.ok) throw new Error("no data")
                 const data: State = await response.json()
-                console.log(data)
 
                 setLives(data._lives)
             }
@@ -27,7 +26,6 @@ export const Liv = () => {
         }
     }, [])
 
-    console.log(lives);
     return (
         <>
             <div className='flex flex-row items-center justify-center gap-2'>

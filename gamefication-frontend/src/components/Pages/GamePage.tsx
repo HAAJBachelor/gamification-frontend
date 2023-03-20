@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import NewCard from "../UI/NewCard";
 import {Title} from "../Title/Title";
 import Questions from "../Questions/Questions";
@@ -114,11 +114,7 @@ const GamePage = () => {
             if (!response.ok)
                 throw new Error("no data")
             return response
-        })
-            .then(response => response.json()
-                .then(response => {
-                    console.log(response)
-                })).catch((error: Error) => {
+        }).catch((error: Error) => {
             console.log(error.message)
         })
     }
@@ -133,10 +129,6 @@ const GamePage = () => {
             body: JSON.stringify(code)
         })
     }
-
-    useEffect(() => {
-        console.log(consoleOutput)
-    }, [consoleOutput])
 
     const languageHandleOnChange = (event: any) => {
         const lang = event.target.value
