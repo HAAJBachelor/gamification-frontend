@@ -49,3 +49,10 @@ export interface State {
     _time: number,
     _runningState: RunningState
 }
+
+export interface SessionRecord {
+    Id: number,
+    Scord: number,
+    Time: number,
+    Username: string
+}
