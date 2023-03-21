@@ -1,9 +1,16 @@
+import { useEffect, useState } from "react";
 import { SessionRecord } from "./models";
 
 const LeaderBoard = () => {
-    try {
+
+  const [list, setList] = useState<SessionRecord[]>([]);
+    /*try {
         const fetchLeaderBoard = async() => {
-            const response = await fetch ("/api/GetLeaderboard/")
+            const response = await fetch ("https://localhost:7067/api/GetLeaderboard/", {
+              headers: {
+                'Access-Control-Allow-Headers': 'Authorization',
+            }
+            })
             if(!response.ok) throw new Error("no data")
             const data: SessionRecord[] = await response.json()
             console.log(data);
@@ -11,7 +18,19 @@ const LeaderBoard = () => {
         fetchLeaderBoard();
     } catch(error: any){
         console.log(error.message);
-    }
+    }*/
+
+    useEffect( () => {
+      fetch("https://localhost:7067/api/GetLeaderboard/")
+      .then (response => response.json())
+      .then((response: SessionRecord[]) => {
+        console.log(response)
+        setList(response)
+      })
+      .catch((error: Error) => {
+        console.log(error.message)
+      })
+    }, [])
     
     return (
       <>
