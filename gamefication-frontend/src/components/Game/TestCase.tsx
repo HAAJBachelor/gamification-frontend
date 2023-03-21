@@ -8,7 +8,7 @@ type Props = {
     ref: React.Ref<HTMLDivElement>;
     input: string;
     output: string;
-    id: any;
+    id: number;
     setRunning: (index: number, val: boolean, done?: boolean) => void;
     running: boolean;
     setConsoleOutput: (val: ConsoleData) => void;
@@ -105,7 +105,8 @@ const TestCase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
     return (
         <>
-            <div className={"group shadow drop-shadow-lg"} ref={ref} style={{zIndex: (hover && !running ? 10 : 0)}}>
+            <div className={"group shadow drop-shadow-lg"} ref={ref}
+                 style={{zIndex: (hover && !running ? 100 : Math.max(0, (parseFloat(mouseDistance.toFixed(1)) * 10)))}}>
                 <div
                     style={{transform: `scale(${Math.max(mouseDistance, 2)})`}}
                     className={"flex justify-center relative"}
