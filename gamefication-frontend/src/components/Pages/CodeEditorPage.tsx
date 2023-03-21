@@ -11,8 +11,9 @@ import LoadingSpinner from "../UI/LoadingSpinner";
 
 type Props = {
     task?: GameTask
-    setSuccess: (value: boolean) => void
-    setIsOpen: (value: boolean) => void
+    setSuccess?: (value: boolean) => void
+    setIsOpen?: (value: boolean) => void
+    test?: boolean
 }
 
 const CodeEditor = (props: Props) => {
@@ -28,7 +29,7 @@ const CodeEditor = (props: Props) => {
     const [runAllTestCases, setRunAllTestCases] = useState(false)
     const [consoleOutput, setConsoleOutput] = useState<ConsoleData>({data: "", display: ConsoleDisplayType.DEFAULT})
     const [mousePosition, setMousePosition] = useState({X: 0, Y: 0})
-    
+
     const setCode = (value: string) => {
         setCodeState(value)
     }
@@ -62,8 +63,8 @@ const CodeEditor = (props: Props) => {
                         setTaskResultFail(response)
                     } else {
                         setTaskResultCheck(true)
-                        props.setIsOpen(true)
-                        props.setSuccess(true)
+                        props.setIsOpen?.(true)
+                        props.setSuccess?.(true)
                         setButtonText('Submit')
                         setTaskResultSuccess(response);
                     }
@@ -87,7 +88,8 @@ const CodeEditor = (props: Props) => {
     }
 
     const runTestCase = async (taskId: number) => {
-        return await fetch(`https://localhost:7067/api/SubmitTestCase?index=${taskId}`, {
+        const path = props.test ? 'SubmitTestTaskTestCase' : 'SubmitTestCase'
+        return await fetch(`https://localhost:7067/api/${path}?index=${taskId}`, {
             method: "POST",
             credentials: 'include',
             headers: {
@@ -126,7 +128,7 @@ const CodeEditor = (props: Props) => {
                         </div>
                         <div
                             className='group overflow-auto h-full min-w-full min-h-[200px] bg-gameComps'>
-                            <GameEditor onChange={setCode} lang={language}/>
+                            <GameEditor onChange={setCode} lang={language} test={props.test}/>
                         </div>
                         <div className='w-full items-center flex pl-8'>
                             <h1 className={"text-yellow-500 text-2xl"}>Tester</h1>
@@ -170,7 +172,7 @@ const CodeEditor = (props: Props) => {
                     </div>
 
                     <div className='flex flex-col sm:flex-row h-[29vh] '>
-                        <div className='flex flex-col h-full basis-11/12 '>
+                        <div className={`flex flex-col h-full ${props.test ? "w-full" : "basis-11/12"} `}>
 
                             <div
                                 className='bg-gameComps mt-2 p-4 h-full overflow-hidden'>
@@ -186,15 +188,17 @@ const CodeEditor = (props: Props) => {
 
                             </div>
                         </div>
-                        <div
-                            className='bg-gameComps mt-2 ml-2 rounded-br-2xl basis-1/12 lg:mt-2 ml-2'>
-                            <Actions text={buttonText} test='TestAll'
-                                     handleOnClickSubmit={submitTaskHandler}
-                                     handleOnClickTest={testCaseHandler}
-                                     handleOnTestAllClick={() => setRunAllTestCases(true)}
-                            />
-                            {taskResultCheck && <RulesModal/>}
-                        </div>
+                        {!props.test &&
+                            <div
+                                className='bg-gameComps mt-2 ml-2 rounded-br-2xl basis-1/12 lg:mt-2 ml-2'>
+                                <Actions text={buttonText} test='TestAll'
+                                         handleOnClickSubmit={submitTaskHandler}
+                                         handleOnClickTest={testCaseHandler}
+                                         handleOnTestAllClick={() => setRunAllTestCases(true)}
+                                />
+                                {taskResultCheck && <RulesModal/>}
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
