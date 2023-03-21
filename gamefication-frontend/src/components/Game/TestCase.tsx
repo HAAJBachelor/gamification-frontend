@@ -8,7 +8,7 @@ type Props = {
     ref: React.Ref<HTMLDivElement>;
     input: string;
     output: string;
-    id: any;
+    id: number;
     setRunning: (index: number, val: boolean, done?: boolean) => void;
     running: boolean;
     setConsoleOutput: (val: ConsoleData) => void;
@@ -95,6 +95,8 @@ const TestCase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     };
 
     useEffect(() => {
+        if (!props.distance)
+            return;
         setMouseDistance(props.distance);
         if (props.distance <= 1 && fullScreen === "") handleOnMouseLeave();
     }, [props.distance]);
@@ -105,7 +107,8 @@ const TestCase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
     return (
         <>
-            <div className={"group shadow drop-shadow-lg"} ref={ref} style={{zIndex: (hover && !running ? 10 : 0)}}>
+            <div className={"group shadow drop-shadow-lg"} ref={ref}
+                 style={{zIndex: (hover && !running ? 100 : Math.max(0, (parseFloat(mouseDistance.toFixed(1)) * 10)))}}>
                 <div
                     style={{transform: `scale(${Math.max(mouseDistance, 2)})`}}
                     className={"flex justify-center relative"}
@@ -170,7 +173,7 @@ const TestCase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                                         <p
                                             className={`px-2 pt-2 pb-4 whitespace-pre ${
                                                 clickFullScreen ? "max-w" : "max-w-[10rem]"
-                                            } pb-2 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900`}
+                                            } pb-2 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900 max-h-24`}
                                         >
                                             {props.input}
                                         </p>
@@ -190,7 +193,7 @@ const TestCase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                                         <p
                                             className={`px-2 pt-2 pb-4 whitespace-pre ${
                                                 clickFullScreen ? "max-w" : "max-w-[10rem]"
-                                            } pb-2 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900`}
+                                            } pb-2 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900 max-h-24`}
                                         >
                                             {props.output}
                                         </p>

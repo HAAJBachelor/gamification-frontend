@@ -1,4 +1,4 @@
-import {useState} from "react";
+import React, {MouseEventHandler, useState} from "react";
 import GameEditor from "../CodeEditor/GameEditor";
 import Problem from "../CodeEditor/Problem";
 import TestCaseContainer from "../CodeEditor/TestCaseContainer";
@@ -11,23 +11,22 @@ import LoadingSpinner from "../UI/LoadingSpinner";
 
 type Props = {
     task?: GameTask
-    setSuccess: (value: boolean) => void
-    setIsOpen: (value: boolean) => void
+    setSuccess?: (value: boolean) => void
+    setIsOpen?: (value: boolean) => void
+    test?: boolean
 }
 
 const CodeEditor = (props: Props) => {
 
-    const [task, setTask] = useState<GameTask>()
     const [taskResultCheck, setTaskResultCheck] = useState(true)
     const [buttonText, setButtonText] = useState('Submit')
     const [language, setLanguage] = useState('java')
     const [code, setCodeState] = useState<String>("")
     const [success, setSuccess] = useState(false)
-    const [taskResultFail, setTaskResultFail] = useState<TaskResult>()
-    const [taskResultSuccess, setTaskResultSuccess] = useState<TaskResult>()
     const [runAllTestCases, setRunAllTestCases] = useState(false)
     const [consoleOutput, setConsoleOutput] = useState<ConsoleData>({data: "", display: ConsoleDisplayType.DEFAULT})
-    
+    const [mousePosition, setMousePosition] = useState({X: 0, Y: 0})
+
     const setCode = (value: string) => {
         setCodeState(value)
     }
@@ -58,13 +57,11 @@ const CodeEditor = (props: Props) => {
                         console.log(success)
                         console.log(response)
                         setSuccess(false)
-                        setTaskResultFail(response)
                     } else {
                         setTaskResultCheck(true)
-                        props.setIsOpen(true)
-                        props.setSuccess(true)
+                        props.setIsOpen?.(true)
+                        props.setSuccess?.(true)
                         setButtonText('Submit')
-                        setTaskResultSuccess(response);
                     }
                     if (response.compilerError) {
                         setConsoleOutput({data: response.compilerErrorMessage, display: ConsoleDisplayType.ERROR})
@@ -86,7 +83,8 @@ const CodeEditor = (props: Props) => {
     }
 
     const runTestCase = async (taskId: number) => {
-        return await fetch(`https://localhost:7067/api/SubmitTestCase?index=${taskId}`, {
+        const path = props.test ? 'SubmitTestTaskTestCase' : 'SubmitTestCase'
+        return await fetch(`https://localhost:7067/api/${path}?index=${taskId}`, {
             method: "POST",
             credentials: 'include',
             headers: {
@@ -95,24 +93,28 @@ const CodeEditor = (props: Props) => {
             },
             body: JSON.stringify(code)
         })
-    }   
+    }
 
     const languageHandleOnChange = (event: any) => {
         const lang = event.target.value
         setLanguage(lang)
     }
-    
+
+    const handleMouseMove = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        setMousePosition({X: event.clientX, Y: event.clientY})
+    }
+
     return (
-        <div className='max-w-screen my-2 flex justify-center'>
+        <div className='max-w-screen my-2 flex justify-center' onMouseMove={handleMouseMove}>
             <div
                 className='flex flex-col sm:flex-row justify-between gap-2 sm:w-full md:w-full lg:w-full xl:w-full 2xl:w-[90%] shadow-2xl mx-4'>
                 <div
-                    className='animate-scale-up-down-opacity h-screen min-w-[50vh] min-h-[400px] h-[89vh] whitespace-pre-wrap bg-gameComps p-4  rounded-bl-2xl rounded-tl-2xl scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
+                    className='animate-scale-up-down-opacity h-screen max-w-xl min-w-[50vh] min-h-[400px] h-[89vh] whitespace-pre-wrap bg-gameComps p-4  rounded-bl-2xl rounded-tl-2xl scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900'>
                     {props.task && <Problem task={props.task}
                     />}
                 </div>
                 <div
-                    className='flex flex-col min-w-[60vh] animate-scale-up-down-opacity w-full'>
+                    className='flex flex-col min-w-[120vh] animate-scale-up-down-opacity w-full'>
                     <div className={"h-[60vh] flex flex-col bg-gameComps rounded-tr-2xl"}>
                         <div className='rounded-tr-2xl '>
                             <div className='flex justify-start'>
@@ -121,7 +123,7 @@ const CodeEditor = (props: Props) => {
                         </div>
                         <div
                             className='group overflow-auto h-full min-w-full min-h-[200px] bg-gameComps'>
-                            <GameEditor onChange={setCode} lang={language}/>
+                            <GameEditor onChange={setCode} lang={language} test={props.test}/>
                         </div>
                         <div className='w-full items-center flex pl-8'>
                             <h1 className={"text-yellow-500 text-2xl"}>Tester</h1>
@@ -130,6 +132,7 @@ const CodeEditor = (props: Props) => {
                                                runAllTestCases={runAllTestCases}
                                                setRunAllTestCases={setRunAllTestCases}
                                                setConsoleOutput={setConsoleOutput}
+                                               mousePosition={mousePosition}
                             ></TestCaseContainer>
                             <div>
                                 {
@@ -146,14 +149,14 @@ const CodeEditor = (props: Props) => {
                                             >
                                                 <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none"
                                                      xmlns="http://www.w3.org/2000/svg">
-                                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                       stroke-linejoin="round"></g>
+                                                    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                                                    <g id="SVGRepo_tracerCarrier" strokeLinecap="round"
+                                                       strokeLinejoin="round"></g>
                                                     <g id="SVGRepo_iconCarrier">
                                                         <path
                                                             d="M7 17.259V6.74104C7 5.96925 7.83721 5.48837 8.50387 5.87726L18.2596 11.5681C18.5904 11.761 18.5904 12.2389 18.2596 12.4319L8.50387 18.1227C7.83721 18.5116 7 18.0308 7 17.259Z"
-                                                            stroke="#eab308" stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round"></path>
+                                                            stroke="#eab308" strokeWidth="2" strokeLinecap="round"
+                                                            strokeLinejoin="round"></path>
                                                     </g>
                                                 </svg>
                                             </button>
@@ -164,7 +167,7 @@ const CodeEditor = (props: Props) => {
                     </div>
 
                     <div className='flex flex-col sm:flex-row h-[29vh] '>
-                        <div className='flex flex-col h-full basis-11/12 '>
+                        <div className={`flex flex-col h-full ${props.test ? "w-full" : "basis-11/12"} `}>
 
                             <div
                                 className='bg-gameComps mt-2 p-4 h-full overflow-hidden'>
@@ -180,15 +183,17 @@ const CodeEditor = (props: Props) => {
 
                             </div>
                         </div>
-                        <div
-                            className='bg-gameComps mt-2 ml-2 rounded-br-2xl basis-1/12 lg:mt-2 ml-2'>
-                            <Actions text={buttonText} test='TestAll'
-                                     handleOnClickSubmit={submitTaskHandler}
-                                     handleOnClickTest={testCaseHandler}
-                                     handleOnTestAllClick={() => setRunAllTestCases(true)}
-                            />
-                            {taskResultCheck && <RulesModal/>}
-                        </div>
+                        {!props.test &&
+                            <div
+                                className='bg-gameComps mt-2 ml-2 rounded-br-2xl basis-1/12 lg:mt-2 ml-2'>
+                                <Actions text={buttonText} test='TestAll'
+                                         handleOnClickSubmit={submitTaskHandler}
+                                         handleOnClickTest={testCaseHandler}
+                                         handleOnTestAllClick={() => setRunAllTestCases(true)}
+                                />
+                                {taskResultCheck && <RulesModal/>}
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

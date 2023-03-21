@@ -16,9 +16,9 @@ const RulesModal = (props: any) => {
 
         <div id='container'
              onClick={handleOnClose}
-             className="fixed inset-0 bg-gameComps bg-opacity-60 backdrop-blur-sm w-full flex justify-center items-center px-4 h-full md:h-auto mx-auto">
+             className="fixed inset-0 bg-gameComps bg-opacity-60 backdrop-blur-sm w-full flex justify-center items-center px-4 h-full md:h-auto mx-auto z-[1000]">
             {confetti &&
-                <Confetti numberOfPieces={350} width={window.innerWidth} height={window.innerHeight} colors={colors} />
+                <Confetti numberOfPieces={350} width={window.innerWidth} height={window.innerHeight} colors={colors}/>
             }
             <div className='max-w-2xl rounded-lg relative bg-background w-[600px] '>
 
