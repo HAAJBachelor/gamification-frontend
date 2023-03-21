@@ -173,7 +173,7 @@ const TestCase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                                         <p
                                             className={`px-2 pt-2 pb-4 whitespace-pre ${
                                                 clickFullScreen ? "max-w" : "max-w-[10rem]"
-                                            } pb-2 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900`}
+                                            } pb-2 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900 max-h-24`}
                                         >
                                             {props.input}
                                         </p>
@@ -193,7 +193,7 @@ const TestCase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                                         <p
                                             className={`px-2 pt-2 pb-4 whitespace-pre ${
                                                 clickFullScreen ? "max-w" : "max-w-[10rem]"
-                                            } pb-2 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900`}
+                                            } pb-2 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900 max-h-24`}
                                         >
                                             {props.output}
                                         </p>
