@@ -119,7 +119,7 @@ const CodeEditor = (props: Props) => {
                     />}
                 </div>
                 <div
-                    className='flex flex-col min-w-[60vh] animate-scale-up-down-opacity w-full'>
+                    className='flex flex-col min-w-[120vh] animate-scale-up-down-opacity w-full'>
                     <div className={"h-[60vh] flex flex-col bg-gameComps rounded-tr-2xl"}>
                         <div className='rounded-tr-2xl '>
                             <div className='flex justify-start'>
