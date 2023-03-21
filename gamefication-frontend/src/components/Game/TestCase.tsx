@@ -96,6 +96,7 @@ const TestCase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
     useEffect(() => {
         setMouseDistance(props.distance);
+        if (props.distance <= 1 && fullScreen === "") handleOnMouseLeave();
     }, [props.distance]);
 
     useEffect(() => {

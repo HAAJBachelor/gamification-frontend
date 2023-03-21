@@ -56,12 +56,12 @@ const TestCaseContainer = (props: Props) => {
             mousePosition = {x: x, y: y}
             const centerX = width / 2;
             const centerY = height / 2;
-            let dist = Math.abs(centerX - x) + Math.abs(centerY - y);
+            let dist = Math.sqrt(Math.pow(centerX - x, 2) + Math.pow(centerY - y, 2));
             dist /= 50;
             dist = 5 - dist;
-            if (dist === mouseDistance[i] || dist < 1)
+            if (dist === mouseDistance[i])
                 continue
-            mouseDistance[i] = Math.max(dist, 2)
+            mouseDistance[i] = dist
         }
         setMouseDistance([...mouseDistance])
     }
