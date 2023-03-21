@@ -51,8 +51,8 @@ export interface State {
 }
 
 export interface SessionRecord {
-    Id: number,
-    Scord: number,
-    Time: number,
-    Username: string
+    id: number,
+    score: number,
+    time: number,
+    username: string
 }

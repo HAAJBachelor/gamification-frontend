@@ -82,6 +82,7 @@ const LandingPage = () => {
 
   return (
     <div className='justify-center flex mt-[1%] relative'>
+      <div className={ showList? "w-2/4" : ""}>
       <NewCard>
         <Title title='Velkommen' />
         <div className="w-[35rem]">
@@ -103,12 +104,13 @@ const LandingPage = () => {
           </div>
         </div>
       </NewCard>
-      <Prize className={"cursor-pointer h-20 w-20 absolute left-2 top-0"} onClick={handleLeaderboard}/>        
+      </div>
+      <Prize className={"cursor-pointer h-20 w-20 absolute left-2 top-0"} onClick={handleLeaderboard}/>
       {showList && <LeaderBoard />}
       <RulesButton openModal={openModal} />
       <RulesModal visible={modalIsOpen} onClose={closeModal} showConfetti={false} modalTitle={'Velkommen til OXX Game'}
                   modalText={'Test dine ferdigheter'} text={'Lukk'}/>
-    </div>   
+    </div>
   );
 };
 export default LandingPage;
