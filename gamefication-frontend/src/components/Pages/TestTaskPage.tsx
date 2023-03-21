@@ -126,6 +126,7 @@ const TestTaskPage = () => {
                                                        runAllTestCases={runAllTestCases}
                                                        setRunAllTestCases={setRunAllTestCases}
                                                        setConsoleOutput={setConsoleOutput}
+                                                       mousePosition={{X: 0, Y: 0}}
                                     ></TestCaseContainer>
                                 </div>
                                 <div
