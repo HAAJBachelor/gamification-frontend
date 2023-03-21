@@ -154,14 +154,14 @@ const CodeEditor = (props: Props) => {
                                             >
                                                 <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none"
                                                      xmlns="http://www.w3.org/2000/svg">
-                                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                       stroke-linejoin="round"></g>
+                                                    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                                                    <g id="SVGRepo_tracerCarrier" strokeLinecap="round"
+                                                       strokeLinejoin="round"></g>
                                                     <g id="SVGRepo_iconCarrier">
                                                         <path
                                                             d="M7 17.259V6.74104C7 5.96925 7.83721 5.48837 8.50387 5.87726L18.2596 11.5681C18.5904 11.761 18.5904 12.2389 18.2596 12.4319L8.50387 18.1227C7.83721 18.5116 7 18.0308 7 17.259Z"
-                                                            stroke="#eab308" stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round"></path>
+                                                            stroke="#eab308" strokeWidth="2" strokeLinecap="round"
+                                                            strokeLinejoin="round"></path>
                                                     </g>
                                                 </svg>
                                             </button>
