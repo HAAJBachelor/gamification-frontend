@@ -18,14 +18,11 @@ type Props = {
 
 const CodeEditor = (props: Props) => {
 
-    const [task, setTask] = useState<GameTask>()
     const [taskResultCheck, setTaskResultCheck] = useState(true)
     const [buttonText, setButtonText] = useState('Submit')
     const [language, setLanguage] = useState('java')
     const [code, setCodeState] = useState<String>("")
     const [success, setSuccess] = useState(false)
-    const [taskResultFail, setTaskResultFail] = useState<TaskResult>()
-    const [taskResultSuccess, setTaskResultSuccess] = useState<TaskResult>()
     const [runAllTestCases, setRunAllTestCases] = useState(false)
     const [consoleOutput, setConsoleOutput] = useState<ConsoleData>({data: "", display: ConsoleDisplayType.DEFAULT})
     const [mousePosition, setMousePosition] = useState({X: 0, Y: 0})
@@ -60,13 +57,11 @@ const CodeEditor = (props: Props) => {
                         console.log(success)
                         console.log(response)
                         setSuccess(false)
-                        setTaskResultFail(response)
                     } else {
                         setTaskResultCheck(true)
                         props.setIsOpen?.(true)
                         props.setSuccess?.(true)
                         setButtonText('Submit')
-                        setTaskResultSuccess(response);
                     }
                     if (response.compilerError) {
                         setConsoleOutput({data: response.compilerErrorMessage, display: ConsoleDisplayType.ERROR})
