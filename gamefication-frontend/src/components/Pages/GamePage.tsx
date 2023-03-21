@@ -140,12 +140,17 @@ const GamePage = () => {
         const lang = event.target.value
         setLanguage(lang)
     }
+    const resetCodeStub = () =>{
+        console.log(language, ' setter her language')
+        setCode(language);
+    }
 
     const validateTestCase = async (taskId: number): Promise<boolean> => {
         let success = await runTestCase(taskId)
         let results = await success.json()
         return results.success
     }
+
 
 
     const nextAssignmentHandler = () => {
@@ -202,7 +207,7 @@ const GamePage = () => {
                                     <div className={'flex justify-end '}>
                                         <button className={"overflow-hidden mr-2 whitespace-nowrap max-h-fit max-w-fit text-yellow-500 font-semibold hover:text-yellow-300 border border-background hover:border-transparent rounded hover:scale-110 transition-all duration-300 text-left rounded-2xl bg-gameComps shadow-lg shadow-yellow-900 transform hover:scale-125"}
                                         onClick={languageHandleOnChange}
-                                        >Reset Code</button>
+                                        >Reset</button>
                                     </div>
                                 </div>
 
