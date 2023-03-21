@@ -32,8 +32,23 @@ const EndGamePage = () => {
                 if (!response.ok)
                     throw new Error("no data")
                 setIsOpen(true)
+            }
+        )
+    }
 
-
+    const submitAnonymous = (e: any) => {
+        e.preventDefault();
+        fetch(`https://localhost:7067/api/SubmitUsername?username=Anonymous`, {
+            method: "GET",
+            credentials: 'include',
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            }
+        }).then(response => {
+                if (!response.ok)
+                    throw new Error("no data");
+                navigate('/');
             }
         )
     }
@@ -67,7 +82,7 @@ const EndGamePage = () => {
 
                                 </div>
                                 <div className={'pt-5 '}>
-                                    <Button text='Lagre Anonymt'/>
+                                    <Button text='Lagre Anonymt' handleOnClick={submitAnonymous}/>
                                 </div>
                             </div>
                         </form>
