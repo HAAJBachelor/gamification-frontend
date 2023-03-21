@@ -36,7 +36,7 @@ const GamePage = () => {
     const openGameEditor = (task: GameTask) => {
         setTask(task)
         setGamePageComponent(GamePageComponent.Editor)
-    }    
+    }
 
     const selectedTaskHandler = (id: number) => {
         fetch(`https://localhost:7067/api/SelectTask?taskId=${id}`, {
@@ -59,7 +59,7 @@ const GamePage = () => {
         })
 
     }
-    
+
     const runTestCase = async (taskId: number) => {
         return await fetch(`https://localhost:7067/api/SubmitTestCase?index=${taskId}`, {
             method: "POST",
@@ -70,7 +70,7 @@ const GamePage = () => {
             },
             body: JSON.stringify(code)
         })
-    }    
+    }
 
     const validateTestCase = async (taskId: number): Promise<boolean> => {
         let success = await runTestCase(taskId)
@@ -112,7 +112,7 @@ const GamePage = () => {
             .catch((error: Error) => {
                 setGamePageComponent(GamePageComponent.TaskSelect)
             })
-    }, [])    
+    }, [])
 
     const renderGamePageComponent = () => {
         switch (gamePageComponent) {

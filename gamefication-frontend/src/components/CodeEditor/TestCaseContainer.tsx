@@ -9,6 +9,7 @@ type Props = {
     runAllTestCases: boolean
     setRunAllTestCases: (val: boolean) => void
     setConsoleOutput: (val: ConsoleData) => void
+    mousePosition: { X: number, Y: number }
 }
 
 interface MousePosition {
@@ -46,13 +47,13 @@ const TestCaseContainer = (props: Props) => {
         }
     }, [props.runAllTestCases])
 
-    const handleOnMouseMove = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const handleOnMouseMove = () => {
         for (let i = 0; i < testCases.length; i++) {
             if (!elementRef[i])
                 continue
             const {left, top, width, height} = elementRef[i].current!.getBoundingClientRect();
-            const x = event.clientX - left;
-            const y = event.clientY - top;
+            const x = props.mousePosition.X - left;
+            const y = props.mousePosition.Y - top;
             mousePosition = {x: x, y: y}
             const centerX = width / 2;
             const centerY = height / 2;
@@ -66,6 +67,10 @@ const TestCaseContainer = (props: Props) => {
         setMouseDistance([...mouseDistance])
     }
 
+    useEffect(() => {
+        handleOnMouseMove()
+    }, [props.mousePosition])
+
     const handleOnMouseLeave = () => {
         for (let i = 0; i < mouseDistance.length; i++) {
             mouseDistance[i] = 2;
@@ -74,22 +79,25 @@ const TestCaseContainer = (props: Props) => {
     }
 
     return (
-        <div
-            className='flex flex-row justify-evenly items-center bg-gameComps h-24 max-h-48 translate-all w-[70%]'
-            onMouseMove={handleOnMouseMove} onMouseLeave={handleOnMouseLeave}>
-            {testCases.map((test, index) => {
-                return (
-                    <TestCases ref={elementRef[index]} input={test.input} output={test.output}
-                               onClick={() => props.testCaseHandler(index)}
-                               distance={mouseDistance[index]}
-                               id={index}
-                               setRunning={setRunningCase}
-                               running={running[index]}
-                               setConsoleOutput={props.setConsoleOutput}
-                    />
-                );
-            })}
-        </div>)
+        <>
+            <div
+                className='flex flex-row justify-evenly items-center bg-gameComps h-24 max-h-48 translate-all w-[70%]'
+                onMouseLeave={handleOnMouseLeave}>
+                {testCases.map((test, index) => {
+                    return (
+                        <TestCases ref={elementRef[index]} input={test.input} output={test.output}
+                                   onClick={() => props.testCaseHandler(index)}
+                                   distance={mouseDistance[index]}
+                                   id={index}
+                                   setRunning={setRunningCase}
+                                   running={running[index]}
+                                   setConsoleOutput={props.setConsoleOutput}
+                        />
+                    );
+                })}
+            </div>
+        </>
+    )
 }
 
 export default TestCaseContainer;
