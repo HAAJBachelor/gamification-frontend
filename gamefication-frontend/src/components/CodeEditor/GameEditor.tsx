@@ -6,46 +6,35 @@ type Props = {
     onChange: (value: string) => void
     lang: string,
     test?: boolean
+    boilerCode: string,
+    update: boolean,
+}
+export type handler = {
+    start: () => void;
 }
 
-const GameEditor = (props: Props) => {
-    const [boilerCode, setBoilerCode] = useState('')
+const GameEditor = React.forwardRef<handler, Props>((props, ref) => {
+
+    const [boilerCode, setBoilerCode] = useState('');
+    const [editor, setEditor] = useState<any>(null)
+
+
     const handleEditorChange = (value: any, event: any) => {
         props.onChange(value)
     }
-
-    useEffect(() => {
-        fetchStartCode()
-    }, [props.lang])
-
-
-    const fetchStartCode = () => {
-        fetch(`https://localhost:7067/api/GetStartCode?language=${props.lang}&test=${!!props.test}`, {
-            method: "GET",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            }
-        }).then(response => {
-            if (!response.ok)
-                throw new Error("no data")
-            return response
-        })
-            .then(response => response.text()
-                .then(response => {
-                    setBoilerCode(response)
-                    props.onChange(response)
-                })).catch((error: Error) => {
-            console.log(error.message)
-        })
-    }
-
     const beforeMount = (monaco: Monaco) => {
         monaco.languages.typescript.typescriptDefaults.addExtraLib(
             ['declare function readline(): string;',
             ].join('\n'));
     }
+    useEffect(() => {
+        setBoilerCode(props.boilerCode)
+        if (editor) {
+            editor.setValue(props.boilerCode)
+        }
+        console.log(editor, 'editor')
+
+    }, [props.update, props.boilerCode])
 
     return (
         <>
@@ -71,8 +60,13 @@ const GameEditor = (props: Props) => {
                 beforeMount={beforeMount}
                 onChange={handleEditorChange}
                 value={boilerCode}
+                saveViewState={false}
+                onMount={(editor) => {
+                    setEditor(editor);
+                }}
+
             />
         </>
     );
-};
+});
 export default GameEditor;
