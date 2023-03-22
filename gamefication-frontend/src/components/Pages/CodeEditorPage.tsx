@@ -120,13 +120,27 @@ const CodeEditor = (props: Props) => {
                             <div className='flex flex-row justify-between'>
                                 <LanguageSelector onChange={languageHandleOnChange}/>
                                 <div className={'mr-1'}>
-                                    <button
-                                        className={'overflow-hidden whitespace-nowrap max-h-fit max-w-fit text-yellow-500 font-semibold hover:text-yellow-300 border border-background hover:border-transparent rounded hover:scale-110 transition-all duration-300 text-left rounded-xl bg-gameComps shadow-lg shadow-yellow-900 transform hover:scale-125'
-
-                                        }>Resett
-                                    </button>
-
-
+                                    <svg width="30px"
+                                         height="30px"
+                                         viewBox="-2 -2 24.00 24.00"
+                                         xmlns="http://www.w3.org/2000/svg"
+                                         fill="#ffeb3b"
+                                         transform="matrix(-1, 0, 0, -1, 0, 0)rotate(0)">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"
+                                           stroke="#CCCCCC#ffeb3b" stroke-width="0.4">
+                                            <path
+                                                d="M17 9a1 1 0 01-1-1c0-.551-.448-1-1-1H5.414l1.293 1.293a.999.999 0 11-1.414 1.414l-3-3a.999.999 0 010-1.414l3-3a.997.997 0 011.414 0 .999.999 0 010 1.414L5.414 5H15c1.654 0 3 1.346 3 3a1 1 0 01-1 1zM3 11a1 1 0 011 1c0 .551.448 1 1 1h9.586l-1.293-1.293a.999.999 0 111.414-1.414l3 3a.999.999 0 010 1.414l-3 3a.999.999 0 11-1.414-1.414L14.586 15H5c-1.654 0-3-1.346-3-3a1 1 0 011-1z"
+                                                fill="#ffeb3b">
+                                            </path>
+                                        </g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path
+                                                d="M17 9a1 1 0 01-1-1c0-.551-.448-1-1-1H5.414l1.293 1.293a.999.999 0 11-1.414 1.414l-3-3a.999.999 0 010-1.414l3-3a.997.997 0 011.414 0 .999.999 0 010 1.414L5.414 5H15c1.654 0 3 1.346 3 3a1 1 0 01-1 1zM3 11a1 1 0 011 1c0 .551.448 1 1 1h9.586l-1.293-1.293a.999.999 0 111.414-1.414l3 3a.999.999 0 010 1.414l-3 3a.999.999 0 11-1.414-1.414L14.586 15H5c-1.654 0-3-1.346-3-3a1 1 0 011-1z"
+                                                fill="#ffeb3b">
+                                            </path>
+                                        </g>
+                                    </svg>
                                 </div>
                             </div>
                         </div>
