@@ -69,7 +69,7 @@ const Question = (props: Props) => {
                             picture={picture}
                         />
                         <Capsule index={3} bgcolor="bg-yellow-400 border-yellow-600"
-                                 text={props.problemsList[props.id].rewards.lives}/>
+                                 text={props.problemsList[props.id].category[0]}/>
                     </QuestionContainer>
                 </>
             }
