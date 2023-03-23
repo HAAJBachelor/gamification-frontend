@@ -21,7 +21,7 @@ const CodeEditor = (props: Props) => {
     const [taskResultCheck, setTaskResultCheck] = useState(true)
     const [buttonText, setButtonText] = useState('Submit')
     const [language, setLanguage] = useState('java')
-    const [code, setCodeState] = useState<String>("")
+    const [code, setCodeState] = useState("")
     const [success, setSuccess] = useState(false)
     const [runAllTestCases, setRunAllTestCases] = useState(false)
     const [consoleOutput, setConsoleOutput] = useState<ConsoleData>({data: "", display: ConsoleDisplayType.DEFAULT})
@@ -29,6 +29,21 @@ const CodeEditor = (props: Props) => {
     const fromEditor = React.useRef<handler>(null);
     const [boilerCode, setBoilerCode] = useState('');
     const [editorUpdate, setEditorUpdate] = useState(false)
+
+
+    useEffect(() => {
+        if (localStorage.getItem('EDITOR_CODE')) {
+            const data = localStorage.getItem('EDITOR_CODE');
+            if (data) setCodeState(JSON.parse(data))
+            console.log(data, ' dette er data fra getItem')
+        }
+    }, []);
+
+    useEffect(() => {
+        if (code !== '')
+            localStorage.setItem('EDITOR_CODE', JSON.stringify(code))
+        console.log('fra useeffect ', code)
+    }, [code]);
 
 
     useEffect(() => {
@@ -92,6 +107,7 @@ const CodeEditor = (props: Props) => {
                         props.setIsOpen?.(true)
                         props.setSuccess?.(true)
                         setButtonText('Submit')
+                        localStorage.setItem('EDITOR_CODE', JSON.stringify(''))
                     }
                     if (response.compilerError) {
                         setConsoleOutput({data: response.compilerErrorMessage, display: ConsoleDisplayType.ERROR})
