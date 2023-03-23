@@ -32,7 +32,6 @@ const GameEditor = React.forwardRef<handler, Props>((props, ref) => {
         if (editor) {
             editor.setValue(props.boilerCode)
         }
-        console.log(editor, 'editor')
 
     }, [props.update, props.boilerCode])
 

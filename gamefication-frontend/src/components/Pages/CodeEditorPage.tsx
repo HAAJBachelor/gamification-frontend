@@ -42,7 +42,6 @@ const CodeEditor = (props: Props) => {
     useEffect(() => {
         if (code !== '')
             localStorage.setItem('EDITOR_CODE', JSON.stringify(code))
-        console.log('fra useeffect ', code)
     }, [code]);
 
 
