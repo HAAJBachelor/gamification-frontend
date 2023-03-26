@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import NewCard from "../UI/NewCard";
-import { Title } from "../Title/Title";
+import {Title} from "../Title/Title";
 import yellowFolk from "../../image/OXX_Yellowfolk.png";
-import { Button } from "../UI/Button";
-import { useNavigate } from "react-router-dom";
+import {Button} from "../UI/Button";
+import {useNavigate} from "react-router-dom";
 import RulesButton from "../RulesButton";
 import RulesModal from "../UI/RulesModal";
-import { Prize } from "../../image/Prize";
+import {Prize} from "../../image/Prize";
 
 const LandingPage = () => {
   const [gameSession, setGameSession] = useState("");
@@ -50,6 +50,8 @@ const LandingPage = () => {
       })
       .then((response) =>
         response.text().then((response) => {
+          localStorage.setItem('EDITOR_CODE', JSON.stringify(''))
+          localStorage.setItem('EDITOR_LANGUAGE', JSON.stringify(''))
           setGameSession(response);
           console.log(response);
           setSession(true);

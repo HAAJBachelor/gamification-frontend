@@ -29,21 +29,28 @@ const CodeEditor = (props: Props) => {
     const fromEditor = React.useRef<handler>(null);
     const [boilerCode, setBoilerCode] = useState('');
     const [editorUpdate, setEditorUpdate] = useState(false)
+    const [isSaved, setIsSaved] = useState(false)
+    const [savedBoilerCode, setSavedBoilerCode] = useState('');
+    const [savedLanguage, setSavedLanguage] = useState('')
 
 
     useEffect(() => {
-        if (localStorage.getItem('EDITOR_CODE')) {
+        if (localStorage.getItem('EDITOR_CODE') && localStorage.getItem('EDITOR_LANGUAGE')) {
             const data = localStorage.getItem('EDITOR_CODE');
-            if (data) setCodeState(JSON.parse(data))
-            console.log(data, ' dette er data fra getItem')
+            const lang = localStorage.getItem('EDITOR_LANGUAGE');
+            if (lang) setSavedLanguage(JSON.parse(lang))
+            if (data) setSavedBoilerCode(JSON.parse(data))
+            console.log(isSaved)
         }
     }, []);
 
     useEffect(() => {
-        if (code !== '')
+        if (code !== '') {
             localStorage.setItem('EDITOR_CODE', JSON.stringify(code))
+            localStorage.setItem('EDITOR_LANGUAGE', JSON.stringify(language))
+            setIsSaved(true)
+        }
     }, [code]);
-
 
     useEffect(() => {
         fetchStartCode(language)
@@ -64,6 +71,7 @@ const CodeEditor = (props: Props) => {
         })
             .then(response => response.text()
                 .then(response => {
+                    setIsSaved(false)
                     setBoilerCode(response)
 
                 })).catch((error: Error) => {
@@ -142,6 +150,7 @@ const CodeEditor = (props: Props) => {
 
     const languageHandleOnChange = (event: any) => {
         const lang = event.target.value
+
         setLanguage(lang)
         fetchStartCode(lang)
     }
@@ -200,11 +209,16 @@ const CodeEditor = (props: Props) => {
                                 </div>
                             </div>
                         </div>
-                        <div
-                            className='group overflow-auto h-full min-w-full min-h-[200px] bg-gameComps'>
-                            <GameEditor onChange={setCode} lang={language} test={props.test} ref={fromEditor}
-                                        boilerCode={boilerCode} update={editorUpdate}/>
-                        </div>
+                        {isSaved ? <div
+                                className='group overflow-auto h-full min-w-full min-h-[200px] bg-gameComps'>
+                                <GameEditor onChange={setCode} lang={savedLanguage} test={props.test} ref={fromEditor}
+                                            boilerCode={savedBoilerCode} update={editorUpdate}/>
+                            </div> :
+                            <div
+                                className='group overflow-auto h-full min-w-full min-h-[200px] bg-gameComps'>
+                                <GameEditor onChange={setCode} lang={language} test={props.test} ref={fromEditor}
+                                            boilerCode={boilerCode} update={editorUpdate}/>
+                            </div>}
                         <div className='w-full items-center flex pl-8'>
                             <h1 className={"text-yellow-500 text-2xl"}>Tester</h1>
                             <TestCaseContainer task={props.task ? props.task.testCases : []}
