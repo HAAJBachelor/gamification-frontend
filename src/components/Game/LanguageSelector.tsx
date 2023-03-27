@@ -1,19 +1,6 @@
 import {useEffect, useState} from "react";
 
 const LanguageSelector = (props: any) => {
-    const [savedLanguage, setSavedLanguage] = useState([])
-
-
-    useEffect(() => {
-        if (localStorage.getItem('EDITOR_LANGUAGE')) {
-            const lang = localStorage.getItem('EDITOR_LANGUAGE');
-            if (lang) setSavedLanguage(JSON.parse(lang))
-            console.log(lang, ' fra selectoren')
-
-        }
-    }, []);
-
-
     return (
         <div className="text-yellow-500">
             <select className='bg-zinc-500 text-yellow-500 pl-1 shadow-2xl outline-0'
