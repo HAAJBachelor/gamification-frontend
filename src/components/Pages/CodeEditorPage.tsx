@@ -23,7 +23,6 @@ const CodeEditor = (props: Props) => {
     const [buttonText, setButtonText] = useState('Submit')
     const [language, setLanguage] = useState('java')
     const [code, setCodeState] = useState("")
-    const [success, setSuccess] = useState(false)
     const [runAllTestCases, setRunAllTestCases] = useState(false)
     const [consoleOutput, setConsoleOutput] = useState<ConsoleData>({data: "", display: ConsoleDisplayType.DEFAULT})
     const [mousePosition, setMousePosition] = useState({X: 0, Y: 0})
@@ -90,7 +89,6 @@ const CodeEditor = (props: Props) => {
                 .then((response: TaskResult) => {
                     if (!response.success) {
                         setButtonText('prøv igjen')
-                        setSuccess(false)
                     } else {
                         setTaskResultCheck(true)
                         props.setIsOpen?.(true)
