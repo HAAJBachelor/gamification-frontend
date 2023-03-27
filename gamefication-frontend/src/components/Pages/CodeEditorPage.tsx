@@ -33,7 +33,6 @@ const CodeEditor = (props: Props) => {
     const [savedBoilerCode, setSavedBoilerCode] = useState('');
     const [savedLanguage, setSavedLanguage] = useState('')
 
-
     useEffect(() => {
         if (localStorage.getItem('EDITOR_CODE') && localStorage.getItem('EDITOR_LANGUAGE')) {
             const data = localStorage.getItem('EDITOR_CODE');
@@ -71,7 +70,6 @@ const CodeEditor = (props: Props) => {
         })
             .then(response => response.text()
                 .then(response => {
-                    setIsSaved(false)
                     setBoilerCode(response)
 
                 })).catch((error: Error) => {
@@ -150,7 +148,8 @@ const CodeEditor = (props: Props) => {
 
     const languageHandleOnChange = (event: any) => {
         const lang = event.target.value
-
+        localStorage.setItem('EDITOR_CODE', JSON.stringify(''))
+        localStorage.setItem('EDITOR_LANGUAGE', JSON.stringify(''))
         setLanguage(lang)
         fetchStartCode(lang)
     }
@@ -209,16 +208,11 @@ const CodeEditor = (props: Props) => {
                                 </div>
                             </div>
                         </div>
-                        {isSaved ? <div
-                                className='group overflow-auto h-full min-w-full min-h-[200px] bg-gameComps'>
-                                <GameEditor onChange={setCode} lang={savedLanguage} test={props.test} ref={fromEditor}
-                                            boilerCode={savedBoilerCode} update={editorUpdate}/>
-                            </div> :
-                            <div
-                                className='group overflow-auto h-full min-w-full min-h-[200px] bg-gameComps'>
-                                <GameEditor onChange={setCode} lang={language} test={props.test} ref={fromEditor}
-                                            boilerCode={boilerCode} update={editorUpdate}/>
-                            </div>}
+                        <div
+                            className='group overflow-auto h-full min-w-full min-h-[200px] bg-gameComps'>
+                            <GameEditor onChange={setCode} lang={savedLanguage ? savedLanguage : language} test={props.test} ref={fromEditor}
+                                        boilerCode={savedBoilerCode  ? savedBoilerCode : boilerCode} update={editorUpdate}/>
+                        </div>
                         <div className='w-full items-center flex pl-8'>
                             <h1 className={"text-yellow-500 text-2xl"}>Tester</h1>
                             <TestCaseContainer task={props.task ? props.task.testCases : []}
