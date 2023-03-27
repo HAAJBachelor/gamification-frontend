@@ -1,5 +1,3 @@
-import {useEffect, useState} from "react";
-
 const LanguageSelector = (props: any) => {
     return (
         <div className="text-yellow-500">
