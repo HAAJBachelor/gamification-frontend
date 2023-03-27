@@ -7,10 +7,9 @@ import {useNavigate} from "react-router-dom";
 import RulesButton from "../RulesButton";
 import RulesModal from "../UI/RulesModal";
 import {Prize} from "../../image/Prize";
+import {API} from "../../Constants";
 
 const LandingPage = () => {
-  const [gameSession, setGameSession] = useState("");
-  const [session, setSession] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [sessionInProgress, setSessionInProgress] = useState(false);
   const [showList, setShowList] = useState(false);
@@ -29,21 +28,11 @@ const LandingPage = () => {
   }
 
   const handleList = () => {
-    setShowList((prev) => {
-      return (prev = !prev)
-    });
+      setShowList(prev => !prev)
   }
 
   const startSession = () => {
-    fetch("https://localhost:7067/api/CreateSession", {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Headers":
-          "Content-Type, Authorization, Set-Cookie",
-      },
-    })
+      API.createSession()
       .then((response) => {
         if (!response.ok) throw new Error("no data");
         return response;
@@ -52,9 +41,7 @@ const LandingPage = () => {
         response.text().then((response) => {
           localStorage.setItem('EDITOR_CODE', JSON.stringify(''))
           localStorage.setItem('EDITOR_LANGUAGE', JSON.stringify(''))
-          setGameSession(response);
           console.log(response);
-          setSession(true);
           navigate("game");
         })
       )
@@ -64,13 +51,7 @@ const LandingPage = () => {
   };
 
   useEffect(() => {
-    fetch("https://localhost:7067/api/IsGameSessionActive", {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Access-Control-Allow-Headers": "Authorization",
-      },
-    })
+      API.isGameSessionActive()
       .then((response) => {
         if (!response.ok) throw new Error("Unauthorized");
         return response;

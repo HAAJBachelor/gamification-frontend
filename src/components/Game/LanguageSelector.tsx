@@ -11,7 +11,6 @@ const LanguageSelector = (props: any) => {
                 <option value="javascript">Javascript</option>
                 <option value="python">Python</option>
             </select>
-
         </div>
     );
 };
