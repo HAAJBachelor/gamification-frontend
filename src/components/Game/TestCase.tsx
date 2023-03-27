@@ -99,10 +99,12 @@ const TestCase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             return;
         setMouseDistance(props.distance);
         if (props.distance <= 1 && fullScreen === "") handleOnMouseLeave();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.distance]);
 
     useEffect(() => {
         if (props.running) handleRunTestCaseOnClick(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.running]);
 
     return (
@@ -228,13 +230,13 @@ const TestCase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                                                 xmlns='http://www.w3.org/2000/svg'
                                                 fill='#fff'
                                                 stroke='#fff'
-                                                stroke-width='0.0002'
+                                                strokeWidth='0.0002'
                                             >
-                                                <g id='SVGRepo_bgCarrier' stroke-width='0'></g>
+                                                <g id='SVGRepo_bgCarrier' strokeWidth='0'></g>
                                                 <g
                                                     id='SVGRepo_tracerCarrier'
-                                                    stroke-linecap='round'
-                                                    stroke-linejoin='round'
+                                                    strokeLinecap='round'
+                                                    strokeLinejoin='round'
                                                 ></g>
                                                 <g id='SVGRepo_iconCarrier'>
                                                     {" "}
@@ -269,11 +271,11 @@ const TestCase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                                                 width='24'
                                                 height='24'
                                                 viewBox='0 0 24 24'
-                                                stroke-width='2'
+                                                strokeWidth='2'
                                                 stroke='currentColor'
                                                 fill='none'
-                                                stroke-linecap='round'
-                                                stroke-linejoin='round'
+                                                strokeLinecap='round'
+                                                strokeLinejoin='round'
                                             >
                                                 <path
                                                     stroke='none'

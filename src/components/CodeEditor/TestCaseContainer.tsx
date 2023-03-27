@@ -12,15 +12,9 @@ type Props = {
     mousePosition: { X: number, Y: number }
 }
 
-interface MousePosition {
-    x: number;
-    y: number;
-}
-
 const TestCaseContainer = (props: Props) => {
     const testCases = props.task
     const [elementRef, setElementRef] = useState<RefObject<HTMLDivElement>[]>([])
-    let mousePosition: MousePosition = {x: 0, y: 0}
     const [mouseDistance, setMouseDistance] = useState<Array<number>>([])
     const [running, setRunning] = useState<boolean[]>([])
 
@@ -45,6 +39,7 @@ const TestCaseContainer = (props: Props) => {
             setRunningCase(0, true)
             props.setConsoleOutput({data: "", display: ConsoleDisplayType.DEFAULT})
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.runAllTestCases])
 
     const handleOnMouseMove = () => {
@@ -54,7 +49,6 @@ const TestCaseContainer = (props: Props) => {
             const {left, top, width, height} = elementRef[i].current!.getBoundingClientRect();
             const x = props.mousePosition.X - left;
             const y = props.mousePosition.Y - top;
-            mousePosition = {x: x, y: y}
             const centerX = width / 2;
             const centerY = height / 2;
             let dist = Math.sqrt(Math.pow(centerX - x, 2) + Math.pow(centerY - y, 2));
@@ -69,6 +63,7 @@ const TestCaseContainer = (props: Props) => {
 
     useEffect(() => {
         handleOnMouseMove()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.mousePosition])
 
     const handleOnMouseLeave = () => {

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import GameEditor, {handler} from "../CodeEditor/GameEditor";
+import GameEditor from "../CodeEditor/GameEditor";
 import Problem from "../CodeEditor/Problem";
 import TestCaseContainer from "../CodeEditor/TestCaseContainer";
 import Actions from "../Game/Actions";
@@ -8,6 +8,7 @@ import {GameTask, TaskResult} from "../models";
 import RulesModal from "../UI/RulesModal";
 import {ConsoleData, ConsoleDisplayType} from "./GamePage";
 import LoadingSpinner from "../UI/LoadingSpinner";
+import {API} from "../../Constants";
 
 type Props = {
     task?: GameTask
@@ -22,11 +23,9 @@ const CodeEditor = (props: Props) => {
     const [buttonText, setButtonText] = useState('Submit')
     const [language, setLanguage] = useState('java')
     const [code, setCodeState] = useState("")
-    const [success, setSuccess] = useState(false)
     const [runAllTestCases, setRunAllTestCases] = useState(false)
     const [consoleOutput, setConsoleOutput] = useState<ConsoleData>({data: "", display: ConsoleDisplayType.DEFAULT})
     const [mousePosition, setMousePosition] = useState({X: 0, Y: 0})
-    const fromEditor = React.useRef<handler>(null);
     const [boilerCode, setBoilerCode] = useState('');
     const [editorUpdate, setEditorUpdate] = useState(false)
     const [savedBoilerCode, setSavedBoilerCode] = useState('');
@@ -39,6 +38,7 @@ const CodeEditor = (props: Props) => {
             if (lang) setSavedLanguage(JSON.parse(lang))
             if (data) setSavedBoilerCode(JSON.parse(data))
         }
+        //eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -46,25 +46,21 @@ const CodeEditor = (props: Props) => {
             localStorage.setItem('EDITOR_CODE', JSON.stringify(code))
             localStorage.setItem('EDITOR_LANGUAGE', JSON.stringify(language))
         }
+        //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [code]);
 
     useEffect(() => {
         fetchStartCode(language)
+        //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const fetchStartCode = (lang: string) => {
-        fetch(`https://localhost:7067/api/GetStartCode?language=${lang}&test=${!!props.test}`, {
-            method: "GET",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            }
-        }).then(response => {
-            if (!response.ok)
-                throw new Error("no data")
-            return response
-        })
+        API.getStartCode(lang, props.test)
+            .then(response => {
+                if (!response.ok)
+                    throw new Error("no data")
+                return response
+            })
             .then(response => response.text()
                 .then(response => {
                     setBoilerCode(response)
@@ -83,24 +79,16 @@ const CodeEditor = (props: Props) => {
 
     const submitTaskHandler = () => {
         resetConsoleOutput()
-        fetch('https://localhost:7067/api/SubmitTask', {
-            method: "POST",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            },
-            body: JSON.stringify(code)
-        }).then(response => {
-            if (!response.ok)
-                throw new Error("500")
-            return response
-        })
+        API.submitTask(code)
+            .then(response => {
+                if (!response.ok)
+                    throw new Error("500")
+                return response
+            })
             .then(response => response.json()
                 .then((response: TaskResult) => {
                     if (!response.success) {
                         setButtonText('prøv igjen')
-                        setSuccess(false)
                     } else {
                         setTaskResultCheck(true)
                         props.setIsOpen?.(true)
@@ -117,28 +105,11 @@ const CodeEditor = (props: Props) => {
         })
     }
 
-    const testCaseHandler = (taskId: number) => {
-        resetConsoleOutput()
-        runTestCase(taskId).then(response => {
-            if (!response.ok)
-                throw new Error("no data")
-            return response
-        }).catch((error: Error) => {
-            console.log(error.message)
-        })
-    }
-
-    const runTestCase = async (taskId: number) => {
-        const path = props.test ? 'SubmitTestTaskTestCase' : 'SubmitTestCase'
-        return await fetch(`https://localhost:7067/api/${path}?index=${taskId}`, {
-            method: "POST",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            },
-            body: JSON.stringify(code)
-        })
+    const runTestCase = async (taskId: number): Promise<Response> => {
+        return props.test ?
+            API.runTestTaskTestCase(code, taskId)
+            :
+            API.runTestCase(code, taskId)
     }
 
     const languageHandleOnChange = (event: any) => {
@@ -186,9 +157,9 @@ const CodeEditor = (props: Props) => {
                                              xmlns="http://www.w3.org/2000/svg"
                                              fill="#ffeb3b"
                                              transform="matrix(-1, 0, 0, -1, 0, 0)rotate(0)">
-                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"
-                                               stroke="#CCCCCC#ffeb3b" stroke-width="0.4">
+                                            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"
+                                               stroke="#CCCCCC#ffeb3b" strokeWidth="0.4">
                                                 <path
                                                     d="M17 9a1 1 0 01-1-1c0-.551-.448-1-1-1H5.414l1.293 1.293a.999.999 0 11-1.414 1.414l-3-3a.999.999 0 010-1.414l3-3a.997.997 0 011.414 0 .999.999 0 010 1.414L5.414 5H15c1.654 0 3 1.346 3 3a1 1 0 01-1 1zM3 11a1 1 0 011 1c0 .551.448 1 1 1h9.586l-1.293-1.293a.999.999 0 111.414-1.414l3 3a.999.999 0 010 1.414l-3 3a.999.999 0 11-1.414-1.414L14.586 15H5c-1.654 0-3-1.346-3-3a1 1 0 011-1z"
                                                     fill="#ffeb3b">
@@ -207,8 +178,10 @@ const CodeEditor = (props: Props) => {
                         </div>
                         <div
                             className='group overflow-auto h-full min-w-full min-h-[200px] bg-gameComps'>
-                            <GameEditor onChange={setCode} lang={savedLanguage ? savedLanguage : language} test={props.test} ref={fromEditor}
-                                        boilerCode={savedBoilerCode  ? savedBoilerCode : boilerCode} update={editorUpdate}/>
+                            <GameEditor onChange={setCode} lang={savedLanguage ? savedLanguage : language}
+                                        test={props.test}
+                                        boilerCode={savedBoilerCode ? savedBoilerCode : boilerCode}
+                                        update={editorUpdate}/>
                         </div>
                         <div className='w-full items-center flex pl-8'>
                             <h1 className={"text-yellow-500 text-2xl"}>Tester</h1>
@@ -273,7 +246,6 @@ const CodeEditor = (props: Props) => {
                                 className='bg-gameComps mt-2 ml-2 rounded-br-2xl basis-1/12 lg:mt-2 ml-2'>
                                 <Actions text={buttonText} test='TestAll'
                                          handleOnClickSubmit={submitTaskHandler}
-                                         handleOnClickTest={testCaseHandler}
                                          handleOnTestAllClick={() => setRunAllTestCases(true)}
                                 />
                                 {taskResultCheck && <RulesModal/>}

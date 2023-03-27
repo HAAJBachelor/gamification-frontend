@@ -13,13 +13,13 @@ export type handler = {
     start: () => void;
 }
 
-const GameEditor = React.forwardRef<handler, Props>((props, ref) => {
+const GameEditor = (props: Props) => {
 
     const [boilerCode, setBoilerCode] = useState('');
     const [editor, setEditor] = useState<any>(null)
 
 
-    const handleEditorChange = (value: any, event: any) => {
+    const handleEditorChange = (value: any) => {
         props.onChange(value)
     }
     const beforeMount = (monaco: Monaco) => {
@@ -32,7 +32,7 @@ const GameEditor = React.forwardRef<handler, Props>((props, ref) => {
         if (editor) {
             editor.setValue(props.boilerCode)
         }
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.update, props.boilerCode])
 
     return (
@@ -67,5 +67,5 @@ const GameEditor = React.forwardRef<handler, Props>((props, ref) => {
             />
         </>
     );
-});
+}
 export default GameEditor;
