@@ -12,6 +12,8 @@ type Props = {
     setRunning: (index: number, val: boolean) => void
     running: boolean
     setConsoleOutput: (val: ConsoleData) => void
+    setRunAllTestCases: (val: boolean) => void
+
 }
 
 const TestCases: React.FC<Props> = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
@@ -19,6 +21,7 @@ const TestCases: React.FC<Props> = React.forwardRef<HTMLDivElement, Props>((prop
         <TestCase input={props.input} output={props.output} onClick={props.onClick} id={props.id} ref={ref}
                   distance={props.distance} setRunning={props.setRunning} running={props.running}
                   setConsoleOutput={props.setConsoleOutput}
+                  setRunAllTestCases={props.setRunAllTestCases}
         />
     );
 });
