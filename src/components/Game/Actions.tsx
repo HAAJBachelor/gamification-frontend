@@ -2,9 +2,10 @@ import React from 'react';
 
 
 type Props = {
+    text: string
+    test: string
     handleOnTestAllClick: () => void
     handleOnClickSubmit: () => void
-    handleOnResetClick: () => void
 }
 
 const actionButton = (callback: any, text: string) => {
@@ -17,12 +18,12 @@ const actionButton = (callback: any, text: string) => {
 }
 
 
-const Actions = (props: any) => {
+const Actions = (props: Props) => {
     return (
         <div className='flex flex-row sm:flex-col justify-evenly items-center  h-full'>
             {actionButton(props.handleOnTestAllClick, "Test alle")}
             {actionButton(props.handleOnClickSubmit, "Fullfør")}
-            {actionButton(props.handleOnResetClick, "Nullstill")}
+            {actionButton(null, "Nullstill")}
         </div>
     );
 };
