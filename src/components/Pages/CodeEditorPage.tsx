@@ -29,7 +29,6 @@ const CodeEditor = (props: Props) => {
     const [mousePosition, setMousePosition] = useState({X: 0, Y: 0})
     const [boilerCode, setBoilerCode] = useState('');
     const [editorUpdate, setEditorUpdate] = useState(false)
-    const [isSaved, setIsSaved] = useState(false)
     const [savedBoilerCode, setSavedBoilerCode] = useState('');
     const [savedLanguage, setSavedLanguage] = useState('')
 
@@ -39,7 +38,6 @@ const CodeEditor = (props: Props) => {
             const lang = localStorage.getItem('EDITOR_LANGUAGE');
             if (lang) setSavedLanguage(JSON.parse(lang))
             if (data) setSavedBoilerCode(JSON.parse(data))
-            console.log(isSaved)
         }
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -48,7 +46,6 @@ const CodeEditor = (props: Props) => {
         if (code !== '') {
             localStorage.setItem('EDITOR_CODE', JSON.stringify(code))
             localStorage.setItem('EDITOR_LANGUAGE', JSON.stringify(language))
-            setIsSaved(true)
         }
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [code]);
@@ -68,7 +65,6 @@ const CodeEditor = (props: Props) => {
             .then(response => response.text()
                 .then(response => {
                     setBoilerCode(response)
-
                 })).catch((error: Error) => {
             console.log(error.message)
         })
@@ -94,8 +90,6 @@ const CodeEditor = (props: Props) => {
                 .then((response: TaskResult) => {
                     if (!response.success) {
                         setButtonText('prøv igjen')
-                        console.log(success)
-                        console.log(response)
                         setSuccess(false)
                     } else {
                         setTaskResultCheck(true)
@@ -103,6 +97,7 @@ const CodeEditor = (props: Props) => {
                         props.setSuccess?.(true)
                         setButtonText('Submit')
                         localStorage.setItem('EDITOR_CODE', JSON.stringify(''))
+                        localStorage.setItem('EDITOR_LANGUAGE', JSON.stringify(''))
                     }
                     if (response.compilerError) {
                         setConsoleOutput({data: response.compilerErrorMessage, display: ConsoleDisplayType.ERROR})
@@ -120,9 +115,9 @@ const CodeEditor = (props: Props) => {
     }
 
     const languageHandleOnChange = (event: any) => {
+        setSavedBoilerCode('')
+        setSavedLanguage('')
         const lang = event.target.value
-        localStorage.setItem('EDITOR_CODE', JSON.stringify(''))
-        localStorage.setItem('EDITOR_LANGUAGE', JSON.stringify(''))
         setLanguage(lang)
         fetchStartCode(lang)
     }
@@ -132,6 +127,8 @@ const CodeEditor = (props: Props) => {
     }
 
     const resetCodeStubHandler = () => {
+        setSavedBoilerCode('')
+
         setEditorUpdate(value => !value)
     }
 
