@@ -1,3 +1,5 @@
+import {useEffect, useState} from "react";
+
 const LanguageSelector = (props: any) => {
     return (
         <div className="text-yellow-500">
@@ -9,7 +11,6 @@ const LanguageSelector = (props: any) => {
                 <option value="javascript">Javascript</option>
                 <option value="python">Python</option>
             </select>
-
         </div>
     );
 };
