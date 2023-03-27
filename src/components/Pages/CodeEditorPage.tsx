@@ -30,6 +30,7 @@ const CodeEditor = (props: Props) => {
     const [editorUpdate, setEditorUpdate] = useState(false)
     const [savedBoilerCode, setSavedBoilerCode] = useState('');
     const [savedLanguage, setSavedLanguage] = useState('')
+    const [selectedClient,setSelectedClient] = useState([]);
 
     useEffect(() => {
         if (localStorage.getItem('EDITOR_CODE') && localStorage.getItem('EDITOR_LANGUAGE')) {
@@ -115,6 +116,7 @@ const CodeEditor = (props: Props) => {
     const languageHandleOnChange = (event: any) => {
         setSavedBoilerCode('')
         setSavedLanguage('')
+        setSelectedClient(event.target.value);
         const lang = event.target.value
         setLanguage(lang)
         fetchStartCode(lang)
@@ -144,7 +146,7 @@ const CodeEditor = (props: Props) => {
                     <div className={"h-[60vh] flex flex-col bg-gameComps rounded-tr-2xl"}>
                         <div className='rounded-tr-2xl '>
                             <div className='flex flex-row justify-between'>
-                                <LanguageSelector onChange={languageHandleOnChange}/>
+                                <LanguageSelector onChange={languageHandleOnChange} value={savedLanguage ? savedLanguage : selectedClient}/>
                                 <div className={'mr-1 mt-1'}>
                                     <button
                                         className={'border border-background hover:border-transparent rounded hover:scale-110 transition-all duration-300 text-left rounded-xl bg-gameComps shadow-lg shadow-yellow-900 transform hover:scale-125'}
