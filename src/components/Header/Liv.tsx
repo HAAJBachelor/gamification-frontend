@@ -1,29 +1,26 @@
 import {useEffect, useState} from 'react';
 import rocket from '../../image/rocket.png';
 import {State} from "../models";
+import {API} from "../../Constants";
 
 
 export const Liv = () => {
     const [lives, setLives] = useState(0);
 
     useEffect(() => {
-        try {
-            const fetchData = async () => {
-                const response = await fetch("https://localhost:7067/api/GetState", {
-                    credentials: 'include',
-                    headers: {
-                        'Access-Control-Allow-Headers': 'Authorization',
-                    }
-                })
+        API.getState()
+            .then(response => response)
+            .then(response => {
                 if (!response.ok) throw new Error("no data")
-                const data: State = await response.json()
-
-                setLives(data._lives)
-            }
-            fetchData();
-        } catch (error: any) {
-            console.log(error.message);
-        }
+                return response
+            })
+            .then(response => response.json())
+            .then((response: State) => {
+                setLives(response._lives)
+            })
+            .catch((error: Error) => {
+                console.log(error.message)
+            })
     }, [])
 
     return (

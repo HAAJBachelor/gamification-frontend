@@ -3,10 +3,11 @@ import NewCard from "../UI/NewCard";
 import {Title} from "../Title/Title";
 import Questions from "../Questions/Questions";
 import ProgressBar from "../ProgressBar";
-import {GameTask, RunningState, State, TaskResult} from "../models";
+import {GameTask, RunningState, State} from "../models";
 import RulesModal from "../UI/RulesModal";
 import Header from "../Header/Header";
 import CodeEditor from './CodeEditorPage';
+import {API} from "../../Constants";
 
 
 export enum ConsoleDisplayType {
@@ -28,7 +29,6 @@ enum GamePageComponent {
 
 const GamePage = () => {
     const [gamePageComponent, setGamePageComponent] = useState<GamePageComponent>(GamePageComponent.None);
-    const [code, setCodeState] = useState<String>("")
     const [task, setTask] = useState<GameTask>()
     const [modalIsOpen, setIsOpen] = useState(false)
     const [success, setSuccess] = useState(false)
@@ -36,21 +36,15 @@ const GamePage = () => {
     const openGameEditor = (task: GameTask) => {
         setTask(task)
         setGamePageComponent(GamePageComponent.Editor)
-    }    
+    }
 
     const selectedTaskHandler = (id: number) => {
-        fetch(`https://localhost:7067/api/SelectTask?taskId=${id}`, {
-            method: "GET",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            }
-        }).then(response => {
-            if (!response.ok)
-                throw new Error("no data")
-            return response
-        })
+        API.selectTask(id)
+            .then(response => {
+                if (!response.ok)
+                    throw new Error("no data")
+                return response
+            })
             .then(response => response.json()
                 .then((response: GameTask) => {
                     openGameEditor(response);
@@ -59,25 +53,6 @@ const GamePage = () => {
         })
 
     }
-    
-    const runTestCase = async (taskId: number) => {
-        return await fetch(`https://localhost:7067/api/SubmitTestCase?index=${taskId}`, {
-            method: "POST",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            },
-            body: JSON.stringify(code)
-        })
-    }    
-
-    const validateTestCase = async (taskId: number): Promise<boolean> => {
-        let success = await runTestCase(taskId)
-        let results = await success.json()
-        return results.success
-    }
-
 
     const nextAssignmentHandler = () => {
         setGamePageComponent(GamePageComponent.TaskSelect)
@@ -85,9 +60,7 @@ const GamePage = () => {
     }
 
     const fetchGameTask = () => {
-        fetch("https://localhost:7067/api/GetSelectedTask", {
-            credentials: 'include',
-        })
+        API.getSelectedTask()
             .then(response => response.json())
             .then((response: GameTask) => {
                 openGameEditor(response)
@@ -98,9 +71,7 @@ const GamePage = () => {
     }
 
     useEffect(() => {
-        fetch('https://localhost:7067/api/GetState', {
-            credentials: 'include',
-        })
+        API.getState()
             .then(response => response.json())
             .then((response: State) => {
                 if (response._runningState === RunningState.InTask) {
@@ -111,8 +82,10 @@ const GamePage = () => {
             })
             .catch((error: Error) => {
                 setGamePageComponent(GamePageComponent.TaskSelect)
+                console.log(error.message)
             })
-    }, [])    
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const renderGamePageComponent = () => {
         switch (gamePageComponent) {
@@ -128,7 +101,11 @@ const GamePage = () => {
                     </NewCard>
                 </div>
             case GamePageComponent.Editor:
-                return <CodeEditor task={task}/>
+                return <CodeEditor
+                    task={task}
+                    setSuccess={setSuccess}
+                    setIsOpen={setIsOpen}
+                />
             case GamePageComponent.None:
                 return <></>
         }

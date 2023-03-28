@@ -22,6 +22,7 @@ export interface GameTask {
     testCases: TestCase[],
     rewards: rewards,
     difficulty: string
+    category: string[]
 }
 
 export interface TestCaseResult {
@@ -48,4 +49,11 @@ export interface State {
     _lives: number,
     _time: number,
     _runningState: RunningState
+}
+
+export interface SessionRecord {
+    id: number,
+    score: number,
+    time: number,
+    username: string
 }
