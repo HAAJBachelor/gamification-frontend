@@ -4,6 +4,7 @@ import {Button} from "../UI/Button";
 import {Title} from "../Title/Title";
 import {useNavigate} from "react-router-dom";
 import RulesModal from "../UI/RulesModal";
+import {API} from "../../Constants";
 
 
 const EndGamePage = () => {
@@ -21,36 +22,24 @@ const EndGamePage = () => {
     }
     const submitUserNameHandler = (e: any) => {
         e.preventDefault();
-        fetch(`https://localhost:7067/api/SubmitUsername?username=${username}`, {
-            method: "GET",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            }
-        }).then(response => {
-                if (!response.ok)
-                    throw new Error("no data")
-                setIsOpen(true)
-            }
-        )
+        API.submitUsername(username)
+            .then(response => {
+                    if (!response.ok)
+                        throw new Error("no data")
+                    setIsOpen(true)
+                }
+            )
     }
 
     const submitAnonymous = (e: any) => {
         e.preventDefault();
-        fetch(`https://localhost:7067/api/SubmitUsername?username=Anonymous`, {
-            method: "GET",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            }
-        }).then(response => {
-                if (!response.ok)
-                    throw new Error("no data");
-                navigate('/');
-            }
-        )
+        API.submitUsername("Anonym")
+            .then(response => {
+                    if (!response.ok)
+                        throw new Error("no data");
+                    navigate('/');
+                }
+            )
     }
 
     return (

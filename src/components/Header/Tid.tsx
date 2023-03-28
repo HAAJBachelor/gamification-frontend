@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import useWebSocket from "react-use-websocket";
 import {useNavigate} from "react-router-dom";
+import {API} from "../../Constants";
 
 type Data = {
     type: DataTypes;
@@ -17,8 +18,9 @@ const Tid = () => {
     const [alert, setAlert] = useState(false);
     const navigate = useNavigate();
 
-    useWebSocket("wss://localhost:7067/ws", {
-        shouldReconnect: (closeEvent) => false,
+
+    useWebSocket(API.WEB_SOCKET_URL, {
+        shouldReconnect: () => false,
 
         onMessage: (message) => {
             const data: Data = JSON.parse(message.data);
@@ -26,6 +28,8 @@ const Tid = () => {
                 setTime(formatTime(parseInt(data.data)));
             }
             if (data.type === DataTypes.StateChange) {
+                localStorage.setItem('EDITOR_CODE', JSON.stringify(''))
+                localStorage.setItem('EDITOR_LANGUAGE', JSON.stringify(''))
                 navigate('/EndGamePage');
                 return;
             }
