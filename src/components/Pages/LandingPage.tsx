@@ -90,7 +90,7 @@ const LandingPage = () => {
                 <div className={"basis-3/4"}>
                     <NewCard>
                         <Title title='Velkommen'/>
-                        <div className="flex flex-col justify-center items-center">
+                        <div className="flex flex-col justify-center items-center h-64">
                             <div className='flex justify-center'>
                                 <img
                                     className='max-w-52 max-h-52 rounded-2xl hover:shadow-md hover:shadow-yellow-500'
