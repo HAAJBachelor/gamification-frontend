@@ -6,7 +6,6 @@ import {Button} from "../UI/Button";
 import {useNavigate} from "react-router-dom";
 import RulesButton from "../RulesButton";
 import RulesModal from "../UI/RulesModal";
-import {Prize} from "../../image/Prize";
 import LeaderBoard from "../LeaderBoard";
 
 const LandingPage = () => {
@@ -15,6 +14,8 @@ const LandingPage = () => {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [sessionInProgress, setSessionInProgress] = useState(false);
     const [showList, setShowList] = useState(false);
+    const [loadingSession, setLoadingSession] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     let navigate = useNavigate();
     const openModal = () => {
@@ -36,6 +37,7 @@ const LandingPage = () => {
     }
 
     const startSession = () => {
+        setLoadingSession(true)
         fetch("https://localhost:7067/api/CreateSession", {
             method: "GET",
             credentials: "include",
@@ -58,8 +60,9 @@ const LandingPage = () => {
                 })
             )
             .catch((error: Error) => {
+                setErrorMessage("Kunne ikke koble til serveren. Prøv igjen senere.");
                 console.log(error.message);
-            });
+            }).finally(() => setLoadingSession(false));
     };
 
     useEffect(() => {
@@ -80,6 +83,10 @@ const LandingPage = () => {
             });
     });
 
+    const handleErrorButton = () => {
+        setErrorMessage("");
+    }
+
     return (
         <div className={"flex justify-center items-center h-screen w-screen"}>
             <div
@@ -89,23 +96,38 @@ const LandingPage = () => {
                 </div>
                 <div className={"basis-3/4"}>
                     <NewCard>
-                        <Title title='Velkommen'/>
-                        <div className="flex flex-col justify-center items-center">
-                            <div className='flex justify-center'>
-                                <img
-                                    className='max-w-52 max-h-52 rounded-2xl hover:shadow-md hover:shadow-yellow-500'
-                                    src={yellowFolk}
-                                    alt='two OXX yellow folk'
-                                />
-                            </div>
-                            <div className='flex flex-row justify-center items-center w-full gap-6 mt-4'>
-                                {sessionInProgress && (
-                                    <Button text='Fortsett spill' handleOnClick={handleContinueGame}/>
-                                )}
-                                <Button
-                                    text='Start nytt spill'
-                                    handleOnClick={startSession}
-                                ></Button>
+                        <div>
+                            <Title title='Velkommen'/>
+                            <div className="flex flex-col justify-center items-center">
+                                <div className='flex justify-center'>
+                                    <img
+                                        className='max-w-52 max-h-52 rounded-2xl hover:shadow-md hover:shadow-yellow-500'
+                                        src={yellowFolk}
+                                        alt='two OXX yellow folk'
+                                    />
+                                </div>
+                                {errorMessage !== "" ?
+                                    <div className="flex justify-center flex-col items-center mt-4">
+                                        <div
+                                            className="text-red-500 text-center absolute bottom-20">{errorMessage}</div>
+                                        <Button handleOnClick={handleErrorButton} text={"Ok"}/>
+                                    </div>
+                                    :
+                                    loadingSession ?
+                                        <div className="flex justify-center items-center mt-4">
+                                            <p className={"text-2xl text-white"}>Venter på server...</p>
+                                        </div>
+                                        :
+                                        <div className='flex flex-row justify-center items-center w-full gap-6 mt-4'>
+                                            {sessionInProgress && (
+                                                <Button text='Fortsett spill' handleOnClick={handleContinueGame}/>
+                                            )}
+                                            <Button
+                                                text='Start nytt spill'
+                                                handleOnClick={startSession}
+                                            ></Button>
+                                        </div>
+                                }
                             </div>
                         </div>
                     </NewCard>
