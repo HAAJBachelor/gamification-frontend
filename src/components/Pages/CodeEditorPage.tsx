@@ -141,6 +141,9 @@ const CodeEditor = (props: Props) => {
         setEditorUpdate(value => !value)
     }
 
+    const skipTaskHandler = () => {}
+    const tipsTaskHandler = () => {}
+
     return (
         <div className='max-w-screen my-2 flex justify-center' onMouseMove={handleMouseMove}>
             <div
@@ -258,6 +261,9 @@ const CodeEditor = (props: Props) => {
                                 <Actions text={buttonText} test='TestAll'
                                          handleOnClickSubmit={submitTaskHandler}
                                          handleOnTestAllClick={() => setRunAllTestCases(true)}
+                                         handleOnClickSkip={skipTaskHandler}
+                                         handleOnClickTips={tipsTaskHandler}
+
                                 />
                                 {taskResultCheck && <RulesModal/>}
                             </div>
