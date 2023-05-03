@@ -1,4 +1,5 @@
 import React from "react";
+import LoadingSpinner from "../UI/LoadingSpinner";
 
 type Props = {
     text: string
@@ -7,6 +8,7 @@ type Props = {
     handleOnClickSubmit: () => void;
     handleOnClickSkip: () => void;
     handleOnClickTips: () => void;
+    submitTasks: boolean;
 };
 
 const actionButton = (callback: any, text: string, image: any) => {
@@ -64,36 +66,33 @@ const Actions = (props: Props) => {
                     </g>
                 </svg>
             </button>
-            <button
-                onClick={props.handleOnClickSubmit}
-                className={"w-fit h-fit flex items-center justify-center align-center bg-gray-900 text-xl text-yellow-500 p-2 rounded-full border shadow-lg shadow-yellow-900 border-black transition-all hover:scale-125 hover:border-white"}>
-                <svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" width="30px"
-                     height="30px" viewBox="0 0 533.973 533.973">
-                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                    <g id="SVGRepo_iconCarrier">
-                        <g>
-                            <g>
-                                <path
-                                    stroke="#eab308" stroke-width="36"
-                                    d="M477.931,52.261c-12.821-12.821-33.605-12.821-46.427,0l-266.96,266.954l-62.075-62.069 c-12.821-12.821-33.604-12.821-46.426,0L9.616,303.572c-12.821,12.821-12.821,33.604,0,46.426l85.289,85.289l46.426,46.426 c12.821,12.821,33.611,12.821,46.426,0l46.426-46.426l290.173-290.174c12.821-12.821,12.821-33.605,0-46.426L477.931,52.261z"></path>
+            {
+                props.submitTasks?
+                <div
+                    className={"w-fit h-fit flex items-center justify-center align-center bg-gray-900 text-xl text-yellow-500 p-2 rounded-full border shadow-lg shadow-yellow-900 border-black"}>
+                    <LoadingSpinner/>
+                </div>
+                    :
+                    <button
+                        onClick={props.handleOnClickSubmit}
+                        className={"w-fit h-fit flex items-center justify-center align-center bg-gray-900 text-xl text-yellow-500 p-2 rounded-full border shadow-lg shadow-yellow-900 border-black transition-all hover:scale-125 hover:border-white"}>
+                        <svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" width="30px"
+                             height="30px" viewBox="0 0 533.973 533.973">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <g>
+                                    <g>
+                                        <path
+                                            stroke="#eab308" stroke-width="36"
+                                            d="M477.931,52.261c-12.821-12.821-33.605-12.821-46.427,0l-266.96,266.954l-62.075-62.069 c-12.821-12.821-33.604-12.821-46.426,0L9.616,303.572c-12.821,12.821-12.821,33.604,0,46.426l85.289,85.289l46.426,46.426 c12.821,12.821,33.611,12.821,46.426,0l46.426-46.426l290.173-290.174c12.821-12.821,12.821-33.605,0-46.426L477.931,52.261z"></path>
+                                    </g>
+                                </g>
                             </g>
-                        </g>
-                    </g>
-                </svg>
-                {/*<svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" width="30px"
-                     height="30px" viewBox="0 0 78.369 78.369">
-                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                    <g id="SVGRepo_iconCarrier">
-                        <g>
-                            <path
-                                stroke="#eab308" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"
-                                d="M78.049,19.015L29.458,67.606c-0.428,0.428-1.121,0.428-1.548,0L0.32,40.015c-0.427-0.426-0.427-1.119,0-1.547l6.704-6.704 c0.428-0.427,1.121-0.427,1.548,0l20.113,20.112l41.113-41.113c0.429-0.427,1.12-0.427,1.548,0l6.703,6.704 C78.477,17.894,78.477,18.586,78.049,19.015z"></path>
-                        </g>
-                    </g>
-                </svg>*/}
-            </button>
+                        </svg>
+                    </button>
+            }
+
         </div>
     );
 };
