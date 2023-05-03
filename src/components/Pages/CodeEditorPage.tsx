@@ -30,6 +30,7 @@ const CodeEditor = (props: Props) => {
     const [editorUpdate, setEditorUpdate] = useState(false)
     const [savedBoilerCode, setSavedBoilerCode] = useState('');
     const [savedLanguage, setSavedLanguage] = useState('')
+    const [submitTasks, setSubmitTasks] = useState(false)
 
     useEffect(() => {
         if (localStorage.getItem('EDITOR_CODE') && localStorage.getItem('EDITOR_LANGUAGE')) {
@@ -78,6 +79,7 @@ const CodeEditor = (props: Props) => {
     }
 
     const submitTaskHandler = () => {
+        setSubmitTasks(true)
         resetConsoleOutput()
         API.submitTask(code)
             .then(response => {
@@ -100,6 +102,7 @@ const CodeEditor = (props: Props) => {
                     if (response.compilerError) {
                         setConsoleOutput({data: response.compilerErrorMessage, display: ConsoleDisplayType.ERROR})
                     }
+                    setSubmitTasks(false)
                 })).catch((error: Error) => {
             console.log(error.message)
         })
@@ -252,6 +255,7 @@ const CodeEditor = (props: Props) => {
                                          handleOnTestAllClick={() => setRunAllTestCases(true)}
                                          handleOnClickSkip={skipTaskHandler}
                                          handleOnClickTips={tipsTaskHandler}
+                                         submitTasks={submitTasks}
 
                                 />
                                 {taskResultCheck && <RulesModal/>}
