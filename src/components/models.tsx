@@ -50,3 +50,10 @@ export interface State {
     _time: number,
     _runningState: RunningState
 }
+
+export interface SessionRecord {
+    id: number,
+    score: number,
+    time: number,
+    username: string
+}
