@@ -92,7 +92,7 @@ export const API = {
         })
     },
     isGameSessionActive: async (): Promise<Response> => {
-        return await fetch("https://localhost:7067/api/IsGameSessionActive", {
+        return await fetch(`${URL}/IsGameSessionActive`, {
             method: "GET",
             credentials: "include",
             headers: {
@@ -101,7 +101,7 @@ export const API = {
         })
     },
     generateTasks: async (): Promise<Response> => {
-        return await fetch('https://localhost:7067/api/GenerateTasks', {
+        return await fetch(`${URL}/GenerateTasks`, {
             credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
@@ -110,7 +110,7 @@ export const API = {
         })
     },
     selectTaskForTestings: async (taskId: string): Promise<Response> => {
-        return await fetch(`https://localhost:7067/api/SelectTaskForTesting?taskId=${taskId}`, {
+        return await fetch(`${URL}/SelectTaskForTesting?taskId=${taskId}`, {
             method: "GET",
             credentials: 'include',
             headers: {
@@ -118,5 +118,15 @@ export const API = {
                 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             }
         })
-    }
+    },
+
+    skipTask: async (): Promise<Response> => {
+        return await fetch(`${URL}/SkipTask`, {
+            method: "GET",
+            credentials: 'include',
+            headers: {
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            }
+        })
+    },
 }

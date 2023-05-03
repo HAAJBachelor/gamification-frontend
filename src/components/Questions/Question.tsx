@@ -63,7 +63,7 @@ const Question = (props: Props) => {
                             text={props.problemsList[props.id].difficulty.toUpperCase()}/>
                         <Capsule
                             index={2}
-                            bgcolor={"bg-blue-400 border-blue-600"}
+                            bgcolor={"bg-[#46aec3] border-[#189ab4]"}
                             text={props.problemsList[props.id].rewards.time + " min | " +
                                 props.problemsList[props.id].rewards.lives + " X"}
                             picture={picture}

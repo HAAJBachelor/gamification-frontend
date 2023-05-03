@@ -9,11 +9,16 @@ type Data = {
 };
 
 enum DataTypes {
-    Update = "Update",
+    Time = "Time",
     StateChange = "StateChange",
+    Skip = "Skip",
 }
 
-const Tid = () => {
+type Props = {
+    skips: (skips: number) => void
+}
+
+const Tid = (props: Props) => {
     const [time, setTime] = useState("10:00");
     const [alert, setAlert] = useState(false);
     const navigate = useNavigate();
@@ -24,19 +29,23 @@ const Tid = () => {
 
         onMessage: (message) => {
             const data: Data = JSON.parse(message.data);
-            if (data.type === DataTypes.Update) {
+            if (data.type === DataTypes.Time) {
                 setTime(formatTime(parseInt(data.data)));
+                if (parseInt(data.data) <= 60) {
+                    setAlert(true);
+                } else {
+                    setAlert(false);
+                }
+            }
+            if (data.type === DataTypes.Skip) {
+                props.skips(parseInt(data.data));
             }
             if (data.type === DataTypes.StateChange) {
                 localStorage.setItem('EDITOR_CODE', JSON.stringify(''))
                 navigate('/EndGamePage');
                 return;
             }
-            if (parseInt(data.data) <= 60) {
-                setAlert(true);
-            } else {
-                setAlert(false);
-            }
+
         },
         onError: (e) => console.log(e),
     });
