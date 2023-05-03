@@ -106,6 +106,10 @@ const CodeEditor = (props: Props) => {
                 .then((response: TaskResult) => {
                     if (!response.success) {
                         setButtonText('prøv igjen')
+                        setConsoleOutput({
+                            data: "Beklager, du kan ikke sende inn oppgaven, fordi du ikke besto alle testene :(",
+                            display: ConsoleDisplayType.ERROR,
+                        });
                     } else {
                         setTaskResultCheck(true)
                         props.setIsOpen?.(true)
