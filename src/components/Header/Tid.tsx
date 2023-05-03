@@ -29,7 +29,6 @@ const Tid = () => {
             }
             if (data.type === DataTypes.StateChange) {
                 localStorage.setItem('EDITOR_CODE', JSON.stringify(''))
-                localStorage.setItem('EDITOR_LANGUAGE', JSON.stringify(''))
                 navigate('/EndGamePage');
                 return;
             }
