@@ -6,7 +6,6 @@ import {Button} from "../UI/Button";
 import {useNavigate} from "react-router-dom";
 import RulesButton from "../RulesButton";
 import RulesModal from "../UI/RulesModal";
-import {Prize} from "../../image/Prize";
 import LeaderBoard from "../LeaderBoard";
 
 const LandingPage = () => {
@@ -83,7 +82,7 @@ const LandingPage = () => {
     return (
         <div className={"flex justify-center items-center h-screen w-screen"}>
             <div
-                className='flex flex-row w-screen h-screen px-4 justify-center items-center 2xl:w-[90rem]'>
+                className='flex flex-row w-screen h-screen px-4 justify-center 2xl:w-[90rem] 2xl:pt-12'>
                 <div className={"basis-1/4"}>
                     <LeaderBoard modalIsOpen={modalIsOpen}/>
                 </div>
