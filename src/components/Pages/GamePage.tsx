@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import NewCard from "../UI/NewCard";
 import {Title} from "../Title/Title";
 import Questions from "../Questions/Questions";
-import ProgressBar from "../ProgressBar";
 import {GameTask, RunningState, State} from "../models";
 import RulesModal from "../UI/RulesModal";
 import Header from "../Header/Header";
@@ -97,7 +96,6 @@ const GamePage = () => {
                             <Title title="Velg neste utfordring"/>
                             <Questions onClick={selectedTaskHandler}/>
                         </div>
-                        <ProgressBar/>
                     </NewCard>
                 </div>
             case GamePageComponent.Editor:

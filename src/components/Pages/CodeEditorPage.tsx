@@ -19,9 +19,17 @@ type Props = {
 
 const CodeEditor = (props: Props) => {
 
+    const getSavedLanguage = () => {
+        if (localStorage.getItem('EDITOR_LANGUAGE')) {
+            const lang = localStorage.getItem('EDITOR_LANGUAGE');
+            return JSON.parse(lang!)
+        }
+        return 'java'
+    }
+
     const [taskResultCheck, setTaskResultCheck] = useState(true)
     const [buttonText, setButtonText] = useState('Submit')
-    const [language, setLanguage] = useState('java')
+    const [language, setLanguage] = useState(getSavedLanguage)
     const [code, setCodeState] = useState("")
     const [runAllTestCases, setRunAllTestCases] = useState(false)
     const [consoleOutput, setConsoleOutput] = useState<ConsoleData>({data: "", display: ConsoleDisplayType.DEFAULT})
@@ -32,11 +40,15 @@ const CodeEditor = (props: Props) => {
     const [savedLanguage, setSavedLanguage] = useState('')
 
     useEffect(() => {
-        if (localStorage.getItem('EDITOR_CODE') && localStorage.getItem('EDITOR_LANGUAGE')) {
+        if (localStorage.getItem('EDITOR_CODE')) {
             const data = localStorage.getItem('EDITOR_CODE');
-            const lang = localStorage.getItem('EDITOR_LANGUAGE');
-            if (lang) setSavedLanguage(JSON.parse(lang))
             if (data) setSavedBoilerCode(JSON.parse(data))
+        }
+        if (localStorage.getItem('EDITOR_LANGUAGE')) {
+            const lang = localStorage.getItem('EDITOR_LANGUAGE');
+            const parsedLang = JSON.parse(lang!)
+            setSavedLanguage(parsedLang)
+            setLanguage(parsedLang)
         }
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -95,7 +107,6 @@ const CodeEditor = (props: Props) => {
                         props.setSuccess?.(true)
                         setButtonText('Submit')
                         localStorage.setItem('EDITOR_CODE', JSON.stringify(''))
-                        localStorage.setItem('EDITOR_LANGUAGE', JSON.stringify(''))
                     }
                     if (response.compilerError) {
                         setConsoleOutput({data: response.compilerErrorMessage, display: ConsoleDisplayType.ERROR})
@@ -147,7 +158,7 @@ const CodeEditor = (props: Props) => {
                     <div className={"h-[60vh] flex flex-col bg-gameComps rounded-tr-2xl"}>
                         <div className='rounded-tr-2xl '>
                             <div className='flex flex-row justify-between'>
-                                <LanguageSelector onChange={languageHandleOnChange}/>
+                                <LanguageSelector onChange={languageHandleOnChange} selectedLanguage={language}/>
                                 <div className={'mr-1 mt-1'}>
                                     <button
                                         className={'border border-background hover:border-transparent rounded hover:scale-110 transition-all duration-300 text-left rounded-xl bg-gameComps shadow-lg shadow-yellow-900 transform hover:scale-125'}
