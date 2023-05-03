@@ -41,6 +41,7 @@ const CodeEditor = (props: Props) => {
     const [savedLanguage, setSavedLanguage] = useState('')
     const [showSkipModal, setShowSkipModal] = useState(false)
     const [showSkipModalFail, setShowSkipModalFail] = useState(false)
+    const [submitTasks, setSubmitTasks] = useState(false)
 
     useEffect(() => {
         if (localStorage.getItem('EDITOR_CODE')) {
@@ -93,6 +94,7 @@ const CodeEditor = (props: Props) => {
     }
 
     const submitTaskHandler = () => {
+        setSubmitTasks(true)
         resetConsoleOutput()
         API.submitTask(code)
             .then(response => {
@@ -114,6 +116,7 @@ const CodeEditor = (props: Props) => {
                     if (response.compilerError) {
                         setConsoleOutput({data: response.compilerErrorMessage, display: ConsoleDisplayType.ERROR})
                     }
+                    setSubmitTasks(false)
                 })).catch((error: Error) => {
             console.log(error.message)
         })
@@ -285,6 +288,7 @@ const CodeEditor = (props: Props) => {
                                          handleOnTestAllClick={() => setRunAllTestCases(true)}
                                          handleOnClickSkip={() => setShowSkipModal(true)}
                                          handleOnClickTips={tipsTaskHandler}
+                                         submitTasks={submitTasks}
 
                                 />
                                 {taskResultCheck && <RulesModal/>}
