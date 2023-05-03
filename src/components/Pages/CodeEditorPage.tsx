@@ -15,6 +15,7 @@ type Props = {
     setSuccess?: (value: boolean) => void
     setIsOpen?: (value: boolean) => void
     test?: boolean
+    nextAssignmentHandler?: () => void
 }
 
 const CodeEditor = (props: Props) => {
@@ -38,6 +39,8 @@ const CodeEditor = (props: Props) => {
     const [editorUpdate, setEditorUpdate] = useState(false)
     const [savedBoilerCode, setSavedBoilerCode] = useState('');
     const [savedLanguage, setSavedLanguage] = useState('')
+    const [showSkipModal, setShowSkipModal] = useState(false)
+    const [showSkipModalFail, setShowSkipModalFail] = useState(false)
     const [submitTasks, setSubmitTasks] = useState(false)
 
     useEffect(() => {
@@ -144,8 +147,27 @@ const CodeEditor = (props: Props) => {
         setEditorUpdate(value => !value)
     }
 
-    const skipTaskHandler = () => {}
-    const tipsTaskHandler = () => {}
+    const handleSkipTask = () => {
+        API.skipTask()
+            .then(response => {
+                if (!response.ok)
+                    throw new Error("500")
+                return response
+            })
+            .then(response => response.json())
+            .then((response: boolean) => {
+                if (response) {
+                    props.nextAssignmentHandler?.()
+                } else {
+                    setShowSkipModal(false)
+                    setShowSkipModalFail(true)
+                }
+            })
+    }
+
+
+    const tipsTaskHandler = () => {
+    }
 
     return (
         <div className='max-w-screen my-2 flex justify-center' onMouseMove={handleMouseMove}>
@@ -264,12 +286,28 @@ const CodeEditor = (props: Props) => {
                                 <Actions text={buttonText} test='TestAll'
                                          handleOnClickSubmit={submitTaskHandler}
                                          handleOnTestAllClick={() => setRunAllTestCases(true)}
-                                         handleOnClickSkip={skipTaskHandler}
+                                         handleOnClickSkip={() => setShowSkipModal(true)}
                                          handleOnClickTips={tipsTaskHandler}
                                          submitTasks={submitTasks}
 
                                 />
                                 {taskResultCheck && <RulesModal/>}
+                                {showSkipModal && <RulesModal
+                                    modalTitle={"Er du sikker på du vil hoppe over oppgaven?"}
+                                    modalText={"Du vil ikke få poeng for denne oppgaven."}
+                                    onOk={handleSkipTask}
+                                    onClose={() => setShowSkipModal(false)}
+                                    visible={true}
+                                    okButtonText={"Hopp over"}
+                                    cancelButtonText={"Avbryt"}
+                                />}
+                                {showSkipModalFail && <RulesModal
+                                    modalTitle={"Du er tom for skips!"}
+                                    modalText={"Du kan nok klare denne oppgaven uten skips :D"}
+                                    onOk={() => setShowSkipModalFail(false)}
+                                    visible={true}
+                                    okButtonText={"Ok"}/>
+                                }
                             </div>
                         }
                     </div>

@@ -2,15 +2,29 @@ import React from 'react';
 import {Button} from "./Button";
 import Confetti from "react-confetti";
 
-const RulesModal = (props: any) => {
+type Props = {
+    visible?: boolean,
+    onClose?: (e: any) => void,
+    onOk?: () => void,
+    modalTitle?: string,
+    modalText?: string,
+    okButtonText?: string,
+    cancelButtonText?: string,
+    showConfetti?: boolean
+    logo?: string
+}
+
+const RulesModal = (props: Props) => {
     if (!props.visible) return null
     let colors = ['#FFEB3B'];
     const confetti = props.showConfetti;
 
     const handleOnClose = (e: any) => {
-        if (e.target.id === 'container') props.onClose();
+        if (e.target.id === 'container')
+            if (props.onClose) {
+                props.onClose(e);
+            }
     }
-
 
     return (
 
@@ -36,9 +50,17 @@ const RulesModal = (props: any) => {
                         {props.modalText}
                     </p>
                 </div>
-                <div
-                    className="flex justify-center bspace-x-2 items-center p-6 border-t rounded-b border-gray-600">
-                    <Button handleOnClick={props.onClose} text={props.text}></Button>
+                <div className={"flex flex-row"}>
+                    {props.cancelButtonText &&
+                        <div
+                            className="flex justify-center bspace-x-2 items-center p-6 border-t rounded-b border-gray-600">
+                            <Button handleOnClick={props.onClose!} text={props.cancelButtonText}></Button>
+                        </div>
+                    }
+                    <div
+                        className="flex justify-center bspace-x-2 items-center p-6 border-t rounded-b border-gray-600">
+                        <Button handleOnClick={props.onOk!} text={props.okButtonText}></Button>
+                    </div>
                 </div>
             </div>
 

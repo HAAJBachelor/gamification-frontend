@@ -89,7 +89,7 @@ const LandingPage = () => {
                 <RulesButton openModal={openModal}/>
                 <RulesModal visible={modalIsOpen} onClose={closeModal} showConfetti={false}
                             modalTitle={'Velkommen til OXX Game'}
-                            modalText={'Test dine ferdigheter'} text={'Lukk'}/>
+                            modalText={'Test dine ferdigheter'} okButtonText={'Lukk'}/>
             </div>
         </div>
     );

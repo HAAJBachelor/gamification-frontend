@@ -81,7 +81,7 @@ const EndGamePage = () => {
 
                 {modalIsOpen &&
                     <RulesModal visible={modalIsOpen} onClose={closeModal} modalTitle={'Brukernavn Registrert'}
-                                modalText={'Takk for registrering'} text={'Lukk'}
+                                modalText={'Takk for registrering'} okButtonText={'Lukk'}
                                 showConfetti={false}/>
 
                 }
