@@ -32,7 +32,6 @@ export default function Header() {
             const data: Data = JSON.parse(message.data);
             if (data.type === DataTypes.Time) {
                 setTime(formatTime(parseInt(data.data)));
-                console.log("time: " + data.data)
                 if (parseInt(data.data) <= 60) {
                     setAlert(true);
                 } else {
@@ -41,11 +40,9 @@ export default function Header() {
             }
             if (data.type === DataTypes.Skip) {
                 setSkips(parseInt(data.data));
-                console.log("skips: " + data.data)
             }
             if(data.type === DataTypes.Score){
                 setScores(parseInt(data.data));
-                console.log("scores: " + data.data)
             }
             if (data.type === DataTypes.StateChange) {
                 localStorage.setItem('EDITOR_CODE', JSON.stringify(''))
