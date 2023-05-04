@@ -71,9 +71,13 @@ export default function Header() {
             <header>
                 <nav
                     className="flex flex-row justify-between pl-2 pr-2 bg-background text-white font-bold text-center w-full">
-                    <Logo/>
-                    <Tid skips={setSkips}/>
-                    <Liv skips={skips}/>
+                    <Logo />
+                    <Tid time={time} alert={alert}/>
+                    <div className={"flex flex-row gap-1"}>
+                        <Scores scores={scores}/>
+                        <Liv skips={skips}/>
+                    </div>
+
                 </nav>
             </header>
         </>
