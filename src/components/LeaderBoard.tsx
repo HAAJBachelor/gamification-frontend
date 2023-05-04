@@ -2,13 +2,13 @@ import React, {useEffect, useState} from "react";
 import {SessionRecord} from "./models";
 import NewCard from "./UI/NewCard";
 import {Title} from "./Title/Title";
-import {Prize} from "../image/Prize"
+import {API} from "../Constants";
 
 const LeaderBoard = (props: { modalIsOpen: boolean }) => {
 
         const [list, setList] = useState<SessionRecord[]>([]);
         useEffect(() => {
-            fetch("https://localhost:7067/api/GetLeaderboard/")
+            API.getLeaderBoard()
                 .then(response => response.json())
                 .then((response: SessionRecord[]) => {
                     console.log(response)
