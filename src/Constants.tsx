@@ -129,4 +129,10 @@ export const API = {
             }
         })
     },
+
+    getLeaderBoard: async (): Promise<Response> => {
+        return await fetch(`${URL}/GetLeaderboard`, {
+            method: "GET"
+        })
+    }
 }

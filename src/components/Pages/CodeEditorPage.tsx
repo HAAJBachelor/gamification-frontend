@@ -124,6 +124,7 @@ const CodeEditor = (props: Props) => {
                     }
                     if (response.compilerError) {
                         setConsoleOutput({data: response.compilerErrorMessage, display: ConsoleDisplayType.ERROR})
+                        setSubmitTasks(false)
                     }
                     setSubmitTasks(false)
                 })).catch((error: Error) => {
@@ -303,7 +304,7 @@ const CodeEditor = (props: Props) => {
                                 {taskResultCheck && <RulesModal/>}
                                 {showSkipModal && <RulesModal
                                     modalTitle={"Er du sikker på du vil hoppe over oppgaven?"}
-                                    modalText={"Du vil ikke få poeng for denne oppgaven."}
+                                    modalText={"Du vil ikke få poeng for denne oppgaven og miste et liv."}
                                     onOk={handleSkipTask}
                                     onClose={() => setShowSkipModal(false)}
                                     visible={true}

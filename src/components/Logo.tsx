@@ -9,7 +9,7 @@ export const Logo = () => {
     
     return (
         <>
-            <div className='bg-black'>
+            <div className='flex-1'>
                 <img src={oxx} onClick={handleOnClick} className='object-scale-down h-16 w-16 cursor-pointer' alt='No images'/>
             </div>
         </>

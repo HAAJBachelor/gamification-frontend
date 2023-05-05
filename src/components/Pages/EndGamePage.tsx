@@ -80,7 +80,7 @@ const EndGamePage = () => {
                 </NewCard>
 
                 {modalIsOpen &&
-                    <RulesModal visible={modalIsOpen} onClose={closeModal} modalTitle={'Brukernavn Registrert'}
+                    <RulesModal visible={modalIsOpen} onClose={closeModal} onOk={closeModal} modalTitle={'Brukernavn Registrert'}
                                 modalText={'Takk for registrering'} okButtonText={'Lukk'}
                                 showConfetti={false}/>
 
