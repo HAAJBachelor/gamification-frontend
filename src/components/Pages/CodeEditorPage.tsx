@@ -46,7 +46,11 @@ const CodeEditor = (props: Props) => {
     useEffect(() => {
         if (localStorage.getItem('EDITOR_CODE')) {
             const data = localStorage.getItem('EDITOR_CODE');
-            if (data) setSavedBoilerCode(JSON.parse(data))
+            if (data) {
+                const parsedCode = JSON.parse(data)
+                setSavedBoilerCode(parsedCode)
+                setCodeState(parsedCode)
+            }
         }
         if (localStorage.getItem('EDITOR_LANGUAGE')) {
             const lang = localStorage.getItem('EDITOR_LANGUAGE');
@@ -80,6 +84,7 @@ const CodeEditor = (props: Props) => {
             .then(response => response.text()
                 .then(response => {
                     setBoilerCode(response)
+                    setCodeState(response)
                 })).catch((error: Error) => {
             console.log(error.message)
         })
