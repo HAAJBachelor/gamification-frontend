@@ -118,5 +118,21 @@ export const API = {
                 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             }
         })
+    },
+
+    skipTask: async (): Promise<Response> => {
+        return await fetch(`${URL}/SkipTask`, {
+            method: "GET",
+            credentials: 'include',
+            headers: {
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            }
+        })
+    },
+
+    getLeaderBoard: async (): Promise<Response> => {
+        return await fetch(`${URL}/GetLeaderboard`, {
+            method: "GET"
+        })
     }
 }

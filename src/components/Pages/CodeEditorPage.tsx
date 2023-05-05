@@ -15,13 +15,22 @@ type Props = {
     setSuccess?: (value: boolean) => void
     setIsOpen?: (value: boolean) => void
     test?: boolean
+    nextAssignmentHandler?: () => void
 }
 
 const CodeEditor = (props: Props) => {
 
+    const getSavedLanguage = () => {
+        if (localStorage.getItem('EDITOR_LANGUAGE')) {
+            const lang = localStorage.getItem('EDITOR_LANGUAGE');
+            return JSON.parse(lang!)
+        }
+        return 'java'
+    }
+
     const [taskResultCheck, setTaskResultCheck] = useState(true)
     const [buttonText, setButtonText] = useState('Submit')
-    const [language, setLanguage] = useState('java')
+    const [language, setLanguage] = useState(getSavedLanguage)
     const [code, setCodeState] = useState("")
     const [runAllTestCases, setRunAllTestCases] = useState(false)
     const [consoleOutput, setConsoleOutput] = useState<ConsoleData>({data: "", display: ConsoleDisplayType.DEFAULT})
@@ -30,14 +39,24 @@ const CodeEditor = (props: Props) => {
     const [editorUpdate, setEditorUpdate] = useState(false)
     const [savedBoilerCode, setSavedBoilerCode] = useState('');
     const [savedLanguage, setSavedLanguage] = useState('')
-    const [selectedClient,setSelectedClient] = useState([]);
+    const [showSkipModal, setShowSkipModal] = useState(false)
+    const [showSkipModalFail, setShowSkipModalFail] = useState(false)
+    const [submitTasks, setSubmitTasks] = useState(false)
 
     useEffect(() => {
-        if (localStorage.getItem('EDITOR_CODE') && localStorage.getItem('EDITOR_LANGUAGE')) {
+        if (localStorage.getItem('EDITOR_CODE')) {
             const data = localStorage.getItem('EDITOR_CODE');
+            if (data) {
+                const parsedCode = JSON.parse(data)
+                setSavedBoilerCode(parsedCode)
+                setCodeState(parsedCode)
+            }
+        }
+        if (localStorage.getItem('EDITOR_LANGUAGE')) {
             const lang = localStorage.getItem('EDITOR_LANGUAGE');
-            if (lang) setSavedLanguage(JSON.parse(lang))
-            if (data) setSavedBoilerCode(JSON.parse(data))
+            const parsedLang = JSON.parse(lang!)
+            setSavedLanguage(parsedLang)
+            setLanguage(parsedLang)
         }
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -65,6 +84,7 @@ const CodeEditor = (props: Props) => {
             .then(response => response.text()
                 .then(response => {
                     setBoilerCode(response)
+                    setCodeState(response)
                 })).catch((error: Error) => {
             console.log(error.message)
         })
@@ -79,6 +99,7 @@ const CodeEditor = (props: Props) => {
     }
 
     const submitTaskHandler = () => {
+        setSubmitTasks(true)
         resetConsoleOutput()
         API.submitTask(code)
             .then(response => {
@@ -90,17 +111,22 @@ const CodeEditor = (props: Props) => {
                 .then((response: TaskResult) => {
                     if (!response.success) {
                         setButtonText('prøv igjen')
+                        setConsoleOutput({
+                            data: "Beklager, du kan ikke sende inn oppgaven, fordi du ikke besto alle testene :(",
+                            display: ConsoleDisplayType.ERROR,
+                        });
                     } else {
                         setTaskResultCheck(true)
                         props.setIsOpen?.(true)
                         props.setSuccess?.(true)
                         setButtonText('Submit')
                         localStorage.setItem('EDITOR_CODE', JSON.stringify(''))
-                        localStorage.setItem('EDITOR_LANGUAGE', JSON.stringify(''))
                     }
                     if (response.compilerError) {
                         setConsoleOutput({data: response.compilerErrorMessage, display: ConsoleDisplayType.ERROR})
+                        setSubmitTasks(false)
                     }
+                    setSubmitTasks(false)
                 })).catch((error: Error) => {
             console.log(error.message)
         })
@@ -116,7 +142,6 @@ const CodeEditor = (props: Props) => {
     const languageHandleOnChange = (event: any) => {
         setSavedBoilerCode('')
         setSavedLanguage('')
-        setSelectedClient(event.target.value);
         const lang = event.target.value
         setLanguage(lang)
         fetchStartCode(lang)
@@ -130,6 +155,28 @@ const CodeEditor = (props: Props) => {
         setSavedBoilerCode('')
 
         setEditorUpdate(value => !value)
+    }
+
+    const handleSkipTask = () => {
+        API.skipTask()
+            .then(response => {
+                if (!response.ok)
+                    throw new Error("500")
+                return response
+            })
+            .then(response => response.json())
+            .then((response: boolean) => {
+                if (response) {
+                    props.nextAssignmentHandler?.()
+                } else {
+                    setShowSkipModal(false)
+                    setShowSkipModalFail(true)
+                }
+            })
+    }
+
+
+    const tipsTaskHandler = () => {
     }
 
     return (
@@ -146,7 +193,7 @@ const CodeEditor = (props: Props) => {
                     <div className={"h-[60vh] flex flex-col bg-gameComps rounded-tr-2xl"}>
                         <div className='rounded-tr-2xl '>
                             <div className='flex flex-row justify-between'>
-                                <LanguageSelector onChange={languageHandleOnChange} value={savedLanguage ? savedLanguage : selectedClient}/>
+                                <LanguageSelector onChange={languageHandleOnChange} selectedLanguage={language}/>
                                 <div className={'mr-1 mt-1'}>
                                     <button
                                         className={'border border-background hover:border-transparent rounded hover:scale-110 transition-all duration-300 text-left rounded-xl bg-gameComps shadow-lg shadow-yellow-900 transform hover:scale-125'}
@@ -249,8 +296,28 @@ const CodeEditor = (props: Props) => {
                                 <Actions text={buttonText} test='TestAll'
                                          handleOnClickSubmit={submitTaskHandler}
                                          handleOnTestAllClick={() => setRunAllTestCases(true)}
+                                         handleOnClickSkip={() => setShowSkipModal(true)}
+                                         handleOnClickTips={tipsTaskHandler}
+                                         submitTasks={submitTasks}
+
                                 />
                                 {taskResultCheck && <RulesModal/>}
+                                {showSkipModal && <RulesModal
+                                    modalTitle={"Er du sikker på du vil hoppe over oppgaven?"}
+                                    modalText={"Du vil ikke få poeng for denne oppgaven og miste et liv."}
+                                    onOk={handleSkipTask}
+                                    onClose={() => setShowSkipModal(false)}
+                                    visible={true}
+                                    okButtonText={"Hopp over"}
+                                    cancelButtonText={"Avbryt"}
+                                />}
+                                {showSkipModalFail && <RulesModal
+                                    modalTitle={"Du er tom for skips!"}
+                                    modalText={"Du kan nok klare denne oppgaven uten skips :D"}
+                                    onOk={() => setShowSkipModalFail(false)}
+                                    visible={true}
+                                    okButtonText={"Ok"}/>
+                                }
                             </div>
                         }
                     </div>

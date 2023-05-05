@@ -1,13 +1,21 @@
-const LanguageSelector = (props: any) => {
+type Props = {
+    onChange: (event: any) => void
+    selectedLanguage: string
+}
+
+const LanguageSelector = (props: Props) => {
+    const languages = ["csharp", "java", "javascript", "python", "typescript"]
+    const languagesDisplayName = ["C#", "Java", "JavaScript", "Python", "TypeScript"]
+
     return (
         <div className="text-yellow-500">
             <select className='bg-zinc-500 text-yellow-500 pl-1 shadow-2xl outline-0'
-                    onChange={props.onChange} value={props.value}>
-                <option value="java" selected>Java</option>
-                <option value="csharp">C#</option>
-                <option value="typescript">Typescript</option>
-                <option value="javascript">Javascript</option>
-                <option value="python">Python</option>
+                    onChange={props.onChange}>
+                {languages.map((language, index) => {
+                    return <option value={language}
+                                   selected={language === props.selectedLanguage}>{languagesDisplayName[index]}</option>
+                })
+                }
             </select>
         </div>
     );

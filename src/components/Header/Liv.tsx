@@ -1,27 +1,15 @@
 import {useEffect, useState} from 'react';
 import rocket from '../../image/rocket.png';
-import {State} from "../models";
-import {API} from "../../Constants";
 
+type Props = {
+    skips: number
+}
 
-export const Liv = () => {
+export const Liv = (props: Props) => {
     const [lives, setLives] = useState(0);
-
     useEffect(() => {
-        API.getState()
-            .then(response => response)
-            .then(response => {
-                if (!response.ok) throw new Error("no data")
-                return response
-            })
-            .then(response => response.json())
-            .then((response: State) => {
-                setLives(response._lives)
-            })
-            .catch((error: Error) => {
-                console.log(error.message)
-            })
-    }, [])
+        setLives(props.skips)
+    }, [props.skips])
 
     return (
         <>
