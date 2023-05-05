@@ -87,6 +87,7 @@ const TestCaseContainer = (props: Props) => {
                                    setRunning={setRunningCase}
                                    running={running[index]}
                                    setConsoleOutput={props.setConsoleOutput}
+                                   setRunAllTestCases={props.setRunAllTestCases}
                         />
                     );
                 })}

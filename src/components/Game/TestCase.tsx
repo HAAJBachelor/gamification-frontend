@@ -12,6 +12,8 @@ type Props = {
     setRunning: (index: number, val: boolean, done?: boolean) => void;
     running: boolean;
     setConsoleOutput: (val: ConsoleData) => void;
+    setRunAllTestCases: (val: boolean) => void
+
 };
 
 const TestCase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
@@ -86,6 +88,7 @@ const TestCase = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                 data: "Something went wrong.",
                 display: ConsoleDisplayType.ERROR,
             });
+            props.setRunAllTestCases(false);
             setRunning(false);
             setOpenDialog(true);
             setPing(false);
