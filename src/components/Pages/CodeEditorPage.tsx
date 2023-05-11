@@ -44,13 +44,13 @@ const CodeEditor = (props: Props) => {
     const [submitTasks, setSubmitTasks] = useState(false)
 
     useEffect(() => {
-        if (localStorage.getItem('EDITOR_CODE')) {
-            const data = localStorage.getItem('EDITOR_CODE');
-            if (data) {
-                const parsedCode = JSON.parse(data)
-                setSavedBoilerCode(parsedCode)
-                setCodeState(parsedCode)
-            }
+        const data = localStorage.getItem('EDITOR_CODE');
+        if (data) {
+            const parsedCode = JSON.parse(data)
+            setSavedBoilerCode(parsedCode)
+            setCodeState(parsedCode)
+        } else {
+            fetchStartCode(language)
         }
         if (localStorage.getItem('EDITOR_LANGUAGE')) {
             const lang = localStorage.getItem('EDITOR_LANGUAGE');
