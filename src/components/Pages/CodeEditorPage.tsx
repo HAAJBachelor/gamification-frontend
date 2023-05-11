@@ -69,11 +69,6 @@ const CodeEditor = (props: Props) => {
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [code]);
 
-    useEffect(() => {
-        fetchStartCode(language)
-        //eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
     const fetchStartCode = (lang: string) => {
         API.getStartCode(lang, props.test)
             .then(response => {
@@ -120,7 +115,7 @@ const CodeEditor = (props: Props) => {
                         props.setIsOpen?.(true)
                         props.setSuccess?.(true)
                         setButtonText('Submit')
-                        localStorage.setItem('EDITOR_CODE', JSON.stringify(''))
+                        localStorage.removeItem('EDITOR_CODE');
                     }
                     if (response.compilerError) {
                         setConsoleOutput({data: response.compilerErrorMessage, display: ConsoleDisplayType.ERROR})

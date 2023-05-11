@@ -34,8 +34,8 @@ const LandingPage = () => {
       })
       .then((response) =>
         response.text().then((response) => {
-          localStorage.setItem('EDITOR_CODE', JSON.stringify(''))
-          console.log(response);
+            localStorage.removeItem('EDITOR_CODE');
+            console.log(response);
           navigate("game");
         })
       )
