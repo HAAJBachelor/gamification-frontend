@@ -44,13 +44,13 @@ const CodeEditor = (props: Props) => {
     const [submitTasks, setSubmitTasks] = useState(false)
 
     useEffect(() => {
-        if (localStorage.getItem('EDITOR_CODE')) {
-            const data = localStorage.getItem('EDITOR_CODE');
-            if (data) {
-                const parsedCode = JSON.parse(data)
-                setSavedBoilerCode(parsedCode)
-                setCodeState(parsedCode)
-            }
+        const data = localStorage.getItem('EDITOR_CODE');
+        if (data) {
+            const parsedCode = JSON.parse(data)
+            setSavedBoilerCode(parsedCode)
+            setCodeState(parsedCode)
+        } else {
+            fetchStartCode(language)
         }
         if (localStorage.getItem('EDITOR_LANGUAGE')) {
             const lang = localStorage.getItem('EDITOR_LANGUAGE');
@@ -68,11 +68,6 @@ const CodeEditor = (props: Props) => {
         }
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [code]);
-
-    useEffect(() => {
-        fetchStartCode(language)
-        //eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     const fetchStartCode = (lang: string) => {
         API.getStartCode(lang, props.test)
@@ -120,7 +115,7 @@ const CodeEditor = (props: Props) => {
                         props.setIsOpen?.(true)
                         props.setSuccess?.(true)
                         setButtonText('Submit')
-                        localStorage.setItem('EDITOR_CODE', JSON.stringify(''))
+                        localStorage.removeItem('EDITOR_CODE');
                     }
                     if (response.compilerError) {
                         setConsoleOutput({data: response.compilerErrorMessage, display: ConsoleDisplayType.ERROR})

@@ -45,7 +45,7 @@ export default function Header() {
                 setScores(parseInt(data.data));
             }
             if (data.type === DataTypes.StateChange) {
-                localStorage.setItem('EDITOR_CODE', JSON.stringify(''))
+                localStorage.removeItem("EDITOR_CODE");
                 navigate('/EndGamePage');
                 return;
             }

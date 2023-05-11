@@ -54,7 +54,7 @@ const GamePage = () => {
     }
 
     const nextAssignmentHandler = () => {
-        localStorage.setItem('EDITOR_CODE', JSON.stringify(''))
+        localStorage.removeItem("EDITOR_CODE")
         setGamePageComponent(GamePageComponent.TaskSelect)
         setSuccess(false)
     }
